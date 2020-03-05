@@ -34,10 +34,20 @@ repositories:
     - 'sim/a1-interface'
 committers:
     - <<: *oran_sim_a1-interface_ptl
-    - name: 'Michael Drre'
+    - name: 'Michael Duerre'
       email: 'michael.duerre@highstreet-technologies.com'
       company: 'highstreet technologies GmbH'
       id: 'metaljackL'
       timezone: 'Germany/Berlin'
+    - name: 'John Keeney'
+      email: 'John.Keeney@est.tech'
+      company: 'Ericsson Software Technology'
+      id: 'johnkeeney'
+      timezone: 'Europe/Dublin'
+    - name: 'Maxime Bonneau'
+      email: 'maxime.bonneau@est.tech'
+      company: 'Ericsson Software Technology'
+      id: 'maximesson'
+      timezone: 'Sweden/Stockholm'
 tsc:
     approval: 'https://lists.o-ran-sc.org/g/toc/message/102'
