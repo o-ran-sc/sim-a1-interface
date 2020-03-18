@@ -99,6 +99,116 @@
     },
     {
       "key": {
+        "uuid": "7844d5bc_266bd7ad",
+        "filename": "near-rt-ric-simulator/scripts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000201
+      },
+      "writtenOn": "2020-03-18T12:37:36Z",
+      "side": 1,
+      "message": "We use Maven to create the Docker container for the simulator. But we will clean it up a bit.",
+      "parentUuid": "a9266a67_5bcb3a5e",
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10220e03_3238530d",
+        "filename": "near-rt-ric-simulator/scripts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000201
+      },
+      "writtenOn": "2020-03-18T12:37:36Z",
+      "side": 1,
+      "message": "Should not be this parent. Look at other projects that are not SpringBoot based to see which one to use.",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be84fcda_4216b520",
+        "filename": "near-rt-ric-simulator/scripts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000201
+      },
+      "writtenOn": "2020-03-18T12:37:36Z",
+      "side": 1,
+      "message": "These should match the correct parent.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518ae4f6_73dba38a",
+        "filename": "near-rt-ric-simulator/scripts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000201
+      },
+      "writtenOn": "2020-03-18T12:37:36Z",
+      "side": 1,
+      "message": "THese two dependencies are not needed.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca86fff7_83e2aa7b",
+        "filename": "near-rt-ric-simulator/scripts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000201
+      },
+      "writtenOn": "2020-03-18T12:37:36Z",
+      "side": 1,
+      "message": "Not needed, I think.",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d7f3f62_f17fdece",
         "filename": "near-rt-ric-simulator/scripts/run_me.sh",
         "patchSetId": 1
