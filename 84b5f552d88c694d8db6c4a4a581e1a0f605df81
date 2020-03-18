@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20416b9f_1db97d01",
+        "filename": "near-rt-ric-simulator/scripts/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-18T12:17:28Z",
+      "side": 1,
+      "message": "you might (might) consider using an Alpine base image with python, rather than a full debian, to reduce the size.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3298cc8_2dd1a2fd",
+        "filename": "near-rt-ric-simulator/scripts/a1-openapi.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-18T12:17:28Z",
+      "side": 1,
+      "message": "seems a bit unusual to put an open api spec document in a \"scripts\" folder?",
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feac7e95_d74c0032",
+        "filename": "near-rt-ric-simulator/scripts/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-18T12:17:28Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9443fe99_8d6ab952",
+        "filename": "near-rt-ric-simulator/scripts/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-18T12:17:28Z",
+      "side": 1,
+      "message": "this colon looks wrong",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9266a67_5bcb3a5e",
+        "filename": "near-rt-ric-simulator/scripts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-18T12:17:28Z",
+      "side": 1,
+      "message": "Why do you have a POM file in a Python project?  I\u0027m very confused",
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7f3f62_f17fdece",
+        "filename": "near-rt-ric-simulator/scripts/run_me.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-18T12:17:28Z",
+      "side": 1,
+      "message": "Maybe a better name could be found, more descriptive than \"run_me\" ?",
+      "revId": "84b5f552d88c694d8db6c4a4a581e1a0f605df81",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
