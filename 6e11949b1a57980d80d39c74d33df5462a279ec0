@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df47e4f4_c2c36c1b",
+        "filename": "near-rt-ric-simulator/scripts/start_simulator.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-20T10:51:03Z",
+      "side": 1,
+      "message": "Don\u0027t really need the if [], you can write this as $* and if there are no arguments then there is no failure",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "6e11949b1a57980d80d39c74d33df5462a279ec0",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
