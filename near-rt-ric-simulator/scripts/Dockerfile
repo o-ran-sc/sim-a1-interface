@@ -22,18 +22,19 @@ WORKDIR /usr/src/app
 
 RUN pip install connexion[swagger-ui]
 
-COPY example_files/policy_instance_1_STD_QoSNudging_0.2.0.json policy_instance_1_STD_QoSNudging_0.2.0.json
-COPY example_files/policy_instance_1_bis_STD_QoSNudging_0.2.0.json policy_instance_1_bis_STD_QoSNudging_0.2.0.json
-COPY example_files/policy_instance_2_STD_QoSNudging_0.2.0.json policy_instance_2_STD_QoSNudging_0.2.0.json
-COPY example_files/policy_type_STD_QoSNudging_0.2.0.json policy_type_STD_QoSNudging_0.2.0.json
 
-COPY a1.py a1.py
-COPY main.py main.py
-COPY var_declaration.py var_declaration.py
+COPY ./near-rt-ric-simulator/scripts/example_files/policy_instance_1_STD_QoSNudging_0.2.0.json policy_instance_1_STD_QoSNudging_0.2.0.json
+COPY ./near-rt-ric-simulator/scripts/example_files/policy_instance_1_bis_STD_QoSNudging_0.2.0.json policy_instance_1_bis_STD_QoSNudging_0.2.0.json
+COPY ./near-rt-ric-simulator/scripts/example_files/policy_instance_2_STD_QoSNudging_0.2.0.json policy_instance_2_STD_QoSNudging_0.2.0.json
+COPY ./near-rt-ric-simulator/scripts/example_files/policy_type_STD_QoSNudging_0.2.0.json policy_type_STD_QoSNudging_0.2.0.json
 
-COPY commands.sh commands.sh
-COPY start_simulator.sh start_simulator.sh
+COPY ./near-rt-ric-simulator/scripts/a1.py a1.py
+COPY ./near-rt-ric-simulator/scripts/main.py main.py
+COPY ./near-rt-ric-simulator/scripts/var_declaration.py var_declaration.py
 
-COPY a1-openapi.yaml a1-openapi.yaml
+COPY ./near-rt-ric-simulator/scripts/commands.sh commands.sh
+COPY ./near-rt-ric-simulator/scripts/start_simulator.sh start_simulator.sh
+
+COPY ./near-rt-ric-simulator/a1-openapi.yaml a1-openapi.yaml
 
 CMD ["/bin/bash", "./run_me.sh"]
