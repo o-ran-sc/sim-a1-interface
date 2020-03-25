@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba86765e_b1c7381c",
+        "filename": "near-rt-ric-simulator/scripts/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-25T08:57:09Z",
+      "side": 1,
+      "message": "Thanks for the heads-up, I forgot to change this when renaming this file.\nPlease find the commit to correct this here: https://gerrit.o-ran-sc.org/r/c/sim/a1-interface/+/2963",
+      "parentUuid": "38578073_e73b6a67",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "6e11949b1a57980d80d39c74d33df5462a279ec0",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df47e4f4_c2c36c1b",
         "filename": "near-rt-ric-simulator/scripts/start_simulator.sh",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6e11949b1a57980d80d39c74d33df5462a279ec0",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc48ca0_4024f55b",
+        "filename": "near-rt-ric-simulator/scripts/start_simulator.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-25T08:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df47e4f4_c2c36c1b",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "6e11949b1a57980d80d39c74d33df5462a279ec0",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     }
   ]
 }
