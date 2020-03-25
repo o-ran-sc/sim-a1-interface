@@ -36,4 +36,4 @@ COPY start_simulator.sh start_simulator.sh
 
 COPY a1-openapi.yaml a1-openapi.yaml
 
-CMD ["/bin/bash", "./run_me.sh"]
+CMD ["/bin/bash", "./start_simulator.sh"]
