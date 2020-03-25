@@ -1,4 +1,3 @@
-#!/bin/bash
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -15,7 +14,10 @@
 #  limitations under the License.
 #  ============LICENSE_END=================================================
 #
-
-# One argument can be used along with the script call: it is the port on which one wish to run the simulator.
-
-python3 ./main.py $*
+policy_instances = {}
+policy_status = {}
+callbacks = {}
+forced_settings = {}
+forced_settings['code']=None
+forced_settings['delay']=None
+policy_fingerprint={}

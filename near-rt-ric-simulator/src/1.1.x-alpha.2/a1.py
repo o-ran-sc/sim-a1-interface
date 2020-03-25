@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -20,7 +19,6 @@ import copy
 import datetime
 import json
 import logging
-#import requests
 
 from connexion import NoContent
 from flask import Flask, escape, request, make_response
@@ -183,6 +181,6 @@ def send_error_code(args):
     elif code == '503':
       return(set_error(None, "Service unavailable", 503, "The provider is currently unable to handle the request due to a temporary overload", None, None, None, None))
     else:
-      return(set_error(None, "Not found", 400, "No resource found at the URI", None, None, None, None))
+      return(set_error(None, "Not found", 400, "Object in payload not properly formulated or not related to the method", None, None, None, None))
   else:
-    return(set_error(None, "Not found", 400, "No resource found at the URI", None, None, None, None))
+    return(set_error(None, "Not found", 404, "No resource found at the URI", None, None, None, None))
