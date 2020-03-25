@@ -20,12 +20,20 @@ import connexion
 import fileinput
 import json
 import sys
+import os
 
+from pathlib import Path
 from flask import Flask, escape, request, make_response
 from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, policy_type_per_instance
 
-app = connexion.App(__name__, specification_dir='.')
+apipath=os.environ['APIPATH']
+
+if (apipath is None):
+  print("Env APIPATH not set. Exiting....")
+  sys.exit(1)
+
+app = connexion.App(__name__, specification_dir=apipath)
 
 @app.route('/policytypes/<string:policyTypeId>', methods=['PUT','DELETE'])
 def policy_type(policyTypeId):
@@ -111,11 +119,15 @@ def set_status_with_reason(policyId, enforceStatus, enforceReason):
 @app.route('/counter/<string:countername>', methods=['GET'])
 def getCounter(countername):
     if (countername == "num_instances"):
-        return str(len(policy_instances)),200
+      return str(len(policy_instances)),200
     elif (countername == "num_types"):
-        return str(len(policy_types)),200
+      return str(len(policy_types)),200
+    elif (countername == "interface"):
+      p=Path(os.getcwd())
+      pp=p.parts
+      return str(pp[len(pp)-1]),200
     else:
-        return "Counter name: "+countername+" not found.",404
+      return "Counter name: "+countername+" not found.",404
 
 
 port_number = 8085
@@ -123,6 +135,6 @@ if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-app.add_api('../a1-openapi.yaml')
+app.add_api('a1-openapi.yaml')
 app.run(port=port_number)
 

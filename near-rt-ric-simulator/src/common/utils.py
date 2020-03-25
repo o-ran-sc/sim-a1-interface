@@ -1,4 +1,3 @@
-#!/bin/bash
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -16,6 +15,12 @@
 #  ============LICENSE_END=================================================
 #
 
-# One argument can be used along with the script call: it is the port on which one wish to run the simulator.
-
-python3 ./main.py $*
+#Calculate a fingerprint from sorted items of a dict
+def calcFingerprint(p):
+  m=''
+  if (p is dict):
+    for i in sorted (p.keys()):
+      m = m+str(i)+calcFingerprint(p[i])
+  else:
+    return str(p)
+  return m
