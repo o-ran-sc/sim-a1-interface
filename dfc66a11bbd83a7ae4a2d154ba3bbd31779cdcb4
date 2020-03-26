@@ -1,0 +1,544 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870dd2d7_3c6c8eb1",
+        "filename": "near-rt-ric-simulator/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Maybe you could use a lighter image, e.g. python:3.8-slim-buster",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c770f67d_fdf890ab",
+        "filename": "near-rt-ric-simulator/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "License",
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42db30c4_409a150c",
+        "filename": "near-rt-ric-simulator/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "should maybe be \"_\" for consistency",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 40
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377f18b7_13f10b8c",
+        "filename": "near-rt-ric-simulator/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "commands",
+      "range": {
+        "startLine": 121,
+        "startChar": 92,
+        "endLine": 121,
+        "endChar": 99
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b54ed9_f63c4f09",
+        "filename": "near-rt-ric-simulator/api/1.1.x-alpha.2/a1-openapi.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "I see that OSC openapi has a license , should we have one too?",
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d38de3_b0526f57",
+        "filename": "near-rt-ric-simulator/src/1.1.x-alpha.2/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Should be \"Object in payload not properly formulated or not related to the method\"",
+      "range": {
+        "startLine": 186,
+        "startChar": 48,
+        "endLine": 186,
+        "endChar": 76
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3133f8e_cbafb1aa",
+        "filename": "near-rt-ric-simulator/src/1.1.x-alpha.2/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Should be 404",
+      "range": {
+        "startLine": 188,
+        "startChar": 42,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091c604d_02e4dcc7",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "This could perhaps be done in a function since it\u0027s called everywhere.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8111cdbf_6eb3ddeb",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "It seems like in this version of the openapi you\u0027re not supposed to return details when there is an error, but just an error code. \n(Example here, the yaml file is:\nresponses:\n  \u0027200\u0027:\n    ...\n  \u0027404\u0027:\n    description: \u003e\n      policy type not found\n)\n\nThis comment is valid wherever there is a call to the create_problem_json function.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 80
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bf83bd_07c1f557",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "This is not able to return 200, only 201 if successful",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f83025_9e32404f",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Should return nothing else than the response code",
+      "range": {
+        "startLine": 125,
+        "startChar": 20,
+        "endLine": 125,
+        "endChar": 36
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac9b412_a55a1eb1",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Response is 202",
+      "range": {
+        "startLine": 187,
+        "startChar": 22,
+        "endLine": 187,
+        "endChar": 25
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c81d34_7695d814",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "You can only get 202 when successful, and the response code only",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 71
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949227c8_bdd3c93d",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Since it\u0027s for test purpose, isn\u0027t there a way to find a solution not impacting the production code?",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 33
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cdc0d7_f40e72fc",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "There should be a elif for 400 too, because it doesn\u0027t correspond to \"Not found\"",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 32
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6bed71_75f19176",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/main.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Already defined in a1.py, create_policy_type",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0d8d4c_6c9173d0",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/main.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Already defined in a1.py, delete_policy_type",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50f583d_541f98f6",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/main.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Already defined in a1.py, get_all_policy_types",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 25
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58ae239_dee2f306",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/main.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Status has properties instance_status, has_been_deleted and created_at",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 15
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b054e4_b8db2525",
+        "filename": "near-rt-ric-simulator/src/STD_1.1.3/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Same suggestion, making a function out of it.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b1db6a7_c8dc990c",
+        "filename": "near-rt-ric-simulator/src/STD_1.1.3/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "same question regarding the test purpose",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 33
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd58a4d5_6db907a2",
+        "filename": "near-rt-ric-simulator/src/STD_1.1.3/a1.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "There is now a 409, conflict (used in put_policy among others)\nAnd there should also be a 400, bad request (it was forgotten in the first version of the simulator)",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 32
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b4e62b_c01ecdf1",
+        "filename": "near-rt-ric-simulator/src/STD_1.1.3/main.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem necessary to keep this",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cf758a_2c4c1792",
+        "filename": "near-rt-ric-simulator/test/OSC_2.1.0/basic_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-26T10:23:14Z",
+      "side": 1,
+      "message": "Status has properties instance_status, has_been_deleted and created_at",
+      "range": {
+        "startLine": 207,
+        "startChar": 34,
+        "endLine": 207,
+        "endChar": 52
+      },
+      "revId": "dfc66a11bbd83a7ae4a2d154ba3bbd31779cdcb4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
