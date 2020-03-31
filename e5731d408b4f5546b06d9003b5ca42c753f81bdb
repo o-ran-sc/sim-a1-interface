@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5735c416_1c92060a",
+        "filename": "near-rt-ric-simulator/src/OSC_2.1.0/a1.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-31T10:50:08Z",
+      "side": 1,
+      "message": "(None, 404)",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "e5731d408b4f5546b06d9003b5ca42c753f81bdb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03f9bb1_5cf101b2",
+        "filename": "near-rt-ric-simulator/src/STD_1.1.3/a1.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-03-31T10:50:08Z",
+      "side": 1,
+      "message": "Missing 400, Bad request",
+      "range": {
+        "startLine": 165,
+        "startChar": 26,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "e5731d408b4f5546b06d9003b5ca42c753f81bdb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
