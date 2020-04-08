@@ -41,7 +41,7 @@ def policy_type(policyTypeId):
     data = data.replace("'", "\"")
     data = json.loads(data)
     policy_types[policyTypeId] = data
-    return ('The policy type was either created or updated for policy type id: ' + policyTypeId)
+    return ('The policy type was either created or updated for policy type id: ' + policyTypeId, 200)
   elif request.method == 'DELETE':
     if policyTypeId in policy_types.keys():
       policy_types.pop(policyTypeId)

@@ -86,7 +86,7 @@ def forcedelay():
 
 
 #Set status and reason
-#/status?policyid=<policyid>&status=<status>[reason=<reason>]
+#/status?policyid=<policyid>&status=<status>[&reason=<reason>]
 @app.route('/status', methods=['PUT'])
 def setstatus():
 
