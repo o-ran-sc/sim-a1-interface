@@ -1,1 +1,8 @@
+# Documentation
+.idea/
+.tox
+docs/_build/
+.DS_STORE
+
+# IDE
 .project
