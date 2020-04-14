@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f8fe3bb_1328ffc9",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "OSC respond \"OK\".",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2c4d62_9ffebbc0",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "Path is \u0027/container_interfaces\u0027",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 16
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08316373_456429ec",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "/deleteall in OSC",
+      "range": {
+        "startLine": 174,
+        "startChar": 5,
+        "endLine": 174,
+        "endChar": 20
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb61c84d_9f2e96d6",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "For OSC this should be only 204 and no message....but impl respond with 204 and the message above.",
+      "range": {
+        "startLine": 321,
+        "startChar": 5,
+        "endLine": 322,
+        "endChar": 44
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa565547_b4c518c2",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "See above",
+      "range": {
+        "startLine": 331,
+        "startChar": 6,
+        "endLine": 332,
+        "endChar": 60
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7cb194_10777b3f",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "any string actually......but I guess \u0027true\u0027 or \u0027false\u0027. Interface supports string so also incorrect values can be set.",
+      "range": {
+        "startLine": 435,
+        "startChar": 56,
+        "endLine": 435,
+        "endChar": 65
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddfb78a_f01a7cc7",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "See above, no check is made, any string is ok",
+      "range": {
+        "startLine": 446,
+        "startChar": 5,
+        "endLine": 446,
+        "endChar": 32
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb58b20a_25993531",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "Missing? path: /container_interfaces",
+      "range": {
+        "startLine": 466,
+        "startChar": 0,
+        "endLine": 466,
+        "endChar": 17
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59253dbf_0a34bc20",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "Is the json response of the actual post request to the callback server, whatever that is.",
+      "range": {
+        "startLine": 649,
+        "startChar": 6,
+        "endLine": 649,
+        "endChar": 30
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03564cda_2cae666c",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-14T13:48:18Z",
+      "side": 1,
+      "message": "Exclude this part perhaps. Only used for basic test of the simulator - not intended to be used for anything else.",
+      "range": {
+        "startLine": 660,
+        "startChar": 1,
+        "endLine": 683,
+        "endChar": 8
+      },
+      "revId": "a9f8ac3ea73a7bdbff8c11732125467f22b53c67",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
