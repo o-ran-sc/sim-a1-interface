@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3f7e62a_43ae8fb6",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000201
+      },
+      "writtenOn": "2020-04-14T14:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bbfa2ff_c444b589",
+      "range": {
+        "startLine": 56,
+        "startChar": 39,
+        "endLine": 56,
+        "endChar": 47
+      },
+      "revId": "c1c76c21c02cc3b2dd7325e8e12a42ac35676fa8",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "099e2ca1_457b8a99",
         "filename": "docs/simulator-api.rst",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c1c76c21c02cc3b2dd7325e8e12a42ac35676fa8",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8651c9_8bb68c1d",
+        "filename": "docs/simulator-api.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000201
+      },
+      "writtenOn": "2020-04-14T14:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "099e2ca1_457b8a99",
+      "range": {
+        "startLine": 87,
+        "startChar": 41,
+        "endLine": 87,
+        "endChar": 52
+      },
+      "revId": "c1c76c21c02cc3b2dd7325e8e12a42ac35676fa8",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     }
   ]
 }
