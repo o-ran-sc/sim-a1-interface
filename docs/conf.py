@@ -1,4 +1,4 @@
-from docs_conf import *
+from docs_conf.conf import *
 
 linkcheck_ignore = [
     'http://localhost.*',
