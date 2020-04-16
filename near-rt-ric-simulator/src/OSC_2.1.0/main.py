@@ -106,7 +106,7 @@ def del_policytype():
 
   policyTypeId=request.args.get('id')
   if (policyTypeId is None):
-    return Response('Parameter <policytypeid> missing in request', status=400, mimetype='text/plain')
+    return Response('Parameter <id> missing in request', status=400, mimetype='text/plain')
   try:
     val=int(policyTypeId)
   except:
