@@ -17,3 +17,5 @@ Near |nbh| RT |nbsp| RICs.
 
 Apart from providing the A1 API, the simulator also provides an administrative API to manage policy types and manipulate
 the simulator, see ":ref:`simulator-api`".
+
+For information on how to run the simulator, see the README.md file in the repository.

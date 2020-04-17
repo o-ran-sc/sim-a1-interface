@@ -6,3 +6,4 @@ docs/_build/
 
 # IDE
 .project
+.vscode

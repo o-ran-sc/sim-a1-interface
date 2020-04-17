@@ -22,10 +22,13 @@ The overall folder structure is \(relative to the location of this README file\)
 
 The simulator handles the requests that are defined in the A1 open API yaml file. All these requests are implemented in the a1.py file in the source folder. In addition, a number of administrative functions are also supported and implemented by the main.py in the source folder.
 
-The section below outlines the supported open api REST operations as well as the adminstrative REST operations.
+The section below outlines the supported open api REST operations as well as the adminstrative REST operations. For the
+documentation of the common parts in the admin API, see [Common Functions](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#common-functions).
 
 
 # Supported operations in simulator OSC 2.1.0
+
+For the complete yaml specification, see [openapi.yaml](../near-rt-ric-simulator/api/OSC_2.1.0/openapi.yaml).
 
 URIs for A1:
 | Function              | Path and parameters |
@@ -42,6 +45,8 @@ URIs for A1:
 |  GET, get policy status | http://localhost:8085/a1-p/policytypes/{policy\_type\_id}/policies/{policy\_instance\_id}/status |
 
 Swagger UI at: http://localhost:8085/ui/
+
+For the documentation of the admin API, see [OSC_2.1.0](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#osc-2-1-0).
 
 URIs for admin operations:
 | Function              | Path and parameters |
@@ -61,6 +66,8 @@ URIs for admin operations:
 
 # Supported operations in simulator A1 Standard 1.1.3
 
+For the complete yaml specification, see [STD_A1.yaml](../near-rt-ric-simulator/api/STD_1.1.3/STD_A1.yaml).
+
 URIs for A1:
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
@@ -70,6 +77,8 @@ URIs for A1:
 |  DELETE a policy instance | http://localhost:8085/A1-P/v1/policies/{policyId} |
 |  GET a policy status | http://localhost:8085/A1-P/v1/policies/{policyid} |
 Swagger UI at: http://localhost:8085/A1-P/v1/ui/
+
+For the documentation of the admin API, see [A1 Standard 1.1.3](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#a1-standard-1-1-3).
 
 URIs for admin operations:
 | Function              | Path and parameters |
@@ -88,7 +97,9 @@ URIs for admin operations:
 
 # Supported operations in simulator 1.1.x-alpha.2
 
- The available requests and the addresses are currently:
+For the complete yaml specification, see [a1-openapi.yaml](../near-rt-ric-simulator/api/1.1.x-alpha.2/a1-openapi.yaml).
+
+The available requests and the addresses are currently:
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
 |  GET all policy identities (respectively for a policy type if query parameter used) | http://localhost:8085/A1-P/v1/policies?policyTypeId={policyTypeId} |
@@ -100,6 +111,8 @@ URIs for admin operations:
 |  GET the schemas for a policy type | http://localhost:8085/A1-P/v1/policytypes/{policyTypeId} |
 
 Nota Bene: It could happen that this page is not updated as soon as the yaml file is. The yaml file can be found under /near-rt-ric-simulator/a1-openapi.yaml.
+
+For the documentation of the admin API, see [1.1.x-alpha.2](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#x-alpha-2).
 
 Additionally, there are requests that are defined in main.py as an administrative API. The goal is to handle information that couldn't be handled using the A1 interface. The available requests and the addresses are currently:
 | Function              | Path and parameters |
