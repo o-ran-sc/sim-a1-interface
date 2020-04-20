@@ -13,10 +13,6 @@ This document describes the API used to manage policy types and manipulate the s
 The simulator supports different versions of the A1 interface. Some functions are common for all version, and some are
 specific for a certain version.
 
-.. contents:: Operations
-   :depth: 4
-   :local:
-
 Common Functions
 ================
 
@@ -31,29 +27,27 @@ The status of the simulator.
 GET
 +++
 
-  Returns the status of the simulator.
+Returns the status of the simulator.
 
-   **URL path:**
-    /
+**URL path:**
+  /
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    Simulator is living.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Simulator is living.
+    curl -X GET "http://localhost:8085/"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X GET "http://localhost:8085/"
-
-    Result:
-      200
-        Simulator is living (OSC_2.1.0 responds OK)
+      Simulator is living (OSC_2.1.0 responds OK)
 
 Supported Interfaces
 --------------------
@@ -66,29 +60,27 @@ The simulator can support different versions of the A1 interface. With this API 
 GET
 +++
 
-  Returns the status of the simulator. (Not available for A1 Standard 1.1.3)
+Returns the status of the simulator. (Not available for A1 Standard 1.1.3)
 
-   **URL path:**
-    /container_interfaces
+**URL path:**
+  /container_interfaces
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    List of supported interfaces.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      List of supported interfaces.
+    curl -X GET "http://localhost:8085/container_interfaces"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X GET "http://localhost:8085/container_interfaces"
-
-    Result:
-      200
-        1.1.x-alpha.2 OSC_2.1.0 STD_1.1.3
+      1.1.x-alpha.2 OSC_2.1.0 STD_1.1.3
 
 Counters
 --------
@@ -101,29 +93,27 @@ The simulator keeps counts of different things that can be accessed.
 GET
 +++
 
-  Get a counter. Counter-name can be one of the following: 'num_instances', 'num_types' or 'interface'.
+Get a counter. Counter-name can be one of the following: 'num_instances', 'num_types' or 'interface'.
 
-   **URL path:**
-    /counter/{counter-name}
+**URL path:**
+  /counter/{counter-name}
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    The counter value for the given counter.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      The counter value for the given counter.
+    curl -X GET "http://localhost:8085/counter/num_instances"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X GET "http://localhost:8085/counter/num_instances"
-
-    Result:
-      200
-        10
+      10
 
 Version Specific Functions
 ==========================
@@ -141,29 +131,27 @@ The available functions for the OSC_2.1.0 version of A1.
 POST
 ++++
 
-  Delete all policy instances.
+Delete all policy instances.
 
-   **URL path:**
-    /deleteinstances
+**URL path:**
+  /deleteinstances
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    All policy instances deleted.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
+    curl -X POST "http://localhost:8085/deleteinstances"
+
+  Result:
+    200: ::
+
       All policy instances deleted.
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X POST "http://localhost:8085/deleteinstances"
-
-    Result:
-      200
-        All policy instances deleted.
 
 /deleteall
 ~~~~~~~~~~~~~~~~
@@ -171,29 +159,27 @@ POST
 POST
 ++++
 
-  Full reset.
+Full reset.
 
-   **URL path:**
-    /deleteall
+**URL path:**
+  /deleteall
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    All policy instances and types deleted.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
+    curl -X POST "http://localhost:8085/deleteall"
+
+  Result:
+    200: ::
+
       All policy instances and types deleted.
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X POST "http://localhost:8085/deleteall"
-
-    Result:
-      200
-        All policy instances and types deleted.
 
 /policytype
 ~~~~~~~~~~~
@@ -201,35 +187,30 @@ POST
 PUT
 +++
 
-  Create a policy type.
+Create a policy type.
 
-   **URL path:**
-    /policytype?id=<policy-type-id>
+**URL path:**
+  /policytype?id=<policy-type-id>
 
-  **Parameters:**
+**Parameters:**
+  id: (*Required*)
+    The ID of the policy type.
 
-    id: (*Required*)
-      The ID of the policy type.
+**Body:** (*Required*)
+    A JSON object containing the schema for the type.
 
-  **Body:** (*Required*)
-      A JSON object containing the schema for the type.
+**Responses:**
+  200:
+    Policy type <policy-type-id> is OK.
+  201:
+    Policy type <policy-type-id> is OK.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Policy type <policy-type-id> is OK.
-
-    201:
-      Policy type <policy-type-id> is OK.
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X PUT "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
-        -H  "Content-Type: application/json"
-        -d "
-          {
+    curl -X PUT "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
+      -H  "Content-Type: application/json"
+      -d '{
             "$schema": "http://json-schema.org/draft-07/schema#",
             "title": "STD_PolicyModelUnconstrained_0.2.0",
             "description": "Standard model of a policy with unconstrained scope id combinations",
@@ -299,40 +280,38 @@ PUT
             "minProperties": 2,
             "additionalProperties": false,
             "required": ["scope"]
-          }
-        "
+          }'
 
-    Result:
-      201
-        Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
+  Result:
+    201: ::
+
+      Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
 
 DELETE
 ++++++
 
-  Delete a policy type.
+Delete a policy type.
 
-   **URL path:**
-    /policytype?id=<policy-type-id>
+**URL path:**
+  /policytype?id=<policy-type-id>
 
-  **Parameters:**
+**Parameters:**
+  id: (*Required*)
+    The ID of the policy type.
 
-    id: (*Required*)
-      The ID of the policy type.
+**Responses:**
+  204:
+    Policy type <policy-type-id> is OK.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    204:
-      Policy type <policy-type-id> is OK.
+   curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
 
-  **Examples:**
+  Result:
+    204: ::
 
-    Call: ::
-
-     curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
-
-    Result:
-      204
-        Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
+      Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
 
 /policytypes
 ~~~~~~~~~~~~
@@ -340,29 +319,27 @@ DELETE
 GET
 +++
 
-  Get a list of policy types.
+Get a list of policy types.
 
-   **URL path:**
-    /policytypes
+**URL path:**
+  /policytypes
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    A list of policy types.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      A list of policy types.
+    curl -X GET "http://localhost:8085/policytypes"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X GET "http://localhost:8085/policytypes"
-
-    Result:
-      200
-        STD_PolicyModelUnconstrained_0.2.0
+      STD_PolicyModelUnconstrained_0.2.0
 
 /forceresponse
 ~~~~~~~~~~~~~~
@@ -370,30 +347,28 @@ GET
 POST
 ++++
 
-  Force a specific response code for an A1 operation.
+Force a specific response code for an A1 operation.
 
-   **URL path:**
-    /forceresponse?responsecode=<http-response-code>
+**URL path:**
+  /forceresponse?responsecode=<http-response-code>
 
-  **Parameters:**
+**Parameters:**
+  responsecode: (*Required*)
+    The HTTP response code to return.
 
-    responsecode: (*Required*)
-      The HTTP response code to return.
+**Responses:**
+  200:
+    Force response code:  <expected code> set for one single A1 response
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Force response code:  <expected code> set for one single A1 response
+    curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
-
-    Result:
-      200
-        Force response code:  400 set for one single A1 response
+      Force response code:  400 set for one single A1 response
 
 /forcedelay
 ~~~~~~~~~~~
@@ -401,30 +376,28 @@ POST
 POST
 ++++
 
-  Force delayed response of all A1 operations.
+Force delayed response of all A1 operations.
 
-   **URL path:**
-    /forcedelay?delay=<delay-time-seconds>
+**URL path:**
+  /forcedelay?delay=<delay-time-seconds>
 
-  **Parameters:**
+**Parameters:**
+  delay: (*Required*)
+    The time in seconds to delay all responses.
 
-    delay: (*Required*)
-      The time in seconds to delay all responses.
+**Responses:**
+  200:
+    Force delay: <expected delay> sec set for all A1 responses
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Force delay: <expected delay> sec set for all A1 responses
+    curl -X POST "http://localhost:8085/forcedelay?delay=2"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X POST "http://localhost:8085/forcedelay?delay=2"
-
-    Result:
-      200
-        Force delay: 2 sec set for all A1 responses
+      Force delay: 2 sec set for all A1 responses
 
 /status
 ~~~~~~~
@@ -432,39 +405,34 @@ POST
 PUT
 +++
 
-  Set status and optional reason, delete and time stamp.
+Set status and optional reason, delete and time stamp.
 
-   **URL path:**
-    /status?policyid=<policyid>&status=<status>&deleted=<value>&created_at=<time-stamp>
+**URL path:**
+  /status?policyid=<policyid>&status=<status>&deleted=<value>&created_at=<time-stamp>
 
-  **Parameters:**
+**Parameters:**
+  policyid: (*Required*)
+    The ID of a policy.
+  status: (*Required*)
+    The status of a policy.
+  deleted: (*Optional*)
+    True or false for real values, but accepts anything for error testing.
+  created_at: (*Optional*)
+    Time stamp for the status.
 
-    policyid: (*Required*)
-      The ID of a policy.
+**Responses:**
+  200:
+    Status set to <status> for policy <policy-id>
 
-    status: (*Required*)
-      The status of a policy.
+**Examples:**
+  **Call**: ::
 
-    deleted: (*Optional*)
-      True or false for real values, but accepts anything for error testing.
+    curl -X PUT "http://localhost:8085/policyid=Policy1&status?status=Accepted
 
-    created_at: (*Optional*)
-      Time stamp for the status.
+  Result:
+    200: ::
 
-  **Responses:**
-
-    200:
-      Status set to <status> for policy <policy-id>
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X PUT "http://localhost:8085/policyid=Policy1&status?status=Accepted
-
-    Result:
-      200
-        Status set to Accepted for policy Policy1.
+      Status set to Accepted for policy Policy1.
 
 A1 Standard 1.1.3
 -----------------
@@ -477,29 +445,27 @@ The available functions for the A1 Standard 1.1.3 version of A1.
 POST
 ++++
 
-  Delete all policy instances.
+Delete all policy instances.
 
-   **URL path:**
-    /deleteinstances
+**URL path:**
+  /deleteinstances
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    All policy instances deleted.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
+    curl -X POST "http://localhost:8085/deleteinstances"
+
+  Result:
+    200: ::
+
       All policy instances deleted.
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X POST "http://localhost:8085/deleteinstances"
-
-    Result:
-      200
-        All policy instances deleted.
 
 /deleteall
 ~~~~~~~~~~
@@ -507,29 +473,27 @@ POST
 POST
 ++++
 
-  Full reset.
+Full reset.
 
-   **URL path:**
-    /deleteinstances
+**URL path:**
+  /deleteinstances
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    All policy instances deleted.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
+    curl -X POST "http://localhost:8085/deleteall"
+
+  Result:
+    200: ::
+
       All policy instances deleted.
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X POST "http://localhost:8085/deleteall"
-
-    Result:
-      200
-        All policy instances deleted.
 
 /forceresponse
 ~~~~~~~~~~~~~~
@@ -537,30 +501,28 @@ POST
 POST
 ++++
 
-  Force a specific response code for an A1 operation.
+Force a specific response code for an A1 operation.
 
-   **URL path:**
-    /forceresponse?responsecode=<http-response-code>
+**URL path:**
+  /forceresponse?responsecode=<http-response-code>
 
-  **Parameters:**
+**Parameters:**
+  responsecode: (*Required*)
+    The HTTP response code to return.
 
-    responsecode: (*Required*)
-      The HTTP response code to return.
+**Responses:**
+  200:
+    Force response code: <expected code> set for one single A1 response
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Force response code: <expected code> set for one single A1 response
+    curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
-
-    Result:
-      200
-        Force response code: 400 set for one single A1 response
+      Force response code: 400 set for one single A1 response
 
 /forcedelay
 ~~~~~~~~~~~
@@ -568,30 +530,28 @@ POST
 POST
 ++++
 
-  Force delayed response of all A1 operations.
+Force delayed response of all A1 operations.
 
-   **URL path:**
-    /forcedelay?delay=<delay-time-seconds>
+**URL path:**
+  /forcedelay?delay=<delay-time-seconds>
 
-  **Parameters:**
+**Parameters:**
+  delay: (*Required*)
+    The time in seconds to delay all responses.
 
-    delay: (*Required*)
-      The time in seconds to delay all responses.
+**Responses:**
+  200:
+    Force delay: <expected delay> sec set for all A1 responses
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Force delay: <expected delay> sec set for all A1 responses
+    curl -X POST "http://localhost:8085/forcedelay?delay=2"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X POST "http://localhost:8085/forcedelay?delay=2"
-
-    Result:
-      200
-        Force delay: 2 sec set for all A1 responses
+      Force delay: 2 sec set for all A1 responses
 
 /status
 ~~~~~~~
@@ -599,36 +559,32 @@ POST
 PUT
 +++
 
-  Set status and optional reason, delete and time stamp.
+Set status and optional reason, delete and time stamp.
 
-   **URL path:**
-    /status?policyid=<policyid>&status=<status>&reason=<reason>
+**URL path:**
+  /status?policyid=<policyid>&status=<status>&reason=<reason>
 
-  **Parameters:**
+**Parameters:**
+  policyid: (*Required*)
+    The ID of a policy.
+  status: (*Required*)
+    The status of a policy.
+  reason: (*Optional*)
+    The reason for the status.
 
-    policyid: (*Required*)
-      The ID of a policy.
+**Responses:**
+  200:
+    Status set to <status> for policy <policy-id>
 
-    status: (*Required*)
-      The status of a policy.
+**Examples:**
+  **Call**: ::
 
-    reason: (*Optional*)
-      The reason for the status.
+    curl -X PUT "http://localhost:8085/status?policyid=Policy1&status=Accepted
 
-  **Responses:**
+  Result:
+    200: ::
 
-    200:
-      Status set to <status> for policy <policy-id>
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X PUT "http://localhost:8085/status?policyid=Policy1&status=Accepted
-
-    Result:
-      200
-        Status set to Accepted for policy Policy1
+      Status set to Accepted for policy Policy1
 
 /sendstatus
 ~~~~~~~~~~~
@@ -636,29 +592,26 @@ PUT
 POST
 ++++
 
-  Send status for policy.
+Send status for policy.
 
-   **URL path:**
-    /sendstatus?policyid=<policy-id>
+**URL path:**
+  /sendstatus?policyid=<policy-id>
 
-  **Parameters:**
+**Parameters:**
+  policyid: (*Required*)
+    The ID of the policy to send status for.
 
-    policyid: (*Required*)
-      The ID of the policy to send status for.
+**Responses:**
+  200:
+    Is a JSON with the response of the actual post request to the callback server, whatever that is.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Is a JSON with the response of the actual post request to the callback server, whatever that is.
+    curl -X POST "http://localhost:8085/sendstatus?policyid=Policy2"
 
-  **Examples:**
-
-    Call: ::
-
-      curl -X POST "http://localhost:8085/sendstatus?policyid=Policy2"
-
-    Result:
-      200
+  Result:
+    200
 
 1.1.x-alpha.2
 -------------
@@ -671,29 +624,27 @@ The available functions for the 1.1.x-alpha.2.
 DELETE
 ++++++
 
-  Delete all policy instances.
+Delete all policy instances.
 
-   **URL path:**
-    /deleteinstances
+**URL path:**
+  /deleteinstances
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    All policy instances deleted.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
+    curl -X DELETE "http://localhost:8085/deleteinstances"
+
+  Result:
+    200: ::
+
       All policy instances deleted.
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X DELETE "http://localhost:8085/deleteinstances"
-
-    Result:
-      200
-        All policy instances deleted.
 
 /deletetypes
 ~~~~~~~~~~~~
@@ -701,29 +652,27 @@ DELETE
 DELETE
 ++++++
 
-  Delete all policy types.
+Delete all policy types.
 
-   **URL path:**
-    /deletetypes
+**URL path:**
+  /deletetypes
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    All policy types deleted.
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
+    curl -X DELETE "http://localhost:8085/deletetypes"
+
+  Result:
+    200: ::
+
       All policy types deleted.
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X DELETE "http://localhost:8085/deletetypes"
-
-    Result:
-      200
-        All policy types deleted.
 
 /policytypes
 ~~~~~~~~~~~~
@@ -731,31 +680,27 @@ DELETE
 PUT
 +++
 
-  Create or update a policy type.
+Create or update a policy type.
 
-   **URL path:**
-    /policytypes/{policy-type-id}
+**URL path:**
+  /policytypes/{policy-type-id}
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Body:** (*Required*)
+    A JSON object containing the schema for the type.
 
-  **Body:** (*Required*)
-      A JSON object containing the schema for the type.
+**Responses:**
+  200:
+    The policy type was either created or updated for policy type id: <policy-type-id>
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      The policy type was either created or updated for policy type id: <policy-type-id>
-
-  **Examples:**
-
-    Call: ::
-
-      curl -X PUT "http://localhost:8085/policytype/Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
-        -H  "Content-Type: application/json"
-        -d "
-          {
+    curl -X PUT "http://localhost:8085/policytype/Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
+      -H  "Content-Type: application/json"
+      -d '{
             "$schema": "http://json-schema.org/draft-07/schema#",
             "title": "STD_PolicyModelUnconstrained_0.2.0",
             "description": "Standard model of a policy with unconstrained scope id combinations",
@@ -825,39 +770,37 @@ PUT
             "minProperties": 2,
             "additionalProperties": false,
             "required": ["scope"]
-          }
-        "
+          }'
 
-    Result:
-      200
-        The policy type was either created or updated for policy type id: STD_PolicyModelUnconstrained_0.2.0
+  Result:
+    200: ::
+
+      The policy type was either created or updated for policy type id: STD_PolicyModelUnconstrained_0.2.0
 
 DELETE
 ++++++
 
-  Delete a policy type.
+Delete a policy type.
 
-   **URL path:**
-    /policytypes/{policy-type-id}
+**URL path:**
+  /policytypes/{policy-type-id}
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    policy type successfully deleted for policy type id: <policy-type-id>
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      policy type successfully deleted for policy type id: <policy-type-id>
+   curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-     curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
-
-     Result:
-      200
-        policy type successfully deleted for policy type id: STD_PolicyModelUnconstrained_0.2.0
+      policy type successfully deleted for policy type id: STD_PolicyModelUnconstrained_0.2.0
 
 /{policyId}/{enforceStatus}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -865,29 +808,27 @@ DELETE
 PUT
 +++
 
-  Set a status to a policy instance with an enforceStatus parameter only.
+Set a status to a policy instance with an enforceStatus parameter only.
 
-   **URL path:**
-    /{policyId}/{enforceStatus}
+**URL path:**
+  /{policyId}/{enforceStatus}
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    Status updated for policy: <policyId>
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Status updated for policy: <policyId>
+    curl -X PUT "http://localhost:8085/Policy1/ENFORCED
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X PUT "http://localhost:8085/Policy1/ENFORCED
-
-    Result:
-      200
-        Status updated for policy: Policy1
+      Status updated for policy: Policy1
 
 /{policyId}/{enforceStatus}/{enforceReason}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -895,26 +836,24 @@ PUT
 PUT
 ++++
 
-  Send a status to a policy instance with both enforceStatus and enforceReason.
+Send a status to a policy instance with both enforceStatus and enforceReason.
 
-   **URL path:**
-    /{policyId}/{enforceStatus}/{enforceReason}
+**URL path:**
+  /{policyId}/{enforceStatus}/{enforceReason}
 
-  **Parameters:**
+**Parameters:**
+  None.
 
-    None.
+**Responses:**
+  200:
+    Status updated for policy: <policyId>
 
-  **Responses:**
+**Examples:**
+  **Call**: ::
 
-    200:
-      Status updated for policy: <policyId>
+    curl -X PUT "http://localhost:8085/Policy1/NOT_ENFORCED/100"
 
-  **Examples:**
+  Result:
+    200: ::
 
-    Call: ::
-
-      curl -X PUT "http://localhost:8085/Policy1/NOT_ENFORCED/100"
-
-    Result:
-      200
-        Status updated for policy: Policy1
+      Status updated for policy: Policy1
