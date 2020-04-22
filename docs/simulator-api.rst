@@ -123,7 +123,11 @@ The methods available to control the simulator depends on the version of the A1 
 OSC_2.1.0
 ---------
 
-The available functions for the OSC_2.1.0 version of A1.
+This section describes the available administrative functions for the OSC_2.1.0 version of A1.
+
+To see the A1 functions for this version, see `OSC_2.1.0 API`_.
+
+.. _OSC_2.1.0 API: https://gerrit.o-ran-sc.org/r/gitweb?p=sim/a1-interface.git;a=blob;f=near-rt-ric-simulator/api/OSC_2.1.0/openapi.yaml
 
 /deleteinstances
 ~~~~~~~~~~~~~~~~
@@ -437,7 +441,11 @@ Set status and optional reason, delete and time stamp.
 A1 Standard 1.1.3
 -----------------
 
-The available functions for the A1 Standard 1.1.3 version of A1.
+This section describes the available administrative functions for the A1 Standard 1.1.3 version of A1.
+
+To see the A1 functions for this version, see `A1 Standard 1.1.3 API`_.
+
+.. _A1 Standard 1.1.3 API: https://gerrit.o-ran-sc.org/r/gitweb?p=sim/a1-interface.git;a=blob;f=near-rt-ric-simulator/api/STD_1.1.3/STD_A1.yaml
 
 /deleteinstances
 ~~~~~~~~~~~~~~~~
@@ -616,7 +624,11 @@ Send status for policy.
 1.1.x-alpha.2
 -------------
 
-The available functions for the 1.1.x-alpha.2.
+This section describes the available administrative functions for the 1.1.x-alpha.2 version of A1.
+
+To see the A1 functions for this version, see `1.1.x-alpha.2 API`_.
+
+.. _1.1.x-alpha.2 API: https://gerrit.o-ran-sc.org/r/gitweb?p=sim/a1-interface.git;a=blob;f=near-rt-ric-simulator/api/1.1.x-alpha.2/a1-openapi.yaml
 
 /deleteinstances
 ~~~~~~~~~~~~~~~~
