@@ -40,14 +40,16 @@ Returns the status of the simulator.
     Simulator is living.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X GET "http://localhost:8085/"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X GET "http://localhost:8085/"
 
-      Simulator is living (OSC_2.1.0 responds OK)
+**Result**:
+
+200: ::
+
+  Simulator is living (OSC_2.1.0 responds OK)
 
 Supported Interfaces
 --------------------
@@ -63,24 +65,30 @@ GET
 Returns the status of the simulator. (Not available for A1 Standard 1.1.3)
 
 **URL path:**
-  /container_interfaces
+
+/container_interfaces
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
+
+200:
     List of supported interfaces.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X GET "http://localhost:8085/container_interfaces"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X GET "http://localhost:8085/container_interfaces"
 
-      1.1.x-alpha.2 OSC_2.1.0 STD_1.1.3
+
+**Result**:
+
+200: ::
+
+  1.1.x-alpha.2 OSC_2.1.0 STD_1.1.3
 
 Counters
 --------
@@ -96,24 +104,30 @@ GET
 Get a counter. Counter-name can be one of the following: 'num_instances', 'num_types' or 'interface'.
 
 **URL path:**
-  /counter/{counter-name}
+
+/counter/{counter-name}
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    The counter value for the given counter.
+
+200:
+
+The counter value for the given counter.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X GET "http://localhost:8085/counter/num_instances"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X GET "http://localhost:8085/counter/num_instances"
 
-      10
+**Result**:
+
+200: ::
+
+  10
 
 Version Specific Functions
 ==========================
@@ -138,24 +152,30 @@ POST
 Delete all policy instances.
 
 **URL path:**
-  /deleteinstances
+
+/deleteinstances
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    All policy instances deleted.
+
+200:
+
+All policy instances deleted.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/deleteinstances"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/deleteinstances"
 
-      All policy instances deleted.
+**Result**:
+
+200: ::
+
+  All policy instances deleted.
 
 /deleteall
 ~~~~~~~~~~~~~~~~
@@ -166,24 +186,30 @@ POST
 Full reset.
 
 **URL path:**
-  /deleteall
+
+/deleteall
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    All policy instances and types deleted.
+
+200:
+
+All policy instances and types deleted.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/deleteall"
+ **Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/deleteall"
 
-      All policy instances and types deleted.
+**Result**:
+
+200: ::
+
+  All policy instances and types deleted.
 
 /policytype
 ~~~~~~~~~~~
@@ -194,102 +220,112 @@ PUT
 Create a policy type.
 
 **URL path:**
-  /policytype?id=<policy-type-id>
+
+/policytype?id=<policy-type-id>
 
 **Parameters:**
-  id: (*Required*)
-    The ID of the policy type.
+
+id: (*Required*)
+
+The ID of the policy type.
 
 **Body:** (*Required*)
-    A JSON object containing the schema for the type.
+
+A JSON object containing the schema for the type.
 
 **Responses:**
-  200:
-    Policy type <policy-type-id> is OK.
-  201:
-    Policy type <policy-type-id> is OK.
+
+200:
+
+Policy type <policy-type-id> is OK.
+
+201:
+
+Policy type <policy-type-id> is OK.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X PUT "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
-      -H  "Content-Type: application/json"
-      -d '{
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "title": "STD_PolicyModelUnconstrained_0.2.0",
-            "description": "Standard model of a policy with unconstrained scope id combinations",
-            "type": "object",
-            "properties": {
-              "scope": {
-                "type": "object",
-                "properties": {
-                  "ueId": {"type": "string"},
-                  "groupId": {"type": "string"},
-                  "sliceId": {"type": "string"},
-                  "qosId": {"type": "string"},
-                  "cellId": {"type": "string"}
-                },
-                "minProperties": 1,
-                "additionalProperties": false
+**Call**: ::
+
+  curl -X PUT "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
+    -H  "Content-Type: application/json"
+    -d '{
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "title": "STD_PolicyModelUnconstrained_0.2.0",
+          "description": "Standard model of a policy with unconstrained scope id combinations",
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "object",
+              "properties": {
+                "ueId": {"type": "string"},
+                "groupId": {"type": "string"},
+                "sliceId": {"type": "string"},
+                "qosId": {"type": "string"},
+                "cellId": {"type": "string"}
               },
-              "qosObjectives": {
-                "type": "object",
-                "properties": {
-                  "gfbr": {"type": "number"},
-                  "mfbr": {"type": "number"},
-                  "priorityLevel": {"type": "number"},
-                  "pdb": {"type": "number"}
-                },
-                "additionalProperties": false
-              },
-              "qoeObjectives": {
-                "type": "object",
-                "properties": {
-                  "qoeScore": {"type": "number"},
-                  "initialBuffering": {"type": "number"},
-                  "reBuffFreq": {"type": "number"},
-                  "stallRatio": {"type": "number"}
-                },
-                "additionalProperties": false
-              },
-              "resources": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "cellIdList": {
-                      "type": "array",
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "preference": {
-                      "type": "string",
-                      "enum": [
-                        "SHALL",
-                        "PREFER",
-                        "AVOID",
-                        "FORBID"
-                      ]
-                    },
-                    "primary": {"type": "boolean"}
-                  },
-                  "additionalProperties": false,
-                  "required": ["cellIdList", "preference"]
-                }
-              }
+              "minProperties": 1,
+              "additionalProperties": false
             },
-            "minProperties": 2,
-            "additionalProperties": false,
-            "required": ["scope"]
-          }'
+            "qosObjectives": {
+              "type": "object",
+              "properties": {
+                "gfbr": {"type": "number"},
+                "mfbr": {"type": "number"},
+                "priorityLevel": {"type": "number"},
+                "pdb": {"type": "number"}
+              },
+              "additionalProperties": false
+            },
+            "qoeObjectives": {
+              "type": "object",
+              "properties": {
+                "qoeScore": {"type": "number"},
+                "initialBuffering": {"type": "number"},
+                "reBuffFreq": {"type": "number"},
+                "stallRatio": {"type": "number"}
+              },
+              "additionalProperties": false
+            },
+            "resources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cellIdList": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "preference": {
+                    "type": "string",
+                    "enum": [
+                      "SHALL",
+                      "PREFER",
+                      "AVOID",
+                      "FORBID"
+                    ]
+                  },
+                  "primary": {"type": "boolean"}
+                },
+                "additionalProperties": false,
+                "required": ["cellIdList", "preference"]
+              }
+            }
+          },
+          "minProperties": 2,
+          "additionalProperties": false,
+          "required": ["scope"]
+        }'
 
-  Result:
-    201: ::
+**Result**:
 
-      Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
+201: ::
+
+  Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
 
 DELETE
 ++++++
@@ -297,25 +333,32 @@ DELETE
 Delete a policy type.
 
 **URL path:**
-  /policytype?id=<policy-type-id>
+
+/policytype?id=<policy-type-id>
 
 **Parameters:**
-  id: (*Required*)
-    The ID of the policy type.
+
+id: (*Required*)
+
+The ID of the policy type.
 
 **Responses:**
-  204:
-    Policy type <policy-type-id> is OK.
+
+204:
+
+Policy type <policy-type-id> is OK.
 
 **Examples:**
-  **Call**: ::
 
-   curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
+**Call**: ::
 
-  Result:
-    204: ::
+  curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
 
-      Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
+**Result**:
+
+204: ::
+
+  Policy type STD_PolicyModelUnconstrained_0.2.0 is OK
 
 /policytypes
 ~~~~~~~~~~~~
@@ -326,24 +369,30 @@ GET
 Get a list of policy types.
 
 **URL path:**
-  /policytypes
+
+/policytypes
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    A list of policy types.
+
+200:
+
+A list of policy types.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X GET "http://localhost:8085/policytypes"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X GET "http://localhost:8085/policytypes"
 
-      STD_PolicyModelUnconstrained_0.2.0
+**Result**:
+
+200: ::
+
+  STD_PolicyModelUnconstrained_0.2.0
 
 /forceresponse
 ~~~~~~~~~~~~~~
@@ -354,25 +403,32 @@ POST
 Force a specific response code for an A1 operation.
 
 **URL path:**
-  /forceresponse?responsecode=<http-response-code>
+
+/forceresponse?responsecode=<http-response-code>
 
 **Parameters:**
-  responsecode: (*Required*)
-    The HTTP response code to return.
+
+responsecode: (*Required*)
+
+The HTTP response code to return.
 
 **Responses:**
-  200:
-    Force response code:  <expected code> set for one single A1 response
+
+200:
+
+Force response code:  <expected code> set for one single A1 response
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
 
-      Force response code:  400 set for one single A1 response
+**Result**:
+
+200: ::
+
+  Force response code:  400 set for one single A1 response
 
 /forcedelay
 ~~~~~~~~~~~
@@ -383,25 +439,32 @@ POST
 Force delayed response of all A1 operations.
 
 **URL path:**
-  /forcedelay?delay=<delay-time-seconds>
+
+/forcedelay?delay=<delay-time-seconds>
 
 **Parameters:**
-  delay: (*Required*)
-    The time in seconds to delay all responses.
+
+delay: (*Required*)
+
+The time in seconds to delay all responses.
 
 **Responses:**
-  200:
-    Force delay: <expected delay> sec set for all A1 responses
+
+200:
+
+Force delay: <expected delay> sec set for all A1 responses
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/forcedelay?delay=2"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/forcedelay?delay=2"
 
-      Force delay: 2 sec set for all A1 responses
+**Result**:
+
+200: ::
+
+  Force delay: 2 sec set for all A1 responses
 
 /status
 ~~~~~~~
@@ -412,31 +475,44 @@ PUT
 Set status and optional reason, delete and time stamp.
 
 **URL path:**
-  /status?policyid=<policyid>&status=<status>&deleted=<value>&created_at=<time-stamp>
+
+/status?policyid=<policyid>&status=<status>&deleted=<value>&created_at=<time-stamp>
 
 **Parameters:**
-  policyid: (*Required*)
-    The ID of a policy.
-  status: (*Required*)
-    The status of a policy.
-  deleted: (*Optional*)
-    True or false for real values, but accepts anything for error testing.
-  created_at: (*Optional*)
-    Time stamp for the status.
+
+policyid: (*Required*)
+
+The ID of a policy.
+
+status: (*Required*)
+
+The status of a policy.
+
+deleted: (*Optional*)
+
+True or false for real values, but accepts anything for error testing.
+
+created_at: (*Optional*)
+
+Time stamp for the status.
 
 **Responses:**
-  200:
-    Status set to <status> for policy <policy-id>
+
+200:
+
+Status set to <status> for policy <policy-id>
 
 **Examples:**
-  **Call**: ::
 
-    curl -X PUT "http://localhost:8085/policyid=Policy1&status?status=Accepted
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X PUT "http://localhost:8085/policyid=Policy1&status?status=Accepted
 
-      Status set to Accepted for policy Policy1.
+**Result**:
+
+200: ::
+
+  Status set to Accepted for policy Policy1.
 
 A1 Standard 1.1.3
 -----------------
@@ -456,24 +532,30 @@ POST
 Delete all policy instances.
 
 **URL path:**
-  /deleteinstances
+
+/deleteinstances
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    All policy instances deleted.
+
+200:
+
+All policy instances deleted.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/deleteinstances"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/deleteinstances"
 
-      All policy instances deleted.
+**Result**:
+
+200: ::
+
+  All policy instances deleted.
 
 /deleteall
 ~~~~~~~~~~
@@ -484,24 +566,30 @@ POST
 Full reset.
 
 **URL path:**
-  /deleteinstances
+
+/deleteinstances
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    All policy instances deleted.
+
+200:
+
+All policy instances deleted.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/deleteall"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/deleteall"
 
-      All policy instances deleted.
+**Result**:
+
+200: ::
+
+  All policy instances deleted.
 
 /forceresponse
 ~~~~~~~~~~~~~~
@@ -512,25 +600,32 @@ POST
 Force a specific response code for an A1 operation.
 
 **URL path:**
-  /forceresponse?responsecode=<http-response-code>
+
+/forceresponse?responsecode=<http-response-code>
 
 **Parameters:**
-  responsecode: (*Required*)
-    The HTTP response code to return.
+
+responsecode: (*Required*)
+
+The HTTP response code to return.
 
 **Responses:**
-  200:
-    Force response code: <expected code> set for one single A1 response
+
+200:
+
+Force response code: <expected code> set for one single A1 response
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/forceresponse?responsecode=400"
 
-      Force response code: 400 set for one single A1 response
+**Result**:
+
+200: ::
+
+  Force response code: 400 set for one single A1 response
 
 /forcedelay
 ~~~~~~~~~~~
@@ -541,25 +636,32 @@ POST
 Force delayed response of all A1 operations.
 
 **URL path:**
-  /forcedelay?delay=<delay-time-seconds>
+
+/forcedelay?delay=<delay-time-seconds>
 
 **Parameters:**
-  delay: (*Required*)
-    The time in seconds to delay all responses.
+
+delay: (*Required*)
+
+The time in seconds to delay all responses.
 
 **Responses:**
-  200:
-    Force delay: <expected delay> sec set for all A1 responses
+
+200:
+
+Force delay: <expected delay> sec set for all A1 responses
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/forcedelay?delay=2"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X POST "http://localhost:8085/forcedelay?delay=2"
 
-      Force delay: 2 sec set for all A1 responses
+**Result**:
+
+200: ::
+
+  Force delay: 2 sec set for all A1 responses
 
 /status
 ~~~~~~~
@@ -570,29 +672,40 @@ PUT
 Set status and optional reason, delete and time stamp.
 
 **URL path:**
-  /status?policyid=<policyid>&status=<status>&reason=<reason>
+
+/status?policyid=<policyid>&status=<status>&reason=<reason>
 
 **Parameters:**
-  policyid: (*Required*)
-    The ID of a policy.
-  status: (*Required*)
-    The status of a policy.
-  reason: (*Optional*)
-    The reason for the status.
+
+policyid: (*Required*)
+
+The ID of a policy.
+
+status: (*Required*)
+
+The status of a policy.
+
+reason: (*Optional*)
+
+The reason for the status.
 
 **Responses:**
-  200:
-    Status set to <status> for policy <policy-id>
+
+200:
+
+Status set to <status> for policy <policy-id>
 
 **Examples:**
-  **Call**: ::
 
-    curl -X PUT "http://localhost:8085/status?policyid=Policy1&status=Accepted
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X PUT "http://localhost:8085/status?policyid=Policy1&status=Accepted
 
-      Status set to Accepted for policy Policy1
+**Result**:
+
+200: ::
+
+  Status set to Accepted for policy Policy1
 
 /sendstatus
 ~~~~~~~~~~~
@@ -603,23 +716,30 @@ POST
 Send status for policy.
 
 **URL path:**
-  /sendstatus?policyid=<policy-id>
+
+/sendstatus?policyid=<policy-id>
 
 **Parameters:**
-  policyid: (*Required*)
-    The ID of the policy to send status for.
+
+policyid: (*Required*)
+
+The ID of the policy to send status for.
 
 **Responses:**
-  200:
-    Is a JSON with the response of the actual post request to the callback server, whatever that is.
+
+200:
+
+Is a JSON with the response of the actual post request to the callback server, whatever that is.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X POST "http://localhost:8085/sendstatus?policyid=Policy2"
+**Call**: ::
 
-  Result:
-    200
+  curl -X POST "http://localhost:8085/sendstatus?policyid=Policy2"
+
+**Result**:
+
+200
 
 1.1.x-alpha.2
 -------------
@@ -639,24 +759,30 @@ DELETE
 Delete all policy instances.
 
 **URL path:**
-  /deleteinstances
+
+/deleteinstances
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    All policy instances deleted.
+
+200:
+
+All policy instances deleted.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X DELETE "http://localhost:8085/deleteinstances"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X DELETE "http://localhost:8085/deleteinstances"
 
-      All policy instances deleted.
+**Result**:
+
+200: ::
+
+  All policy instances deleted.
 
 /deletetypes
 ~~~~~~~~~~~~
@@ -667,24 +793,30 @@ DELETE
 Delete all policy types.
 
 **URL path:**
-  /deletetypes
+
+/deletetypes
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    All policy types deleted.
+
+200:
+
+All policy types deleted.
 
 **Examples:**
-  **Call**: ::
 
-    curl -X DELETE "http://localhost:8085/deletetypes"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X DELETE "http://localhost:8085/deletetypes"
 
-      All policy types deleted.
+**Result**:
+
+200: ::
+
+  All policy types deleted.
 
 /policytypes
 ~~~~~~~~~~~~
@@ -695,99 +827,106 @@ PUT
 Create or update a policy type.
 
 **URL path:**
-  /policytypes/{policy-type-id}
+
+/policytypes/{policy-type-id}
 
 **Parameters:**
-  None.
+
+None.
 
 **Body:** (*Required*)
-    A JSON object containing the schema for the type.
+
+A JSON object containing the schema for the type.
 
 **Responses:**
-  200:
-    The policy type was either created or updated for policy type id: <policy-type-id>
+
+200:
+
+The policy type was either created or updated for policy type id: <policy-type-id>
 
 **Examples:**
-  **Call**: ::
 
-    curl -X PUT "http://localhost:8085/policytype/Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
-      -H  "Content-Type: application/json"
-      -d '{
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "title": "STD_PolicyModelUnconstrained_0.2.0",
-            "description": "Standard model of a policy with unconstrained scope id combinations",
-            "type": "object",
-            "properties": {
-              "scope": {
-                "type": "object",
-                "properties": {
-                  "ueId": {"type": "string"},
-                  "groupId": {"type": "string"},
-                  "sliceId": {"type": "string"},
-                  "qosId": {"type": "string"},
-                  "cellId": {"type": "string"}
-                },
-                "minProperties": 1,
-                "additionalProperties": false
+**Call**: ::
+
+  curl -X PUT "http://localhost:8085/policytype/Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
+    -H  "Content-Type: application/json"
+    -d '{
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "title": "STD_PolicyModelUnconstrained_0.2.0",
+          "description": "Standard model of a policy with unconstrained scope id combinations",
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "object",
+              "properties": {
+                "ueId": {"type": "string"},
+                "groupId": {"type": "string"},
+                "sliceId": {"type": "string"},
+                "qosId": {"type": "string"},
+                "cellId": {"type": "string"}
               },
-              "qosObjectives": {
-                "type": "object",
-                "properties": {
-                  "gfbr": {"type": "number"},
-                  "mfbr": {"type": "number"},
-                  "priorityLevel": {"type": "number"},
-                  "pdb": {"type": "number"}
-                },
-                "additionalProperties": false
-              },
-              "qoeObjectives": {
-                "type": "object",
-                "properties": {
-                  "qoeScore": {"type": "number"},
-                  "initialBuffering": {"type": "number"},
-                  "reBuffFreq": {"type": "number"},
-                  "stallRatio": {"type": "number"}
-                },
-                "additionalProperties": false
-              },
-              "resources": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "cellIdList": {
-                      "type": "array",
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "preference": {
-                      "type": "string",
-                      "enum": [
-                        "SHALL",
-                        "PREFER",
-                        "AVOID",
-                        "FORBID"
-                      ]
-                    },
-                    "primary": {"type": "boolean"}
-                  },
-                  "additionalProperties": false,
-                  "required": ["cellIdList", "preference"]
-                }
-              }
+              "minProperties": 1,
+              "additionalProperties": false
             },
-            "minProperties": 2,
-            "additionalProperties": false,
-            "required": ["scope"]
-          }'
+            "qosObjectives": {
+              "type": "object",
+              "properties": {
+                "gfbr": {"type": "number"},
+                "mfbr": {"type": "number"},
+                "priorityLevel": {"type": "number"},
+                "pdb": {"type": "number"}
+              },
+              "additionalProperties": false
+            },
+            "qoeObjectives": {
+              "type": "object",
+              "properties": {
+                "qoeScore": {"type": "number"},
+                "initialBuffering": {"type": "number"},
+                "reBuffFreq": {"type": "number"},
+                "stallRatio": {"type": "number"}
+              },
+              "additionalProperties": false
+            },
+            "resources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cellIdList": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "preference": {
+                    "type": "string",
+                    "enum": [
+                      "SHALL",
+                      "PREFER",
+                      "AVOID",
+                      "FORBID"
+                    ]
+                  },
+                  "primary": {"type": "boolean"}
+                },
+                "additionalProperties": false,
+                "required": ["cellIdList", "preference"]
+              }
+            }
+          },
+          "minProperties": 2,
+          "additionalProperties": false,
+          "required": ["scope"]
+        }'
 
-  Result:
-    200: ::
+**Result**:
 
-      The policy type was either created or updated for policy type id: STD_PolicyModelUnconstrained_0.2.0
+200: ::
+
+  The policy type was either created or updated for policy type id: STD_PolicyModelUnconstrained_0.2.0
 
 DELETE
 ++++++
@@ -795,24 +934,30 @@ DELETE
 Delete a policy type.
 
 **URL path:**
-  /policytypes/{policy-type-id}
+
+/policytypes/{policy-type-id}
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    policy type successfully deleted for policy type id: <policy-type-id>
+
+200:
+
+policy type successfully deleted for policy type id: <policy-type-id>
 
 **Examples:**
-  **Call**: ::
 
-   curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X DELETE "http://localhost:8085/policytype?id=Policy%201&ric=ric1&service=Service%201&type=STD_PolicyModelUnconstrained_0.2.0"
 
-      policy type successfully deleted for policy type id: STD_PolicyModelUnconstrained_0.2.0
+**Result**:
+
+200: ::
+
+  policy type successfully deleted for policy type id: STD_PolicyModelUnconstrained_0.2.0
 
 /{policyId}/{enforceStatus}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -823,24 +968,30 @@ PUT
 Set a status to a policy instance with an enforceStatus parameter only.
 
 **URL path:**
-  /{policyId}/{enforceStatus}
+
+/{policyId}/{enforceStatus}
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    Status updated for policy: <policyId>
+
+200:
+
+Status updated for policy: <policyId>
 
 **Examples:**
-  **Call**: ::
 
-    curl -X PUT "http://localhost:8085/Policy1/ENFORCED
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X PUT "http://localhost:8085/Policy1/ENFORCED
 
-      Status updated for policy: Policy1
+**Result**:
+
+200: ::
+
+  Status updated for policy: Policy1
 
 /{policyId}/{enforceStatus}/{enforceReason}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -851,21 +1002,27 @@ PUT
 Send a status to a policy instance with both enforceStatus and enforceReason.
 
 **URL path:**
-  /{policyId}/{enforceStatus}/{enforceReason}
+
+/{policyId}/{enforceStatus}/{enforceReason}
 
 **Parameters:**
-  None.
+
+None.
 
 **Responses:**
-  200:
-    Status updated for policy: <policyId>
+
+200:
+
+Status updated for policy: <policyId>
 
 **Examples:**
-  **Call**: ::
 
-    curl -X PUT "http://localhost:8085/Policy1/NOT_ENFORCED/100"
+**Call**: ::
 
-  Result:
-    200: ::
+  curl -X PUT "http://localhost:8085/Policy1/NOT_ENFORCED/100"
 
-      Status updated for policy: Policy1
+**Result**:
+
+200: ::
+
+  Status updated for policy: Policy1
