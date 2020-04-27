@@ -143,6 +143,10 @@ echo "=== Get counter: interface ==="
 RESULT="STD_1.1.3"
 do_curl GET /counter/interface 200
 
+echo "=== Get counter: remote hosts ==="
+RESULT="*"
+do_curl GET '/counter/remote_hosts' 200
+
 echo "********************"
 echo "*** All tests ok ***"
 echo "********************"

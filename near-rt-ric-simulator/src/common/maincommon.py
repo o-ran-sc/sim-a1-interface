@@ -19,6 +19,7 @@ import os
 import sys
 from pathlib import Path
 from flask import Response
+import socket
 
 apipath=os.environ['APIPATH']
 
@@ -37,3 +38,14 @@ def get_supported_interfaces_response():
     del arr[arr.index('start.sh')] # Remove the start script
     return Response("Current interface: " + str(pp[len(pp)-1]) + "  All supported A1 interface yamls in this container: "+str(arr), 200, mimetype='text/plain')
 
+# Remote host lookup and store host name in a set
+def extract_host_name(hosts_set, request):
+    host_ip=str(request.environ['REMOTE_ADDR'])
+    prefix='::ffff:'
+    if (host_ip.startswith('::ffff:')):
+        host_ip=host_ip[len(prefix):]
+    try:
+        name, alias, addresslist = socket.gethostbyaddr(host_ip)
+        hosts_set.add(name)
+    except Exception as e:
+        hosts_set.add(host_ip)

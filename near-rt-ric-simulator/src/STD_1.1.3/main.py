@@ -24,7 +24,7 @@ import requests
 from pathlib import Path
 from flask import Flask, escape, request, Response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint
+from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from maincommon import *
 
 
@@ -157,6 +157,9 @@ def getCounter(countername):
     p=Path(os.getcwd())
     pp=p.parts
     return Response(str(pp[len(pp)-1]),200, mimetype='text/plain')
+  elif (countername == "remote_hosts"):
+    hosts=",".join(hosts_set)
+    return str(hosts),200
   else:
     return Response("Counter name: "+countername+" not found.",404, mimetype='text/plain')
 
@@ -166,4 +169,4 @@ if len(sys.argv) >= 2:
     port_number = sys.argv[1]
 
 app.add_api('STD_A1.yaml')
-app.run(port=port_number)
+app.run(port=port_number, host="::")

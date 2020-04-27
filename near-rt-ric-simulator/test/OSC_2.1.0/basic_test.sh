@@ -230,6 +230,10 @@ echo "=== Get counter: interface ==="
 RESULT="OSC_2.1.0"
 do_curl GET '/counter/interface' 200
 
+echo "=== Get counter: remote hosts ==="
+RESULT="*"
+do_curl GET '/counter/remote_hosts' 200
+
 echo "=== DELETE policy pi1 ==="
 RESULT=""
 do_curl DELETE /a1-p/policytypes/1/policies/pi1 202

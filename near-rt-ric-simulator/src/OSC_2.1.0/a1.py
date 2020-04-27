@@ -23,13 +23,15 @@ from datetime import datetime
 from connexion import NoContent
 from flask import Flask, request, Response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings
+from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set
 from utils import calcFingerprint
-from maincommon import *
+from maincommon import extract_host_name
 
 
 # API Function: Health check
 def get_healthcheck():
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -39,6 +41,8 @@ def get_healthcheck():
 # API Function: Get all policy type ids
 def get_all_policy_types():
 
+  extract_host_name(hosts_set, request)
+
   if ((r := check_modified_response()) is not None):
     return r
 
@@ -46,6 +50,8 @@ def get_all_policy_types():
 
 # API Function: Get a policy type
 def get_policy_type(policy_type_id):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -59,6 +65,8 @@ def get_policy_type(policy_type_id):
 
 # API Function: Delete a policy type
 def delete_policy_type(policy_type_id):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -79,6 +87,8 @@ def delete_policy_type(policy_type_id):
 
 # API Function: Create a policy type
 def create_policy_type(policy_type_id):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -109,6 +119,8 @@ def create_policy_type(policy_type_id):
 # API Function: Get all policy ids for a type
 def get_all_policy_identities(policy_type_id):
 
+  extract_host_name(hosts_set, request)
+
   if ((r := check_modified_response()) is not None):
     return r
 
@@ -120,6 +132,8 @@ def get_all_policy_identities(policy_type_id):
 
 # API Function: Get a policy instance
 def get_policy_instance(policy_type_id, policy_instance_id):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -136,6 +150,8 @@ def get_policy_instance(policy_type_id, policy_instance_id):
 
 # API function: Delete a policy
 def delete_policy_instance(policy_type_id, policy_instance_id):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -157,6 +173,8 @@ def delete_policy_instance(policy_type_id, policy_instance_id):
 
 # API function: Create/update a policy
 def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -208,6 +226,8 @@ def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
 
 # API function: Get policy status
 def get_policy_instance_status(policy_type_id, policy_instance_id):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
