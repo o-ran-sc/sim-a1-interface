@@ -18,13 +18,25 @@ The overall folder structure is \(relative to the location of this README file\)
 |api               |The open api yaml for each supported version |
 |src               |Python source code for each supported version |
 |test              |Basic test |
-
+|certificate       |A self-signed certificate and a key
 
 The simulator handles the requests that are defined in the A1 open API yaml file. All these requests are implemented in the a1.py file in the source folder. In addition, a number of administrative functions are also supported and implemented by the main.py in the source folder.
 
 The section below outlines the supported open api REST operations as well as the adminstrative REST operations. For the
 documentation of the common parts in the admin API, see [Common Functions](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#common-functions).
 
+# Ports and certificates
+
+The simulator normally opens the port 8085 for http. If a certificate and a key are provided the simulator will open port 8185 for https instead. The port 8185 is only opened if a valid certificate and key is found.
+The certificate and key shall be placed in the same dir and the dir shall be mounted to /usr/src/app/cert in the container.
+
+| Port     | Protocol |
+| -------- | ----- |
+| 8085     | http  |
+| 8185     | https |
+
+The dir certificate contains a self-signed cert. Use the script generate_cert_and_key.sh to generate a new certificate and key. The password of the certificate must be set 'test'.
+The same urls are availables on both the http port 8085 and the https port 8185. If using curl and https, the flag -k shall be given to make curl ignore checking the certificate.
 
 # Supported operations in simulator OSC 2.1.0
 
@@ -61,7 +73,7 @@ URIs for admin operations:
 |  POST, force a specific response code for an A1 operation | http://localhost:8085/forceresponse?code=&lt;http-code&gt; |
 |  POST, force delayed response of all A1 operations | http://localhost:8085/forcedelay?delay=&lt;seconds&gt; |
 |  PUT, set status and optional reason, delete and timestamp | http://localhost:8085/status?status=&lt;status&gt;&amp;reason=&lt;reason&gt;[&amp;deleted=&lt;boolean&gt;][&amp;created\_at=&lt;timestamp&gt;]  |
-|  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types' or 'interface') | http://localhost:8085/counter/&lt;counter-name&gt; |
+|  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types', 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
 
 
 # Supported operations in simulator A1 Standard 1.1.3
@@ -91,7 +103,7 @@ URIs for admin operations:
 |  POST, force delayed response of all A1 operations | http://localhost:8085/forcedelay?delay=&lt;seconds&gt; |
 |  PUT, set status and optional reason | http://localhost:8085/status?status=&lt;status&gt;[&amp;reason=&lt;reason&gt;] |
 |  POST, send status for policy | http://localhost:8085/sendstatus?policyid=&lt;policyid&gt; |
-|  GET a counter <br> (counter-name: 'num\_instances', 'num\_types'(always 0) or 'interface') | http://localhost:8085/counter/&lt;counter-name&gt; |
+|  GET a counter <br> (counter-name: 'num\_instances', 'num\_types'(always 0), 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
 
 
 
@@ -124,13 +136,18 @@ Additionally, there are requests that are defined in main.py as an administrativ
 |  DELETE all policy types | http://localhost:8085/deletetypes |
 |  PUT a status to a policy instance with an enforceStatus parameter only | http://localhost:8085/{policyId}/{enforceStatus} |
 |  PUT a status to a policy instance with both enforceStatus and enforceReason | http://localhost:8085/{policyId}/{enforceStatus}/{enforceReason} |
-|  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types' or 'interface') | http://localhost:8085/counter/{counter-name} |
+|  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types', 'interface' or 'remote\_hosts') | http://localhost:8085/counter/{counter-name} |
 
 The backend server publishes live API documentation at the URL `http://localhost:8085/A1-P/v1/ui/`
 
 # Configuring the simulator
-A env variable, A1\_VERSION need to be passed to the container at start to select the desired interface version. The variable shall be set to one of the version-ids shown in the table in the first section. For example A1\_VERSIION=STD\_1.1.3.
-In docker run the full command could look like this 'docker run -it -p 8085:8085 -e A1\_VERSION=STD\_1.1.3 a1test' where the variable is set with the '-e' flag.
+An env variable, A1\_VERSION need to be passed to the container at start to select the desired interface version. The variable shall be set to one of the version-ids shown in the table in the first section. For example A1\_VERSIION=STD\_1.1.3.
+An env variable, REMOTE_HOSTS_LOGGING, can be set (any value is ok) and the the counter remote\_hosts will log the host names of all remote hosts that has accessed the A1 URIs. If host names cannot be resolved, the ip address of the remote host is logged instead. This logging is default off so must be configured to be enabled. If not configured, the counter remote\_hosts will return a fixed text indicating that host name logging is not enabled. Use this feature with caution, remote host lookup may take time in certain environments.
+The simulator can also run using the https protocol. The enable https, a valid certificate and key need to provided. There is self-signed certificate available in the certificate dir and that dir shall be mounted to the container to make it available
+
+In docker run the full command could look like this:<br> 'docker run -it -p 8085:8085 -e A1\_VERSION=STD\_1.1.3 a1test' where the variable for A1 version is set with the '-e' flag.<br>
+With logging of remote host enabled:<br> 'docker run -it -p 8085:8085 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 a1test'<br>
+Example of running https with secure port and certificate dir mounted<br> 'docker run -it -p 8085:8085 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 --read-only --volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert a1test'
 
 # Updating the openapi specs
 The openapi specifications are stored in the 'api/&lt;version&gt;/'. If adding/replacing with a new file, make sure to copy the 'operationId' parameter for each operation to the new file.
@@ -144,15 +161,17 @@ There is a folder 'test/&lt;version&gt;/' for each supported simulator version. 
 
 Go to the test folder of the selected version, 'test/&lt;version&gt;/.
 
-Build and start the simulator container using: ./build\_and\_start.sh
-This will build and start the container in interactive mode. The built container only resides in the local docker repository.
-Note, the default port is 8085 which can be easily changed in the the script above as well as in the test script.
+Note that test can be performed both using the nonsecure http port and the secure https port.
 
-In a second terminal, go to the same folder and run the basic test script, basic\_test.sh or commands.sh depending on version.
+Build and start the simulator container using: ./build\_and\_start.sh nonsecure|secure
+This will build and start the container in interactive mode. The built container only resides in the local docker repository.
+Note, the default port is 8085 for http and 8185 for https. When running the simulator as a container, the defualt ports can be re-mapped to any port on the localhost.
+
+In a second terminal, go to the same folder and run the basic test script, basic\_test.sh nonsecure|secure or commands.sh nonsecure|secure depending on version.
 This script runs a number of tests towards the simulator to make sure it works properply.
 
 Only for version 1.1.x-alpha.2
-Let the simulator run in one terminal; in another terminal, one can run the command ./commands.sh. It contains the main requests, and will eventually leave the user with a policy type STD\_QoSNudging\_0.2.0 and a policy instance pi1 with an enforceStatus set to NOT\_ENFORCED and an enforce Reason set to 300.
+Let the simulator run in one terminal; in another terminal, one can run the command ./commands.sh nonsecure|secure. It contains the main requests, and will eventually leave the user with a policy type STD\_QoSNudging\_0.2.0 and a policy instance pi1 with an enforceStatus set to NOT\_ENFORCED and an enforce Reason set to 300.
 All the response codes should be 20X, otherwise something went wrong.
 
 ## License

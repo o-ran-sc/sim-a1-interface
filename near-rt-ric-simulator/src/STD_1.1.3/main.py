@@ -21,10 +21,11 @@ import sys
 import os
 import requests
 
+
 from pathlib import Path
 from flask import Flask, escape, request, Response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint
+from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from maincommon import *
 
 
@@ -123,7 +124,7 @@ def sendstatus():
   ps=policy_status[policyid]
   cb=callbacks[policyid]
   try:
-    resp=requests.post(cb,json=json.dumps(ps))
+    resp=requests.post(cb,json=json.dumps(ps), verify=False)
   except:
     return Response('Post status failed, could not send to: '+str(cb), status=500, mimetype='text/plain')
   if (resp.status_code<199 & resp.status_code > 299):
@@ -157,6 +158,9 @@ def getCounter(countername):
     p=Path(os.getcwd())
     pp=p.parts
     return Response(str(pp[len(pp)-1]),200, mimetype='text/plain')
+  elif (countername == "remote_hosts"):
+    hosts=",".join(hosts_set)
+    return str(hosts),200
   else:
     return Response("Counter name: "+countername+" not found.",404, mimetype='text/plain')
 
@@ -165,5 +169,13 @@ if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
+port_number_secure=8185
+
 app.add_api('STD_A1.yaml')
-app.run(port=port_number)
+context=get_security_context()
+if (context == None):
+  print("Start on non-secure port: "+str(port_number))
+  app.run(port=port_number, host="::")
+else:
+  print("Start on secure port: "+str(port_number_secure))
+  app.run(port=port_number_secure, host="::", ssl_context=context)

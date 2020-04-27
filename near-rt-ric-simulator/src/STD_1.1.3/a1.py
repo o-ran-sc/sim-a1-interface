@@ -24,11 +24,13 @@ import time
 
 from connexion import NoContent
 from flask import Flask, escape, request, Response, make_response
-from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint
+from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from utils import calcFingerprint
+from maincommon import *
 
 # API Function: Get all policy ids
 def get_all_policy_identities():
+
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -37,6 +39,8 @@ def get_all_policy_identities():
 
 # API Function: Create or update a policy
 def put_policy(policyId):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -84,6 +88,8 @@ def put_policy(policyId):
 # API Function: Get a policy
 def get_policy(policyId):
 
+  extract_host_name(hosts_set, request)
+
   if ((r := check_modified_response()) is not None):
     return r
 
@@ -95,6 +101,8 @@ def get_policy(policyId):
 
 # API Function: Delete a policy
 def delete_policy(policyId):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
@@ -112,6 +120,8 @@ def delete_policy(policyId):
 
 # API Function: Get status for a policy
 def get_policy_status(policyId):
+
+  extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r

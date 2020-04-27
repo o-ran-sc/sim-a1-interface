@@ -17,13 +17,29 @@
 #  ============LICENSE_END=================================================
 #
 
-#Script to build and start the container
+# Script to build and start the container
+# Args: nonsecure|secure
 
+if [ $# -ne 1 ]; then
+    echo "Usage: ./build_and_start.sh nonsecure|secure"
+    exit 1
+fi
+if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
+    echo "Usage: ./build_and_start.sh nonsecure|secure"
+    exit 1
+fi
 
+echo "Building image"
 cd ../../
 
 #Build the image
 docker build -t a1test .
 
-#Run the container in interactive mode
-docker run -it -p 8085:8085 -e A1_VERSION=STD_1.1.3 a1test
+echo "Starting $1 mode"
+if [ $1 == "nonsecure" ]; then
+    #Run the container in interactive mode, unsecure port
+    docker run -it -p 8085:8085 -e A1_VERSION=STD_1.1.3 -e REMOTE_HOSTS_LOGGING=1 a1test
+else
+    #Run the container in interactive mode, secure port.
+    docker run -it -p 8185:8185 -e A1_VERSION=STD_1.1.3 -e REMOTE_HOSTS_LOGGING=1 --read-only --volume "$PWD/certificate:/usr/src/app/cert" a1test
+fi

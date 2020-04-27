@@ -19,6 +19,9 @@
 
 # Function to execute curl and compare + print result
 
+# Note: Env var PORT must be set to the intended port number
+# Notre Env var HTTPX must be set to either 'http' or 'https'
+
 #args: <http-operation> <url> <response-code> [file]
 #Expects the env $RESULT to contain the expected RESULT.
 #If json, the RESULT shall begin with 'json:'.
@@ -29,7 +32,7 @@ do_curl() {
         echo "Exiting test script....."
         exit 1
     fi
-    curlstr="curl -X "$1" -sw %{http_code} localhost:"${PORT}${2}" -H accept:*/*"
+    curlstr="curl -X "$1" -skw %{http_code} $HTTPX://localhost:"${PORT}${2}" -H accept:*/*"
     if [ $# -gt 3 ]; then
         curlstr=$curlstr" -H Content-Type:application/json --data-binary @"$4
     fi
