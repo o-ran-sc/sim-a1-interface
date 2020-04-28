@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "055b6a94_7a1083d8",
+        "filename": "near-rt-ric-simulator/src/common/maincommon.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2020-04-28T10:05:43Z",
+      "side": 1,
+      "message": "This only works for IPv4 addresses mapped to IPv6, not for native IPv6 addresses. \n\nYou probably also need to check for \u0027::ffff:0:\u0027 and maybe \u002764:ff9b::\u0027",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "beefe9008267b86411337c00e01a677c6ffd7400",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b74345_3dbdb2a6",
+        "filename": "near-rt-ric-simulator/src/common/maincommon.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2020-04-28T10:05:43Z",
+      "side": 1,
+      "message": "Not sure how robust this is.\nOn some machines (e.g. nordix jenkins VMs) where a localhost name is not set I think this can sometimes cause a hostnotfound exception. I know its inside a \u0027try\u0027 here - but not ideal. Perhaps OK for the simulator though.",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "beefe9008267b86411337c00e01a677c6ffd7400",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
