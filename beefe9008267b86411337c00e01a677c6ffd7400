@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ba84c47_a667d946",
+        "filename": "near-rt-ric-simulator/src/common/maincommon.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-29T07:42:37Z",
+      "side": 1,
+      "message": "If the remote address has ::ffff in the beginning it means that this is IPV4 address. In python this ::ffff is added to all IPV4 addresses when listening to \"::\", that is both IPV4 and IPV6.(If listening only on IPV4 address, then ofcourse this prefix is not added by python).\nSo for IPV4 address, the \"::ffff\" must be removed to get the remote hostname lookup work. If it is a true IPV6 address then it will not have this prefix, it will be the full IPV6 adress and host name lookup will work if the host name exist. Made the function configurable so an env var need to be actively set to use this feature.",
+      "parentUuid": "055b6a94_7a1083d8",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "beefe9008267b86411337c00e01a677c6ffd7400",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b74345_3dbdb2a6",
         "filename": "near-rt-ric-simulator/src/common/maincommon.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "beefe9008267b86411337c00e01a677c6ffd7400",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04194ef0_8a1c304a",
+        "filename": "near-rt-ric-simulator/src/common/maincommon.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2020-04-29T07:42:37Z",
+      "side": 1,
+      "message": "I think is ok for the sim.  The simulator is frequently called from local machine when running the test script and that will produce a \"unknown host\" which is the intention and just the IP is logged. This is for metrics only and only for the A1 operations to see which component called the simulator A1.\nMade the function configurable so an env var REMOTE_HOSTS_LOGGIN need to be actively set to use this feature.",
+      "parentUuid": "f1b74345_3dbdb2a6",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "beefe9008267b86411337c00e01a677c6ffd7400",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     }
   ]
 }
