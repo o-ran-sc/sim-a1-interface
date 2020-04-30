@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "93b62da3_0dfbee1a",
+        "filename": "near-rt-ric-simulator/src/common/maincommon.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2020-04-30T11:41:46Z",
+      "side": 1,
+      "message": "Understood. Thanks for the clarification. \nIn some other systems - maybe not this python implementation - they use \u0027::ffff:0:\u0027 or \u002764:ff9b::\u0027 instead. \n\nSuggest checking for \nprefix\u003d\u0027::ffff:\u0027 OR \u0027::ffff:0:\u0027 OR \u002764:ff9b::\u0027\n\nBut if what you have works then feel free to ignore. \nThanks.",
+      "parentUuid": "8ba84c47_a667d946",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "beefe9008267b86411337c00e01a677c6ffd7400",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b74345_3dbdb2a6",
         "filename": "near-rt-ric-simulator/src/common/maincommon.py",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I think is ok for the sim.  The simulator is frequently called from local machine when running the test script and that will produce a \"unknown host\" which is the intention and just the IP is logged. This is for metrics only and only for the A1 operations to see which component called the simulator A1.\nMade the function configurable so an env var REMOTE_HOSTS_LOGGIN need to be actively set to use this feature.",
       "parentUuid": "f1b74345_3dbdb2a6",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "beefe9008267b86411337c00e01a677c6ffd7400",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84d17d66_b6b3726a",
+        "filename": "near-rt-ric-simulator/src/common/maincommon.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2020-04-30T11:41:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "04194ef0_8a1c304a",
       "range": {
         "startLine": 48,
         "startChar": 42,
