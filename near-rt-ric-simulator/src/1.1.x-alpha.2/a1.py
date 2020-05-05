@@ -24,9 +24,11 @@ from connexion import NoContent
 from flask import Flask, escape, request, make_response
 from jsonschema import validate
 from random import random, choice
-from var_declaration import policy_instances, policy_types, policy_status, policy_type_per_instance
+from var_declaration import policy_instances, policy_types, policy_status, policy_type_per_instance, hosts_set
+from maincommon import *
 
 def get_all_policy_identities():
+  extract_host_name(hosts_set, request)
   if len(request.args) == 0:
     return(list(policy_instances.keys()), 200)
   elif 'policyTypeId' in request.args:
@@ -39,6 +41,7 @@ def get_all_policy_identities():
     return(send_error_code(request.args))
 
 def put_policy(policyId):
+  extract_host_name(hosts_set, request)
   data = request.data.decode("utf-8")
   data = data.replace("'", "\"")
   data = json.loads(data)
@@ -100,6 +103,7 @@ def set_status(*args):
   return ps
 
 def get_policy(policyId):
+  extract_host_name(hosts_set, request)
   if len(request.args) == 0:
     if policyId in policy_instances.keys():
       res = policy_instances[policyId]
@@ -111,6 +115,7 @@ def get_policy(policyId):
     return(send_error_code(request.args))
 
 def delete_policy(policyId):
+  extract_host_name(hosts_set, request)
   if len(request.args) == 0:
     if policyId in policy_instances.keys():
       policy_instances.pop(policyId)
@@ -123,6 +128,7 @@ def delete_policy(policyId):
     return(send_error_code(request.args))
 
 def get_policy_status(policyId):
+  extract_host_name(hosts_set, request)
   if len(request.args) == 0:
     if policyId in policy_instances.keys():
       return(policy_status[policyId], 200)
@@ -132,12 +138,14 @@ def get_policy_status(policyId):
     return(send_error_code(request.args))
 
 def get_all_policytypes_identities():
+  extract_host_name(hosts_set, request)
   if len(request.args) == 0:
     return(list(policy_types.keys()), 200)
   else:
     return(send_error_code(request.args))
 
 def get_policytypes(policyTypeId):
+  extract_host_name(hosts_set, request)
   if len(request.args) == 0:
     if policyTypeId in policy_types.keys():
       return(policy_types[policyTypeId], 200)

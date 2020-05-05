@@ -19,39 +19,61 @@
 # Different commands for the simulator.
 # By running this, nothing should return an error.
 
+# Run the build_and_start with the same arg as this script
+if [ $# -ne 1 ]; then
+    echo "Usage: ./commands.sh nonsecure|secure"
+    exit 1
+fi
+if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
+    echo "Usage: ./commands.sh nonsecure|secure"
+    exit 1
+fi
+
+if [ $1 == "nonsecure" ]; then
+    #Default http port for the simulator
+    PORT=8085
+    # Set http protocol
+    HTTPX="http"
+else
+    #Default https port for the simulator
+    PORT=8185
+    # Set https protocol
+    HTTPX="https"
+fi
+
 # Make a test
-curl -v "http://localhost:8085/"
+curl -vk "$HTTPX://localhost:$PORT/"
 
 # PUT a policy type STD_QoSNudging_0.2.0
-curl -X PUT -v "http://localhost:8085/policytypes/STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_type_STD_QoSNudging_0.2.0.json
+curl -X PUT -vk "$HTTPX://localhost:$PORT/policytypes/STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_type_STD_QoSNudging_0.2.0.json
 
 # GET policy types
-curl -v "http://localhost:8085/A1-P/v1/policytypes"
+curl -vk "$HTTPX://localhost:$PORT/A1-P/v1/policytypes"
 
 # GET policy type STD_QoSNudging_0.2.0
-curl -v "http://localhost:8085/A1-P/v1/policytypes/STD_QoSNudging_0.2.0"
+curl -vk "$HTTPX://localhost:$PORT/A1-P/v1/policytypes/STD_QoSNudging_0.2.0"
 
 # PUT a policy instance pi1
-curl -X PUT -v "http://localhost:8085/A1-P/v1/policies/pi1?policyTypeId=STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_instance_1_STD_QoSNudging_0.2.0.json
+curl -X PUT -vk "$HTTPX://localhost:$PORT/A1-P/v1/policies/pi1?policyTypeId=STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_instance_1_STD_QoSNudging_0.2.0.json
 
 # PUT a policy instance pi2
-curl -X PUT -v "http://localhost:8085/A1-P/v1/policies/pi2?policyTypeId=STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_instance_2_STD_QoSNudging_0.2.0.json
+curl -X PUT -vk "$HTTPX://localhost:$PORT/A1-P/v1/policies/pi2?policyTypeId=STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_instance_2_STD_QoSNudging_0.2.0.json
 
 # SET status for pi1 and pi2
-curl -X PUT "http://localhost:8085/pi1/NOT_ENFORCED/300"
-curl -X PUT "http://localhost:8085/pi2/ENFORCED"
+curl -X PUT -vk "$HTTPX://localhost:$PORT/pi1/NOT_ENFORCED/300"
+curl -X PUT -vk "$HTTPX://localhost:$PORT/pi2/ENFORCED"
 
 # GET policies
-curl -v "http://localhost:8085/A1-P/v1/policies"
+curl -vk "$HTTPX://localhost:$PORT/A1-P/v1/policies"
 
 # DELETE policy instance pi2
-curl -X DELETE -v "http://localhost:8085/A1-P/v1/policies/pi2"
+curl -X DELETE -vk "$HTTPX://localhost:$PORT/A1-P/v1/policies/pi2"
 
 # PUT a different policy instance pi1 (i.e. update it)
-curl -X PUT -v "http://localhost:8085/A1-P/v1/policies/pi1?policyTypeId=STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_instance_1_bis_STD_QoSNudging_0.2.0.json
+curl -X PUT -vk "$HTTPX://localhost:$PORT/A1-P/v1/policies/pi1?policyTypeId=STD_QoSNudging_0.2.0" -H "accept: application/json" -H "Content-Type: application/json" --data-binary @example_files/policy_instance_1_bis_STD_QoSNudging_0.2.0.json
 
 # GET policy instance pi1
-curl -v "http://localhost:8085/A1-P/v1/policies/pi1"
+curl -vk "$HTTPX://localhost:$PORT/A1-P/v1/policies/pi1"
 
 # GET policy status for pi1
-curl -v "http://localhost:8085/A1-P/v1/policystatus/pi1"
+curl -vk "$HTTPX://localhost:$PORT/A1-P/v1/policystatus/pi1"

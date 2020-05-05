@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -14,11 +16,6 @@
 #  limitations under the License.
 #  ============LICENSE_END=================================================
 #
-policy_instances = {}
-policy_status = {}
-callbacks = {}
-forced_settings = {}
-forced_settings['code']=None
-forced_settings['delay']=None
-policy_fingerprint={}
-hosts_set=set()
+
+# This will generate a self-signed certificate with password 'test'
+openssl req -x509 -passout pass:"test" -newkey rsa:2048 -keyout key.crt -out cert.crt -days 9999

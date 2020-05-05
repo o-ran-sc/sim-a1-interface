@@ -21,14 +21,12 @@ import json
 import sys
 import os
 
-import maincommon
 
 from pathlib import Path
 from flask import Flask, escape, request, make_response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_types, policy_status, policy_type_per_instance
+from var_declaration import policy_instances, policy_types, policy_status, policy_type_per_instance, hosts_set
 from maincommon import *
-
 
 check_apipath()
 
@@ -125,6 +123,9 @@ def getCounter(countername):
       p=Path(os.getcwd())
       pp=p.parts
       return str(pp[len(pp)-1]),200
+    elif (countername == "remote_hosts"):
+      hosts=",".join(hosts_set)
+      return str(hosts),200
     else:
       return "Counter name: "+countername+" not found.",404
 
@@ -134,6 +135,13 @@ if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-app.add_api('a1-openapi.yaml')
-app.run(port=port_number)
+port_number_secure=8185
 
+app.add_api('a1-openapi.yaml')
+context=get_security_context()
+if (context == None):
+  print("Start on non-secure port: "+str(port_number))
+  app.run(port=port_number, host="::")
+else:
+  print("Start on secure port: "+str(port_number_secure))
+  app.run(port=port_number_secure, host="::", ssl_context=context)

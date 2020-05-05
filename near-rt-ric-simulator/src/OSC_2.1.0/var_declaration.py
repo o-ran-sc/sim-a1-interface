@@ -22,3 +22,4 @@ forced_settings={}
 forced_settings['code']=None
 forced_settings['delay']=None
 policy_fingerprint={}
+hosts_set=set()

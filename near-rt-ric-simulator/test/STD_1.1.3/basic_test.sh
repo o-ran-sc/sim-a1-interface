@@ -17,8 +17,28 @@
 #  ============LICENSE_END=================================================
 #
 
-#Default port for the simulator
-PORT=8085
+# Script for basic test of the simulator.
+# Run the build_and_start with the same arg as this script
+if [ $# -ne 1 ]; then
+    echo "Usage: ./basic_test.sh nonsecure|secure"
+    exit 1
+fi
+if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
+    echo "Usage: ./basic_test.sh nonsecure|secure"
+    exit 1
+fi
+
+if [ $1 == "nonsecure" ]; then
+    #Default http port for the simulator
+    PORT=8085
+    # Set http protocol
+    HTTPX="http"
+else
+    #Default https port for the simulator
+    PORT=8185
+    # Set https protocol
+    HTTPX="https"
+fi
 
 . ../common/test_common.sh
 
@@ -77,7 +97,7 @@ do_curl PUT /A1-P/v1/policies/pi2 201 jsonfiles/pi2.json
 
 echo "=== API: Update policy instance pi2 ==="
 RESULT="json:{\"scope\": {\"ueId\": \"ue2\", \"groupId\": \"group2\", \"sliceId\": \"slice2\", \"qosId\": \"qos2\", \"cellId\": \"cell2\"}, \"statement\": {\"priorityLevel\": 10}}"
-do_curl PUT '/A1-P/v1/policies/pi2?notificationDestination=http://localhost:8085/statustest' 200 jsonfiles/pi2.json
+do_curl PUT '/A1-P/v1/policies/pi2?notificationDestination='$HTTPX'://localhost:'$PORT'/statustest' 200 jsonfiles/pi2.json
 
 echo "=== API: Get policy instances, shall contain pi1 and pi2=="
 RESULT="json:[ \"pi1\", \"pi2\" ]"
@@ -142,6 +162,10 @@ do_curl GET /counter/num_types 200
 echo "=== Get counter: interface ==="
 RESULT="STD_1.1.3"
 do_curl GET /counter/interface 200
+
+echo "=== Get counter: remote hosts ==="
+RESULT="*"
+do_curl GET '/counter/remote_hosts' 200
 
 echo "********************"
 echo "*** All tests ok ***"

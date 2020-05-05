@@ -17,8 +17,28 @@
 #  ============LICENSE_END=================================================
 #
 
-#Default port for the simulator
-PORT=8085
+# Script for basic test of the simulator.
+# Run the build_and_start with the same arg as this script
+if [ $# -ne 1 ]; then
+    echo "Usage: ./basic_test.sh nonsecure|secure"
+    exit 1
+fi
+if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
+    echo "Usage: ./basic_test.sh nonsecure|secure"
+    exit 1
+fi
+
+if [ $1 == "nonsecure" ]; then
+    #Default http port for the simulator
+    PORT=8085
+    # Set http protocol
+    HTTPX="http"
+else
+    #Default https port for the simulator
+    PORT=8185
+    # Set https protocol
+    HTTPX="https"
+fi
 
 . ../common/test_common.sh
 
@@ -229,6 +249,10 @@ do_curl GET '/counter/num_types' 200
 echo "=== Get counter: interface ==="
 RESULT="OSC_2.1.0"
 do_curl GET '/counter/interface' 200
+
+echo "=== Get counter: remote hosts ==="
+RESULT="*"
+do_curl GET '/counter/remote_hosts' 200
 
 echo "=== DELETE policy pi1 ==="
 RESULT=""
