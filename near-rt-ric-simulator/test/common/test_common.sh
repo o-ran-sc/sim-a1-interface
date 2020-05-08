@@ -27,6 +27,7 @@
 #If json, the RESULT shall begin with 'json:'.
 #Any json parameter with unknown value shall be given as "????" to skip checking the value.
 do_curl() {
+     echo "(${BASH_LINENO[0]}): ${FUNCNAME[0]}" $@
     if [ $# -lt 3 ]; then
         echo "Need 3 or more parameters, <http-operation> <url> <response-code> [file]: "$@
         echo "Exiting test script....."

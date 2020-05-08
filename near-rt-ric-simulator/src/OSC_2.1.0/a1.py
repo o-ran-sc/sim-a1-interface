@@ -164,7 +164,7 @@ def delete_policy_instance(policy_type_id, policy_instance_id):
   if (policy_instance_id not in policy_instances[policy_type_id].keys()):
     return (None, 404)
 
-  fpPrevious=calcFingerprint(policy_instances[policy_type_id][policy_instance_id])
+  fpPrevious=calcFingerprint(policy_type_id, policy_instances[policy_type_id][policy_instance_id])
   del policy_fingerprint[fpPrevious]
   del policy_instances[policy_type_id][policy_instance_id]
   del policy_status[policy_instance_id]
@@ -199,12 +199,12 @@ def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
   retcode=201
   if policy_instance_id in policy_instances[policy_type_id].keys():
     retcode=200
-    fpPrevious=calcFingerprint(policy_instances[policy_type_id][policy_instance_id])
+    fpPrevious=calcFingerprint(policy_type_id, policy_instances[policy_type_id][policy_instance_id])
   else:
     if (policy_instance_id in policy_fingerprint.values()):
       return (None, 400)
 
-  fp=calcFingerprint(data)
+  fp=calcFingerprint(policy_type_id, data)
   if (fp in policy_fingerprint.keys()):
     id=policy_fingerprint[fp]
     if (id != policy_instance_id):

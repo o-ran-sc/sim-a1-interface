@@ -118,7 +118,7 @@ def del_policytype():
 
     del policy_types[policyTypeId]
     del policy_instances[policyTypeId]
-    return Response("Policy type " + policyTypeId + " is OK.", 204, mimetype='text/plain')
+    return Response("Policy type " + policyTypeId + " deleted OK.", 204, mimetype='text/plain')
 
   return Response("Policy type " + policyTypeId + " not found.", 204, mimetype='text/plain')
 

@@ -1,0 +1,43 @@
+{
+  "policySchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "STD_TEST3_0.0.1",
+    "description": "Test 3 policy type",
+    "type": "object",
+    "properties": {
+      "scope": {
+        "type": "object",
+        "properties": {
+          "cellId": {
+            "type": "string"
+          },
+          "qosId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "cellId",
+          "qosId"
+        ]
+      },
+      "qosObjectives": {
+        "type": "object",
+        "properties": {
+          "bitrate": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "bitrate"
+        ]
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "scope",
+      "qosObjectives"
+    ]
+  }
+}

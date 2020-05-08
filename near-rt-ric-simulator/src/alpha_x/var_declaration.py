@@ -14,21 +14,13 @@
 #  limitations under the License.
 #  ============LICENSE_END=================================================
 #
-
-FROM python:3.8-slim-buster
-
-WORKDIR /usr/src/app
-
-RUN pip install connexion[swagger-ui]
-
-#Install do handle the case when the image is built on WIN
-RUN apt-get update && apt-get install -y dos2unix
-
-COPY src src
-
-COPY api api
-
-#Convert the script from dos format (if needed)
-RUN dos2unix src/start.sh
-
-CMD src/start.sh ${A1_VERSION}
+policy_instances = {}
+policy_status = {}
+callbacks = {}
+forced_settings = {}
+forced_settings['code']=None
+forced_settings['delay']=None
+policy_fingerprint={}
+hosts_set=set()
+policy_types = {}
+policy_instance_to_type = {}

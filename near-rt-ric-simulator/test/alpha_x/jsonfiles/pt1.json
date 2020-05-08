@@ -1,0 +1,70 @@
+{
+  "policySchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "STD_TEST_0.0.1",
+    "description": "Test 1 policy type",
+    "type": "object",
+    "properties": {
+      "scope": {
+        "type": "object",
+        "properties": {
+          "ueId": {
+            "type": "string"
+          },
+          "qosId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "ueId",
+          "qosId"
+        ]
+      },
+      "qosObjectives": {
+        "type": "object",
+        "properties": {
+          "priorityLevel": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "priorityLevel"
+        ]
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "scope",
+      "qosObjectives"
+    ]
+  },
+  "statusSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "STD_TEST_0.0.1",
+    "description": "Test 1 policy type",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "object",
+        "properties": {
+          "policystatus": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "policystatus"
+        ]
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "status"
+    ]
+  }
+}

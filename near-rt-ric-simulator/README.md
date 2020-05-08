@@ -3,11 +3,12 @@
 The O-RAN SC Near-RealTime RIC simulates the A1 as an generic REST API which can receive and send northbound messages. The simulator validates the payload and applies policy.
 
 The simulator supports multiple A1 interface versions (version of the open API yaml file\):
-| Yaml file version     | Version id|
-| --------------------- | ------------------- |
+| Yaml file version     | Version id          | Comment
+| --------------------- | ------------------- | -
 | OSC 2.1.0,            |      OSC\_2.1.0     |
 | A1 Standard 1.1.3,    |      STD\_1.1.3     |
-| 1.1.x-alpha.2 ,       |      1.1.x-alpha.2  |
+| 1.1.x-alpha.2 ,       |      1.1.x-alpha.2  | Not supported by the Non-RT RIC Policy management servicies
+| alpha_x               |      alpha_x        | Experimental - Not supported by the Non-RT RIC Policy management servicies
 
 All versions are supported by the same container, see section 'Configuring the simulator' below for details about how to the start the simulator with the intended version id.
 
@@ -105,7 +106,41 @@ URIs for admin operations:
 |  POST, send status for policy | http://localhost:8085/sendstatus?policyid=&lt;policyid&gt; |
 |  GET a counter <br> (counter-name: 'num\_instances', 'num\_types'(always 0), 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
 
+# Supported operations in simulator alpha_x
 
+Note: This is an experimental api version and may change at any time.
+
+For the complete yaml specification, see [alpha_x_A1.yaml](../near-rt-ric-simulator/api/alpha_x/alpha_x_A1.yaml).
+
+URIs for A1:
+| Function              | Path and parameters |
+| --------------------- | ------------------- |
+|  GET all policy identities | http://localhost:8085/A1-P/v1/policies |
+|  PUT a policy instance(create or update it) | http://localhost:8085/A1-P/v1/policies/{policyId} |
+|  GET a policy | http://localhost:8085/A1-P/v1/policies/{policyId} |
+|  DELETE a policy instance | http://localhost:8085/A1-P/v1/policies/{policyId} |
+|  GET a policy status | http://localhost:8085/A1-P/v1/policies/{policyid} |
+|  GET all policy type identities | http://localhost:8085/A1-P/v1/policytypes |
+|  GET a policy type | http://localhost:8085/A1-P/v1/policytypes/{policyTypeId} |
+Swagger UI at: http://localhost:8085/A1-P/v1/ui/
+
+
+URIs for admin operations:
+| Function              | Path and parameters |
+| --------------------- | ------------------- |
+|  GET, a basic healthcheck | http://localhost:8085/ |
+|  GET, a list of all supported interfaces | http://localhost:8085/container\_interfaces |
+|  POST, delete all policy instances | http://localhost:8085/deleteinstances |
+|  POST, full reset | http://localhost:8085/deleteall |
+|  PUT, create/update a policy type | http://localhost:8085/policytype?id=&lt;policytypeid&gt; |
+|  DELETE, delete a policy type | http://localhost:8085/policytype?id=&lt;policytypeid&gt; |
+|  GET, list of policy type id | http://localhost:8085/policytypes |
+|  POST, force a specific response code for an A1 operation | http://localhost:8085/forceresponse?code=&lt;http-code&gt; |
+|  POST, force delayed response of all A1 operations | http://localhost:8085/forcedelay?delay=&lt;seconds&gt; |
+|  PUT, set status and optional reason (for policies with no type)| http://localhost:8085/status?status=&lt;status&gt;[&amp;reason=&lt;reason&gt;] |
+|  PUT, set status (for policies with type)| http://localhost:8085/status |
+|  POST, send status for policy | http://localhost:8085/sendstatus?policyid=&lt;policyid&gt; |
+|  GET a counter <br> (counter-name: 'num\_instances', 'num\_types', 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
 
 # Supported operations in simulator 1.1.x-alpha.2
 

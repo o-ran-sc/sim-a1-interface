@@ -1,0 +1,9 @@
+{
+  "scope": {
+    "cellId": "cell3",
+    "qosId": "qos3"
+  },
+  "qosObjectives": {
+    "bitrate": 10
+  }
+}

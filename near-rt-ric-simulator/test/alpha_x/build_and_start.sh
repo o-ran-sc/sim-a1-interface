@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -15,20 +17,29 @@
 #  ============LICENSE_END=================================================
 #
 
-FROM python:3.8-slim-buster
+# Script to build and start the container
+# Args: nonsecure|secure
 
-WORKDIR /usr/src/app
+if [ $# -ne 1 ]; then
+    echo "Usage: ./build_and_start.sh nonsecure|secure"
+    exit 1
+fi
+if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
+    echo "Usage: ./build_and_start.sh nonsecure|secure"
+    exit 1
+fi
 
-RUN pip install connexion[swagger-ui]
+echo "Building image"
+cd ../../
 
-#Install do handle the case when the image is built on WIN
-RUN apt-get update && apt-get install -y dos2unix
+#Build the image
+docker build -t a1test .
 
-COPY src src
-
-COPY api api
-
-#Convert the script from dos format (if needed)
-RUN dos2unix src/start.sh
-
-CMD src/start.sh ${A1_VERSION}
+echo "Starting $1 mode"
+if [ $1 == "nonsecure" ]; then
+    #Run the container in interactive mode, unsecure port
+    docker run -it -p 8085:8085 -e A1_VERSION=alpha_x -e REMOTE_HOSTS_LOGGING=1 a1test
+else
+    #Run the container in interactive mode, secure port.
+    docker run -it -p 8185:8185 -e A1_VERSION=alpha_x -e REMOTE_HOSTS_LOGGING=1 --read-only --volume "$PWD/certificate:/usr/src/app/cert" a1test
+fi
