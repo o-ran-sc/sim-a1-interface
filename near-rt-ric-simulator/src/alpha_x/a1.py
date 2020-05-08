@@ -22,13 +22,15 @@ import logging
 import collections
 import time
 
-from connexion import NoContent
+from jsonschema import validate
 from flask import Flask, escape, request, Response, make_response
-from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
+from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, policy_types, policy_instance_to_type
 from utils import calcFingerprint
 from maincommon import *
+from __main__ import app
 
 # API Function: Get all policy ids
+@app.route('/A1-P/v1/policies', methods=['GET'])
 def get_all_policy_identities():
 
   extract_host_name(hosts_set, request)
@@ -36,15 +38,34 @@ def get_all_policy_identities():
   if ((r := check_modified_response()) is not None):
     return r
 
-  return (list(policy_instances.keys()), 200)
+  policyTypeId=request.args.get('policyTypeId')
+
+  if (policyTypeId is None):
+    return Response(json.dumps(list(policy_instances.keys())), 200, mimetype='application/json')
+
+
+  ids=[]
+  for key in policy_instance_to_type.keys():
+    if (policy_instance_to_type[key] == policyTypeId):
+      ids.append(key)
+
+  return Response(json.dumps(ids), 200, mimetype='application/json')
 
 # API Function: Create or update a policy
+@app.route('/A1-P/v1/policies/<string:policyId>', methods=['PUT'])
 def put_policy(policyId):
 
   extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
     return r
+
+  policyTypeId=request.args.get('policyTypeId')
+
+  if (policyTypeId is not None):
+    if (policyTypeId not in policy_types.keys()):
+      pjson=create_problem_json(None, "The policy  type does not exist.", 404, None, policyTypeId)
+      return Response(json.dumps(pjson), 404, mimetype='application/problem+json')
 
   try:
     data = request.data
@@ -53,13 +74,23 @@ def put_policy(policyId):
     pjson=create_problem_json(None, "The policy is corrupt or missing.", 400, None, policyId)
     return Response(json.dumps(pjson), 400, mimetype='application/problem+json')
 
+  if (policyTypeId is not None):
+    try:
+      validate(instance=data, schema=policy_types[policyTypeId]['policySchema'])
+    except:
+      pjson=create_problem_json(None, "The policy does not validate towards the policy type schema.", 400, None, policyId)
+      return Response(json.dumps(pjson), 400, mimetype='application/problem+json')
+
   fpPrevious=None
   retcode=201
   if policyId in policy_instances.keys():
     retcode=200
-    fpPrevious=calcFingerprint(None, policy_instances[policyId])
+    fpPrevious=calcFingerprint(policyTypeId, policy_instances[policyId])
+    if (policy_instance_to_type[policyId] != policyTypeId):
+      pjson=create_problem_json(None, "The policy is not allowed to change type allocation.", 400, None, policyId)
+      return Response(json.dumps(pjson), 400, mimetype='application/problem+json')
 
-  fp=calcFingerprint(None, data)
+  fp=calcFingerprint(policyTypeId, data)
   if (fp in policy_fingerprint.keys()):
     id=policy_fingerprint[fp]
     if (id != policyId):
@@ -75,9 +106,14 @@ def put_policy(policyId):
   callbacks[policyId]=noti
 
   policy_instances[policyId]=data
-  ps={}
-  ps["enforceStatus"] = "UNDEFINED"
-  policy_status[policyId]=ps
+  policy_instance_to_type[policyId]=policyTypeId
+
+  if (policyTypeId is None):
+    ps={}
+    ps["enforceStatus"] = "UNDEFINED"
+    policy_status[policyId]=ps
+  else:
+    policy_status[policyId]=None
 
   if (retcode == 200):
     return Response(json.dumps(data), 200, mimetype='application/json')
@@ -87,6 +123,7 @@ def put_policy(policyId):
     return Response(json.dumps(data), 201, headers=headers, mimetype='application/json')
 
 # API Function: Get a policy
+@app.route('/A1-P/v1/policies/<string:policyId>', methods=['GET'])
 def get_policy(policyId):
 
   extract_host_name(hosts_set, request)
@@ -101,6 +138,7 @@ def get_policy(policyId):
   return Response(json.dumps(pjson), 404, mimetype='application/problem+json')
 
 # API Function: Delete a policy
+@app.route('/A1-P/v1/policies/<string:policyId>', methods=['DELETE'])
 def delete_policy(policyId):
 
   extract_host_name(hosts_set, request)
@@ -109,17 +147,20 @@ def delete_policy(policyId):
     return r
 
   if policyId in policy_instances.keys():
-    fpPrevious=calcFingerprint(None, policy_instances[policyId])
+    policyTypeId=policy_instance_to_type[policyId]
+    fpPrevious=calcFingerprint(policyTypeId, policy_instances[policyId])
     policy_fingerprint.pop(fpPrevious)
     policy_instances.pop(policyId)
     policy_status.pop(policyId)
     callbacks.pop(policyId)
+    policy_instance_to_type.pop(policyId)
     return Response('', 204, mimetype='application/json')
 
   pjson=create_problem_json(None, "The policy identity does not exist.", 404, "No policy instance has been deleted.", policyId)
   return Response(json.dumps(pjson), 404, mimetype='application/problem+json')
 
 # API Function: Get status for a policy
+@app.route('/A1-P/v1/policies/<string:policyId>/status', methods=['GET'])
 def get_policy_status(policyId):
 
   extract_host_name(hosts_set, request)
@@ -128,9 +169,45 @@ def get_policy_status(policyId):
     return r
 
   if policyId in policy_instances.keys():
+
+    policyTypeId=policy_instance_to_type[policyId]
+    if (policyTypeId is not None):
+      if policy_types[policyTypeId]['policySchema'] is None:
+        pjson=create_problem_json(None, "The status schemas does not exist.", 400, "The policy type status schemas does not exists ", policyId)
+        return Response(json.dumps(pjson), 400, mimetype='application/problem+json')
+
+    if policy_status[policyId] is None:
+      pjson=create_problem_json(None, "The policy status is not set.", 400, "The policy exists but has not status set", policyId)
+      return Response(json.dumps(pjson), 400, mimetype='application/problem+json')
     return Response(json.dumps(policy_status[policyId]), status=200, mimetype='application/json')
 
   pjson=create_problem_json(None, "The policy identity does not exist.", 404, "There is no existing policy instance with the identity: " + policyId, policyId)
+  return Response(json.dumps(pjson), 404, mimetype='application/problem+json')
+
+# API Function: Get all policy type ids
+@app.route('/A1-P/v1/policytypes', methods=['GET'])
+def get_all_policytype_identities():
+
+  extract_host_name(hosts_set, request)
+
+  if ((r := check_modified_response()) is not None):
+    return r
+
+  return Response(json.dumps(list(policy_types.keys())), 200, mimetype='application/json')
+
+# API Function: Get a policy type
+@app.route('/A1-P/v1/policytypes/<string:policyTypeId>', methods=['GET'])
+def get_policytype(policyTypeId):
+
+  extract_host_name(hosts_set, request)
+
+  if ((r := check_modified_response()) is not None):
+    return r
+
+  if policyTypeId in policy_types.keys():
+    return Response(json.dumps(policy_types[policyTypeId]), 200, mimetype='application/json')
+
+  pjson=create_problem_json(None, "The requested policy type does not exist.", 404, None, policyTypeId)
   return Response(json.dumps(pjson), 404, mimetype='application/problem+json')
 
 # Helper: Create a response object if forced http response code is set

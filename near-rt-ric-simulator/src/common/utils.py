@@ -15,12 +15,14 @@
 #  ============LICENSE_END=================================================
 #
 
-#Calculate a fingerprint from sorted items of a dict
-def calcFingerprint(p):
+#Calculate a fingerprint from a string prefix and a sorted items of a dict
+def calcFingerprint(prefix, p):
+  if prefix is None:
+    prefix=""
   m=''
   if (p is dict):
     for i in sorted (p.keys()):
-      m = m+str(i)+calcFingerprint(p[i])
+      m = m+str(i)+calcFingerprint(prefix, p[i])
   else:
-    return str(p)
-  return m
+    return str(prefix)+str(p)
+  return str(prefix)+m

@@ -1,0 +1,9 @@
+{
+  "scope": {
+    "sliceId": "slice2",
+    "qosId": "qos2"
+  },
+  "qosObjectives": {
+    "bitrate": 10
+  }
+}

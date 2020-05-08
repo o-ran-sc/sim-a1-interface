@@ -17,7 +17,10 @@
 #  ============LICENSE_END=================================================
 #
 
-# Script for basic test of the simulator.
+# Script for basic test of the simulator. This is the test that
+# the STD_1_1_3 still works
+# NOTE:Used testdata from
+
 # Run the build_and_start with the same arg as this script
 if [ $# -ne 1 ]; then
     echo "Usage: ./basic_test.sh nonsecure|secure"
@@ -48,7 +51,7 @@ RESULT="OK"
 do_curl GET / 200
 
 echo "=== Check used and implemented interfaces ==="
-RESULT="Current interface: STD_1.1.3 All supported A1 interface yamls in this container: ['1.1.x-alpha.2', 'alpha_x', 'STD_1.1.3', 'OSC_2.1.0']"
+RESULT="Current interface: alpha_x All supported A1 interface yamls in this container: ['1.1.x-alpha.2', 'alpha_x', 'STD_1.1.3', 'OSC_2.1.0']"
 do_curl GET /container_interfaces 200
 
 echo "=== Reset simulator instances ==="
@@ -56,7 +59,7 @@ RESULT="All policy instances deleted"
 do_curl POST /deleteinstances 200
 
 echo "=== Reset simulator, all ==="
-RESULT="All policy instances deleted"
+RESULT="All policy instances and types deleted"
 do_curl POST /deleteall 200
 
 echo "=== API: Get policy instances, shall be empty=="
@@ -65,11 +68,11 @@ do_curl GET /A1-P/v1/policies 200
 
 echo "=== API: Create policy instance pi1 ==="
 RESULT="json:{\"scope\": {\"ueId\": \"ue1\", \"groupId\": \"group1\", \"sliceId\": \"slice1\", \"qosId\": \"qos1\", \"cellId\": \"cell1\"}, \"statement\": {\"priorityLevel\": 5}}"
-do_curl PUT /A1-P/v1/policies/pi1 201 jsonfiles/pi1.json
+do_curl PUT /A1-P/v1/policies/pi1 201 ../STD_1.1.3/jsonfiles/pi1.json
 
 echo "=== API: Update policy instance pi1 ==="
 RESULT="json:{\"scope\": {\"ueId\": \"ue1\", \"groupId\": \"group1\", \"sliceId\": \"slice1\", \"qosId\": \"qos1\", \"cellId\": \"cell1\"}, \"statement\": {\"priorityLevel\": 6}}"
-do_curl PUT /A1-P/v1/policies/pi1 200 jsonfiles/pi1_updated.json
+do_curl PUT /A1-P/v1/policies/pi1 200 ../STD_1.1.3/jsonfiles/pi1_updated.json
 
 echo "=== API: Get policy instances, shall contain pi1=="
 RESULT="json:[ \"pi1\" ]"
@@ -77,7 +80,7 @@ do_curl GET /A1-P/v1/policies 200
 
 echo "=== API: Create policy instance pi2 (copy of pi1). Shall fail ==="
 RESULT="json:{\"title\": \"The policy json already exists.\", \"status\": 400, \"instance\": \"pi2\"}"
-do_curl PUT /A1-P/v1/policies/pi2 400 jsonfiles/pi1_updated.json
+do_curl PUT /A1-P/v1/policies/pi2 400 ../STD_1.1.3/jsonfiles/pi1_updated.json
 
 echo "=== Set force response code 409. ==="
 RESULT="*"
@@ -93,11 +96,11 @@ do_curl GET /A1-P/v1/policies/pi1/status 200
 
 echo "=== API: Create policy instance pi2 ==="
 RESULT="json:{\"scope\": {\"ueId\": \"ue2\", \"groupId\": \"group2\", \"sliceId\": \"slice2\", \"qosId\": \"qos2\", \"cellId\": \"cell2\"}, \"statement\": {\"priorityLevel\": 10}}"
-do_curl PUT /A1-P/v1/policies/pi2 201 jsonfiles/pi2.json
+do_curl PUT /A1-P/v1/policies/pi2 201 ../STD_1.1.3/jsonfiles/pi2.json
 
 echo "=== API: Update policy instance pi2 ==="
 RESULT="json:{\"scope\": {\"ueId\": \"ue2\", \"groupId\": \"group2\", \"sliceId\": \"slice2\", \"qosId\": \"qos2\", \"cellId\": \"cell2\"}, \"statement\": {\"priorityLevel\": 10}}"
-do_curl PUT '/A1-P/v1/policies/pi2?notificationDestination='$HTTPX'://localhost:'$PORT'/statustest' 200 jsonfiles/pi2.json
+do_curl PUT '/A1-P/v1/policies/pi2?notificationDestination='$HTTPX'://localhost:'$PORT'/statustest' 200 ../STD_1.1.3/jsonfiles/pi2.json
 
 echo "=== API: Get policy instances, shall contain pi1 and pi2=="
 RESULT="json:[ \"pi1\", \"pi2\" ]"
@@ -160,7 +163,7 @@ RESULT="0"
 do_curl GET /counter/num_types 200
 
 echo "=== Get counter: interface ==="
-RESULT="STD_1.1.3"
+RESULT="alpha_x"
 do_curl GET /counter/interface 200
 
 echo "=== Get counter: remote hosts ==="
