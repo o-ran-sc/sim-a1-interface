@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d69f6e96_d7b66e47",
+        "filename": "near-rt-ric-simulator/api/alpha_x/alpha_x_A1.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2020-05-08T09:02:16Z",
+      "side": 1,
+      "message": "Please add a note that this is experimental - pre-approval?\n\nUpdate about licensing:\nNote, this does not become (c) ORAN Alliance until approved AFAIK. \nPrior to this I think it is (c) Ericsson - which means we should have permission from Ericsson to use it here. \n\nI will try to clarify - but we may need to revise whether we can use this file or not.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "686a020fbe81b39feee4d68e39f32be740dfcd04",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
