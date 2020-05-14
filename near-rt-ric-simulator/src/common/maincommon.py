@@ -40,6 +40,7 @@ def get_supported_interfaces_response():
     arr = os.listdir("../")
     del arr[arr.index('common')] # Remove the common lib
     del arr[arr.index('start.sh')] # Remove the start script
+    arr.sort()
     return Response("Current interface: " + str(pp[len(pp)-1]) + "  All supported A1 interface yamls in this container: "+str(arr), 200, mimetype='text/plain')
 
 # Remote host lookup and store host name in a set
