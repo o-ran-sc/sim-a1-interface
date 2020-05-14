@@ -130,18 +130,12 @@ def getCounter(countername):
       return "Counter name: "+countername+" not found.",404
 
 
-port_number = 8085
+port_number = 2222
 if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-port_number_secure=8185
-
 app.add_api('a1-openapi.yaml')
-context=get_security_context()
-if (context == None):
-  print("Start on non-secure port: "+str(port_number))
-  app.run(port=port_number, host="::")
-else:
-  print("Start on secure port: "+str(port_number_secure))
-  app.run(port=port_number_secure, host="::", ssl_context=context)
+
+print("Start on non-secure port: "+str(port_number))
+app.run(port=port_number, host="::")

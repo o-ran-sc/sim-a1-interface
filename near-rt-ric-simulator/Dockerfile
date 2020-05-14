@@ -21,8 +21,16 @@ WORKDIR /usr/src/app
 
 RUN pip install connexion[swagger-ui]
 
+#install nginx
+RUN apt-get update
+RUN apt-get install -y nginx=1.14.*
+
+#install curl
+RUN apt-get install -y curl
+
 COPY src src
-
 COPY api api
+COPY nginx.conf nginx.conf
 
+RUN chmod +x src/start.sh
 CMD src/start.sh ${A1_VERSION}

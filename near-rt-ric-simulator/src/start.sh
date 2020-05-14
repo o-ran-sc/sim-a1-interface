@@ -37,5 +37,9 @@ echo "PYTHONPATH set to: "$PYTHONPATH
 
 cd $1
 
+#start nginx
+nginx -c /usr/src/app/nginx.conf
+
+#start near-rt-ric-simulator
 echo "Path to main.py: "$PWD
 python -u main.py
