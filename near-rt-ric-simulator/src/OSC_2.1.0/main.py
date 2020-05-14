@@ -26,11 +26,28 @@ from flask import Flask, escape, request, Response
 from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set
 from maincommon import *
+from time import sleep
 
 
 check_apipath()
 
 app = connexion.FlaskApp(__name__, specification_dir=apipath)
+t=[] ##varialbe for test purpose
+
+#long poll
+@app.route('/long', methods=['GET'])
+def longpoll():
+    global t
+    sleep(10)
+    t.append(1)
+    return Response(str(t), 200, mimetype='text/plain')
+
+#short poll
+@app.route('/short', methods=['GET'])
+def shortpoll():
+    global t
+    t.append(2)
+    return Response(str(t), 200, mimetype='text/plain')
 
 #Check alive function
 @app.route('/', methods=['GET'])
@@ -199,18 +216,11 @@ def getCounter(countername):
   else:
     return Response("Counter name: "+countername+" not found.",404, mimetype='text/plain')
 
-port_number = 8085
+port_number = 2222
 if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-port_number_secure=8185
-
 app.add_api('openapi.yaml')
-context=get_security_context()
-if (context == None):
-  print("Start on non-secure port: "+str(port_number))
-  app.run(port=port_number, host="::")
-else:
-  print("Start on secure port: "+str(port_number_secure))
-  app.run(port=port_number_secure, host="::", ssl_context=context)
+
+app.run(port=port_number, host="127.0.0.1", threaded=False)
