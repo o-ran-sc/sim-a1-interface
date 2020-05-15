@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "28fbb57a_ff385abf",
+        "filename": "near-rt-ric-simulator/nginx.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000247
+      },
+      "writtenOn": "2020-05-15T12:47:21Z",
+      "side": 1,
+      "message": "app.run(port\u003dport_number, host\u003d\"127.0.0.1\", threaded\u003dFalse)\nflask run single threaded",
+      "parentUuid": "3417edd3_367dc2b7",
+      "revId": "a23b3734de946b5c2ffbd8caf71c30107b1d7f10",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ddaf62_3dd85fb8",
         "filename": "near-rt-ric-simulator/src/1.1.x-alpha.2/main.py",
         "patchSetId": 1
