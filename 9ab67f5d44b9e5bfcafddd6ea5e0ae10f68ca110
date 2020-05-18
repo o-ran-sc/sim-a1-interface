@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c795ec2d_5faf5cfb",
+        "filename": "near-rt-ric-simulator/test/1.1.x-alpha.2/build_and_start.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000247
+      },
+      "writtenOn": "2020-05-18T07:17:12Z",
+      "side": 1,
+      "message": "8085 \u0026 8185 will be exposed by nginx, main.py is serving on 2222.",
+      "parentUuid": "f1d86046_17936701",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9ab67f5d44b9e5bfcafddd6ea5e0ae10f68ca110",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f24cebf_931665cf",
         "filename": "near-rt-ric-simulator/test/OSC_2.1.0/build_and_start.sh",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "664d4423_130dead5",
+        "filename": "near-rt-ric-simulator/test/OSC_2.1.0/build_and_start.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000247
+      },
+      "writtenOn": "2020-05-18T07:17:12Z",
+      "side": 1,
+      "message": "8085 \u0026 8186 will be exposed by nginx, main.py is serving on 2222.",
+      "parentUuid": "3f24cebf_931665cf",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9ab67f5d44b9e5bfcafddd6ea5e0ae10f68ca110",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a05f9930_ebb64301",
         "filename": "near-rt-ric-simulator/test/STD_1.1.3/build_and_start.sh",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2020-05-18T07:14:24Z",
       "side": 1,
       "message": "And here",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9ab67f5d44b9e5bfcafddd6ea5e0ae10f68ca110",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0857c0df_a6183f1f",
+        "filename": "near-rt-ric-simulator/test/STD_1.1.3/build_and_start.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000247
+      },
+      "writtenOn": "2020-05-18T07:17:12Z",
+      "side": 1,
+      "message": "8085 \u0026 8186 will be exposed by nginx, main.py is serving on 2222.",
+      "parentUuid": "a05f9930_ebb64301",
       "range": {
         "startLine": 30,
         "startChar": 18,
