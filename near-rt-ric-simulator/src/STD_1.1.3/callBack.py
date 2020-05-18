@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -17,33 +15,29 @@
 #  ============LICENSE_END=================================================
 #
 
-if [ $# -ne 1 ]; then
-    echo "Expected folder name of simulator."
-    echo "The container shall be started with env variable 'A1_VERSION' set to the folder name of the A1 version to use."
-    echo "Exiting...."
-    exit 1
-fi
-echo "Version folder for simulator: "$1
+import json
+from flask import Flask, request, Response
 
-#Set path to open api
-export APIPATH=$PWD/api/$1
-echo "APIPATH set to: "$APIPATH
+app = Flask(__name__)
 
-cd src
+#Check alive function
+@app.route('/', methods=['GET'])
+def test():
 
-#Include common module(s)
-export PYTHONPATH=$PWD/common
-echo "PYTHONPATH set to: "$PYTHONPATH
+  return Response("OK", 200, mimetype='text/plain')
 
-cd $1
+#Receive status (only for testing callbacks)
+#/statustest
+@app.route('/statustest', methods=['POST', 'PUT'])
+def statustest():
+  try:
+    data = request.data
+    data = json.loads(data)
+  except:
+    return Response("The status data is corrupt or missing.", 400, mimetype='text/plain')
 
-#start nginx
-nginx -c /usr/src/app/nginx.conf
+  return Response(json.dumps(data), 200, mimetype='application/json')
 
-#start callBack server
-echo "Path to callBack.py: "$PWD
-python -u callBack.py &
+port_number = 2223
 
-#start near-rt-ric-simulator
-echo "Path to main.py: "$PWD
-python -u main.py
+app.run(port=port_number, host="127.0.0.1", threaded=False)

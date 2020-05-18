@@ -145,9 +145,11 @@ An env variable, A1\_VERSION need to be passed to the container at start to sele
 An env variable, REMOTE_HOSTS_LOGGING, can be set (any value is ok) and the the counter remote\_hosts will log the host names of all remote hosts that has accessed the A1 URIs. If host names cannot be resolved, the ip address of the remote host is logged instead. This logging is default off so must be configured to be enabled. If not configured, the counter remote\_hosts will return a fixed text indicating that host name logging is not enabled. Use this feature with caution, remote host lookup may take time in certain environments.
 The simulator can also run using the https protocol. The enable https, a valid certificate and key need to provided. There is self-signed certificate available in the certificate dir and that dir shall be mounted to the container to make it available
 
-In docker run the full command could look like this:<br> 'docker run -it -p 8085:8085 -e A1\_VERSION=STD\_1.1.3 a1test' where the variable for A1 version is set with the '-e' flag.<br>
-With logging of remote host enabled:<br> 'docker run -it -p 8085:8085 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 a1test'<br>
-Example of running https with secure port and certificate dir mounted<br> 'docker run -it -p 8085:8085 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 --read-only --volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert a1test'
+In docker run the full command could look like this:<br> 'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 --volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert a1test'
+http port 8085 and https port 8185
+The variable for A1 version is set with the '-e' flag.
+With logging of remote host enabled "-e REMOTE_HOSTS_LOGGING=1 "
+With certificate dir mounted  "--volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert"
 
 # Updating the openapi specs
 The openapi specifications are stored in the 'api/&lt;version&gt;/'. If adding/replacing with a new file, make sure to copy the 'operationId' parameter for each operation to the new file.
@@ -163,7 +165,7 @@ Go to the test folder of the selected version, 'test/&lt;version&gt;/.
 
 Note that test can be performed both using the nonsecure http port and the secure https port.
 
-Build and start the simulator container using: ./build\_and\_start.sh nonsecure|secure
+Build and start the simulator container using: ./build\_and\_start.sh
 This will build and start the container in interactive mode. The built container only resides in the local docker repository.
 Note, the default port is 8085 for http and 8185 for https. When running the simulator as a container, the defualt ports can be re-mapped to any port on the localhost.
 
