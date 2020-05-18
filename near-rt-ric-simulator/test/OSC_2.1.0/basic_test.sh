@@ -95,7 +95,7 @@ RESULT=""
 do_curl PUT /a1-p/policytypes/1 201 jsonfiles/pt1.json
 
 echo "=== API: Get policy type ids, shall contain type 1 =="
-RESULT="json:[ \"1\" ]"
+RESULT="json:[ 1 ]"
 do_curl GET /a1-p/policytypes 200
 
 echo "=== API: Get instances for type 1, shall be empty ==="
@@ -143,7 +143,7 @@ RESULT="Policy type 2 is OK."
 do_curl PUT '/policytype?id=2' 200 jsonfiles/pt1.json
 
 echo "=== API: Get policy type ids, shall contain type 1 and 2 =="
-RESULT="json:[ \"1\", \"2\" ]"
+RESULT="json:[ 1, 2 ]"
 do_curl GET /a1-p/policytypes 200
 
 echo "=== Get policy type ids, shall contain type 1 and 2 =="
@@ -159,7 +159,7 @@ RESULT=""
 do_curl DELETE '/policytype?id=2' 204 jsonfiles/pt1.json
 
 echo "=== API: Get policy type ids, shall contain type 1 =="
-RESULT="json:[ \"1\" ]"
+RESULT="json:[ 1 ]"
 do_curl GET /a1-p/policytypes 200
 
 echo "=== Load a policy type: 2 ==="

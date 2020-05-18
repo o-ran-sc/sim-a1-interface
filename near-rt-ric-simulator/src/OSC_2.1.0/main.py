@@ -22,7 +22,7 @@ import os
 import requests
 
 from pathlib import Path
-from flask import Flask, escape, request, Response
+from flask import Flask, escape, request, Response, jsonify
 from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set
 from maincommon import *
@@ -32,28 +32,19 @@ from time import sleep
 check_apipath()
 
 app = connexion.FlaskApp(__name__, specification_dir=apipath)
-t=[] ##varialbe for test purpose
-
-#long poll
-@app.route('/long', methods=['GET'])
-def longpoll():
-    global t
-    sleep(10)
-    t.append(1)
-    return Response(str(t), 200, mimetype='text/plain')
-
-#short poll
-@app.route('/short', methods=['GET'])
-def shortpoll():
-    global t
-    t.append(2)
-    return Response(str(t), 200, mimetype='text/plain')
 
 #Check alive function
 @app.route('/', methods=['GET'])
 def test():
 
     return Response("OK", 200, mimetype='text/plain')
+
+@app.route('/ip', methods=['GET'])
+def get_ip():
+    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+        return jsonify({'ip': request.environ['REMOTE_ADDR']}), 200
+    else:
+        return jsonify({'ip': request.environ['HTTP_X_FORWARDED_FOR']}), 200
 
 #Return the current and all supported yamls for the this container
 @app.route('/container_interfaces', methods=['GET'])
