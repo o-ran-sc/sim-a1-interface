@@ -46,7 +46,10 @@ def get_supported_interfaces_response():
 # Remote host lookup and store host name in a set
 def extract_host_name(hosts_set, request):
     if (remote_hosts_logging is not None):
-        host_ip=str(request.environ['REMOTE_ADDR'])
+        if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+            host_ip=str(request.environ['REMOTE_ADDR'])
+        else:
+            host_ip=str(request.environ['HTTP_X_FORWARDED_FOR'])
         prefix='::ffff:'
         if (host_ip.startswith('::ffff:')):
             host_ip=host_ip[len(prefix):]
@@ -57,24 +60,3 @@ def extract_host_name(hosts_set, request):
             hosts_set.add(host_ip)
     else:
         hosts_set.add("logging_of_remote_host_names_not_enabled")
-
-# Check if cert is available and return a sec context, if not return 'None'
-def get_security_context():
-
-    try:
-        path="/usr/src/app/cert"
-        if (os.path.isdir(path)):
-            certpath=path+"/cert.crt"
-            keypath=path+"/key.crt"
-            if (os.path.isfile(certpath) and os.path.isfile(keypath)):
-                context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-                context.load_cert_chain(certpath, keypath, password="test")
-                return context
-            else:
-                print("Cert and/or key does not exists in dir "+str(path))
-
-        else:
-            print("Path "+str(path)+" to certificate and key does not exists")
-    except Exception as e:
-        print("Problem when loading cert and key: "+str(e))
-    return None

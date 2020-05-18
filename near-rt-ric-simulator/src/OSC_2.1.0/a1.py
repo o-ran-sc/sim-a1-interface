@@ -46,7 +46,9 @@ def get_all_policy_types():
   if ((r := check_modified_response()) is not None):
     return r
 
-  return (list(policy_instances.keys()), 200)
+  res = list(policy_instances.keys())
+  res = list(map(int, res))
+  return (res, 200)
 
 # API Function: Get a policy type
 def get_policy_type(policy_type_id):

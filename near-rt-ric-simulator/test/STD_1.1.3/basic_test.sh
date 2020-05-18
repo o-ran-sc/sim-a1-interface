@@ -97,7 +97,7 @@ do_curl PUT /A1-P/v1/policies/pi2 201 jsonfiles/pi2.json
 
 echo "=== API: Update policy instance pi2 ==="
 RESULT="json:{\"scope\": {\"ueId\": \"ue2\", \"groupId\": \"group2\", \"sliceId\": \"slice2\", \"qosId\": \"qos2\", \"cellId\": \"cell2\"}, \"statement\": {\"priorityLevel\": 10}}"
-do_curl PUT '/A1-P/v1/policies/pi2?notificationDestination='$HTTPX'://localhost:'$PORT'/statustest' 200 jsonfiles/pi2.json
+do_curl PUT '/A1-P/v1/policies/pi2?notificationDestination=http://localhost:2223/statustest' 200 jsonfiles/pi2.json
 
 echo "=== API: Get policy instances, shall contain pi1 and pi2=="
 RESULT="json:[ \"pi1\", \"pi2\" ]"
