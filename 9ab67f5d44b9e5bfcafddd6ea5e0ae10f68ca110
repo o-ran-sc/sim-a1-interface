@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d86046_17936701",
+        "filename": "near-rt-ric-simulator/test/1.1.x-alpha.2/build_and_start.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-05-18T07:14:24Z",
+      "side": 1,
+      "message": "If I understood correctly, in main.py it\u0027s now 2222, and 8085 and 8185 have been deleted. Or did I miss something?",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9ab67f5d44b9e5bfcafddd6ea5e0ae10f68ca110",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f24cebf_931665cf",
+        "filename": "near-rt-ric-simulator/test/OSC_2.1.0/build_and_start.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-05-18T07:14:24Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9ab67f5d44b9e5bfcafddd6ea5e0ae10f68ca110",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05f9930_ebb64301",
+        "filename": "near-rt-ric-simulator/test/STD_1.1.3/build_and_start.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000214
+      },
+      "writtenOn": "2020-05-18T07:14:24Z",
+      "side": 1,
+      "message": "And here",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9ab67f5d44b9e5bfcafddd6ea5e0ae10f68ca110",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
