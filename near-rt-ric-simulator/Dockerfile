@@ -31,6 +31,7 @@ RUN apt-get install -y curl
 COPY src src
 COPY api api
 COPY nginx.conf nginx.conf
+COPY certificate /usr/src/app/cert
 
 RUN chmod +x src/start.sh
 CMD src/start.sh ${A1_VERSION}

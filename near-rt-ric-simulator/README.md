@@ -145,6 +145,24 @@ An env variable, A1\_VERSION need to be passed to the container at start to sele
 An env variable, REMOTE_HOSTS_LOGGING, can be set (any value is ok) and the the counter remote\_hosts will log the host names of all remote hosts that has accessed the A1 URIs. If host names cannot be resolved, the ip address of the remote host is logged instead. This logging is default off so must be configured to be enabled. If not configured, the counter remote\_hosts will return a fixed text indicating that host name logging is not enabled. Use this feature with caution, remote host lookup may take time in certain environments.
 The simulator can also run using the https protocol. The enable https, a valid certificate and key need to provided. There is self-signed certificate available in the certificate dir and that dir shall be mounted to the container to make it available
 
+By default, this image has default certificates under /usr/src/app/cert
+file "cert.crt" is the certificate file
+file "key.crt" is the key file
+file "generate_cert_and_key.sh" is a shell script to generate certificate and key
+file "pass" stores the password when you run the shell script
+
+Start the a1-interface container without specifing external certificates:
+'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 a1test'
+
+It will listen to http 8085 port and https 8185 port(using default certificates) at the same time.
+
+This certificates/key can be overriden by mounting a volume when using "docker run" or "docker-compose"
+In 'docker run', use field:
+--volume "$PWD/certificate:/usr/src/app/cert" a1test
+In 'docker-compose.yml', use field:
+volumes:
+      - ./certificate:/usr/src/app/cert:ro
+
 In docker run the full command could look like this:<br> 'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 --volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert a1test'
 http port 8085 and https port 8185
 The variable for A1 version is set with the '-e' flag.
