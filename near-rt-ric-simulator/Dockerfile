@@ -24,6 +24,7 @@ RUN pip install connexion[swagger-ui]
 #install nginx
 RUN apt-get update
 RUN apt-get install -y nginx=1.14.*
+RUN apt-get install -y nginx-extras
 
 #install curl
 RUN apt-get install -y curl
