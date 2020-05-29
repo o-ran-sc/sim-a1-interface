@@ -154,7 +154,12 @@ file "pass" stores the password when you run the shell script
 Start the a1-interface container without specifing external certificates:
 'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 a1test'
 
-It will listen to http 8085 port and https 8185 port(using default certificates) at the same time.
+It will listen to https 8185 port(using default certificates) by default.
+Http can be enabled on port 8085 using an environment variable "ALLOW_HTTP".
+If this environment variable is left out or set to false, the nginx server will send
+"444 Connection Closed Without Response" when making a call using http.
+Example command to enable http:
+'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=OSC\_2.1.0 -e ALLOW_HTTP=true a1test'
 
 This certificates/key can be overriden by mounting a volume when using "docker run" or "docker-compose"
 In 'docker run', use field:
