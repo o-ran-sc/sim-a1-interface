@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7aa33ffa_d102a8ba",
+        "filename": "near-rt-ric-simulator/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2020-06-01T07:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab7a499_b9996a80",
+      "revId": "3acaec799c5cc9c0766986fc301572f22cec84ad",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93eca0bf_5ef648a9",
         "filename": "near-rt-ric-simulator/nginx.conf",
         "patchSetId": 1
