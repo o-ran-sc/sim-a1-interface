@@ -20,5 +20,6 @@ A1 Interface Simulator
 
    ./overview.rst
    ./simulator-api.rst
+   ./release-notes.rst
 
 * :ref:`search`
