@@ -41,8 +41,10 @@ cd $1
 nginx -c /usr/src/app/nginx.conf
 
 #start callBack server
-echo "Path to callBack.py: "$PWD
-python -u callBack.py &
+if [ ${A1_VERSION} == "STD_1.1.3" ]; then
+    echo "Path to callBack.py: "$PWD
+    python -u callBack.py &
+fi
 
 #start near-rt-ric-simulator
 echo "Path to main.py: "$PWD
