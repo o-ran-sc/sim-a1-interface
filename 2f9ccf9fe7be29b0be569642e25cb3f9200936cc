@@ -22,6 +22,30 @@
       "revId": "2f9ccf9fe7be29b0be569642e25cb3f9200936cc",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "351d62e0_bf83ac41",
+        "filename": "near-rt-ric-simulator/src/start.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000247
+      },
+      "writtenOn": "2020-07-29T10:23:54Z",
+      "side": 1,
+      "message": "yes exactly, \bBjörn and I we talked about this. That is why we left it as it was.",
+      "parentUuid": "47b178d6_805f7c8f",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 1
+      },
+      "revId": "2f9ccf9fe7be29b0be569642e25cb3f9200936cc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     }
   ]
 }
