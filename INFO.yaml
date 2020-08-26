@@ -16,7 +16,7 @@ issue_tracking:
     key: 'SIM'
 mailing_list:
     type: 'groups.io'
-    url: 'https://lists.o-ran-sc.org/g/main'
+    url: 'https://lists.o-ran-sc.org/g/discuss'
     tag: '<[sim]>'
 realtime_discussion:
     type: 'irc'
