@@ -27,6 +27,8 @@ from var_declaration import policy_instances, policy_types, policy_status, polic
 from utils import calcFingerprint
 from maincommon import extract_host_name
 
+#Constsants
+APPL_JSON='application/json'
 
 # API Function: Health check
 def get_healthcheck():
@@ -63,7 +65,7 @@ def get_policy_type(policy_type_id):
   if (policy_type_id not in policy_types.keys()):
     return (None, 404)
 
-  return Response(json.dumps(policy_types[policy_type_id]), 200, mimetype='application/json')
+  return Response(json.dumps(policy_types[policy_type_id]), 200, mimetype=APPL_JSON)
 
 # API Function: Delete a policy type
 def delete_policy_type(policy_type_id):
@@ -96,8 +98,8 @@ def create_policy_type(policy_type_id):
     return r
 
   try:
-    val=int(policy_type_id)
-  except:
+    int(policy_type_id)
+  except Exception:
     return Response("The policy type id is not an int", 400, mimetype='text/plain')
 
   policy_type_id=str(policy_type_id)
@@ -109,7 +111,7 @@ def create_policy_type(policy_type_id):
   try:
     data = request.data
     data = json.loads(data)
-  except:
+  except Exception:
     return (None, 400)
 
   if (('name' not in data.keys()) or ('description' not in data.keys()) or ('policy_type_id' not in data.keys()) or ('create_schema' not in data.keys())):
@@ -153,7 +155,7 @@ def get_policy_instance(policy_type_id, policy_instance_id):
   if (policy_instance_id not in policy_instances[policy_type_id].keys()):
     return (None, 404)
 
-  return Response(json.dumps(policy_instances[policy_type_id][policy_instance_id]), 200, mimetype='application/json')
+  return Response(json.dumps(policy_instances[policy_type_id][policy_instance_id]), 200, mimetype=APPL_JSON)
 
 # API function: Delete a policy
 def delete_policy_instance(policy_type_id, policy_instance_id):
@@ -171,8 +173,8 @@ def delete_policy_instance(policy_type_id, policy_instance_id):
   if (policy_instance_id not in policy_instances[policy_type_id].keys()):
     return (None, 404)
 
-  fpPrevious=calcFingerprint(policy_instances[policy_type_id][policy_instance_id])
-  del policy_fingerprint[fpPrevious]
+  fp_previous=calcFingerprint(policy_instances[policy_type_id][policy_instance_id])
+  del policy_fingerprint[fp_previous]
   del policy_instances[policy_type_id][policy_instance_id]
   del policy_status[policy_instance_id]
 
@@ -194,31 +196,30 @@ def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
   try:
     data = request.data
     data = json.loads(data)
-  except:
+  except Exception:
     return (None, 400)
 
   try:
     validate(instance=data, schema=policy_types[policy_type_id]['create_schema'])
-  except:
+  except Exception:
     return (None, 400)
 
-  fpPrevious=None
-  retcode=201
+  fp_previous=None
   if policy_instance_id in policy_instances[policy_type_id].keys():
     retcode=200
-    fpPrevious=calcFingerprint(policy_instances[policy_type_id][policy_instance_id])
+    fp_previous=calcFingerprint(policy_instances[policy_type_id][policy_instance_id])
   else:
     if (policy_instance_id in policy_fingerprint.values()):
       return (None, 400)
 
   fp=calcFingerprint(data)
   if (fp in policy_fingerprint.keys()):
-    id=policy_fingerprint[fp]
-    if (id != policy_instance_id):
+    p_id=policy_fingerprint[fp]
+    if (p_id != policy_instance_id):
       return (None, 400)
 
-  if (fpPrevious is not None):
-    del policy_fingerprint[fpPrevious]
+  if (fp_previous is not None):
+    del policy_fingerprint[fp_previous]
 
   policy_fingerprint[fp]=policy_instance_id
 
@@ -246,7 +247,7 @@ def get_policy_instance_status(policy_type_id, policy_instance_id):
   if (policy_instance_id not in policy_instances[policy_type_id].keys()):
     return (None, 404)
 
-  return Response(json.dumps(policy_status[policy_instance_id]), 200, mimetype='application/json')
+  return Response(json.dumps(policy_status[policy_instance_id]), 200, mimetype=APPL_JSON)
 
 # Helper: Create a response object if forced http response code is set
 def get_forced_response():
@@ -264,7 +265,7 @@ def do_delay():
     try:
       val=int(forced_settings['delay'])
       time.sleep(val)
-    except:
+    except Exception:
       return
   return
 

@@ -56,7 +56,7 @@ def extract_host_name(hosts_set, request):
         try:
             name, alias, addresslist = socket.gethostbyaddr(host_ip)
             hosts_set.add(name)
-        except Exception as e:
+        except Exception:
             hosts_set.add(host_ip)
     else:
         hosts_set.add("logging_of_remote_host_names_not_enabled")

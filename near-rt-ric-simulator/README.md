@@ -7,7 +7,6 @@ The simulator supports multiple A1 interface versions (version of the open API y
 | --------------------- | ------------------- |
 | OSC 2.1.0,            |      OSC\_2.1.0     |
 | A1 Standard 1.1.3,    |      STD\_1.1.3     |
-| 1.1.x-alpha.2 ,       |      1.1.x-alpha.2  |
 
 All versions are supported by the same container, see section 'Configuring the simulator' below for details about how to the start the simulator with the intended version id.
 
@@ -107,39 +106,6 @@ URIs for admin operations:
 
 
 
-# Supported operations in simulator 1.1.x-alpha.2
-
-For the complete yaml specification, see [a1-openapi.yaml](../near-rt-ric-simulator/api/1.1.x-alpha.2/a1-openapi.yaml).
-
-The available requests and the addresses are currently:
-| Function              | Path and parameters |
-| --------------------- | ------------------- |
-|  GET all policy identities (respectively for a policy type if query parameter used) | http://localhost:8085/A1-P/v1/policies?policyTypeId={policyTypeId} |
-|  PUT a policy instance(create or update it) | http://localhost:8085/A1-P/v1/policies/{policyId}?policyTypeId={policyTypeId} |
-|  GET a policy | http://localhost:8085/A1-P/v1/policies/{policyId} |
-|  DELETE a policy instance | http://localhost:8085/A1-P/v1/policies/{policyId} |
-|  GET a policy status | http://localhost:8085/A1-P/v1/policystatus |
-|  GET all policy types | http://localhost:8085/A1-P/v1/policytypes |
-|  GET the schemas for a policy type | http://localhost:8085/A1-P/v1/policytypes/{policyTypeId} |
-
-Nota Bene: It could happen that this page is not updated as soon as the yaml file is. The yaml file can be found under /near-rt-ric-simulator/a1-openapi.yaml.
-
-For the documentation of the admin API, see [1.1.x-alpha.2](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#x-alpha-2).
-
-Additionally, there are requests that are defined in main.py as an administrative API. The goal is to handle information that couldn't be handled using the A1 interface. The available requests and the addresses are currently:
-| Function              | Path and parameters |
-| --------------------- | ------------------- |
-|  GET, a basic healthcheck | http://localhost:8085/ |
-|  PUT a policy type | http://localhost:8085/policytypes/{policyTypeId} |
-|  DELETE a policy type | http://localhost:8085/policytypes/{policyTypeId} |
-|  DELETE all policy instances | http://localhost:8085/deleteinstances |
-|  DELETE all policy types | http://localhost:8085/deletetypes |
-|  PUT a status to a policy instance with an enforceStatus parameter only | http://localhost:8085/{policyId}/{enforceStatus} |
-|  PUT a status to a policy instance with both enforceStatus and enforceReason | http://localhost:8085/{policyId}/{enforceStatus}/{enforceReason} |
-|  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types', 'interface' or 'remote\_hosts') | http://localhost:8085/counter/{counter-name} |
-
-The backend server publishes live API documentation at the URL `http://localhost:8085/A1-P/v1/ui/`
-
 # Configuring the simulator
 An env variable, A1\_VERSION need to be passed to the container at start to select the desired interface version. The variable shall be set to one of the version-ids shown in the table in the first section. For example A1\_VERSIION=STD\_1.1.3.
 An env variable, REMOTE_HOSTS_LOGGING, can be set (any value is ok) and the the counter remote\_hosts will log the host names of all remote hosts that has accessed the A1 URIs. If host names cannot be resolved, the ip address of the remote host is logged instead. This logging is default off so must be configured to be enabled. If not configured, the counter remote\_hosts will return a fixed text indicating that host name logging is not enabled. Use this feature with caution, remote host lookup may take time in certain environments.
@@ -178,6 +144,8 @@ With certificate dir mounted  "--volume /PATH_TO_CERT_DIR/certificate:/usr/src/a
 The openapi specifications are stored in the 'api/&lt;version&gt;/'. If adding/replacing with a new file, make sure to copy the 'operationId' parameter for each operation to the new file.
 
 # Start and test of the simulator
+See also 'Basic test and code coverage'.
+
 First, download the sim/a1-interface repo on gerrit:
 git clone "https://gerrit.o-ran-sc.org/oransc/sim/a1-interface"
 
@@ -195,9 +163,19 @@ Note, the default port is 8085 for http and 8185 for https. When running the sim
 In a second terminal, go to the same folder and run the basic test script, basic\_test.sh nonsecure|secure or commands.sh nonsecure|secure depending on version.
 This script runs a number of tests towards the simulator to make sure it works properply.
 
-Only for version 1.1.x-alpha.2
-Let the simulator run in one terminal; in another terminal, one can run the command ./commands.sh nonsecure|secure. It contains the main requests, and will eventually leave the user with a policy type STD\_QoSNudging\_0.2.0 and a policy instance pi1 with an enforceStatus set to NOT\_ENFORCED and an enforce Reason set to 300.
-All the response codes should be 20X, otherwise something went wrong.
+# Basic test and code coverage
+
+Basic test, or unit test, using a python script is also supported. This test basically the same thing as the bash script mentioned in the section above. Follow the instruction of how to clone the repo described in that section.
+Only http is tested as the internal flask server is only using http (https is part of the webserver inteface).
+
+Navigate to 'near-rt-ric-simulator/tests'. This location contains one dir for each simulator version. Choose the version to test and go to that sub dir.
+
+Use 'python3 -m unittest' to run unit test only with no coverage check
+
+Or use 'coverage run  -m unittest' to run unit test and produce coverage data.
+List coverage data by 'coverage report -m --include=../../*' - the include flag makes the list to only contain coverage data from the simulator python file.
+
+To use the 'coverage' cmd, coverage need to be installed use 'pip install coverage'
 
 ## License
 

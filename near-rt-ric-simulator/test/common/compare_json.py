@@ -91,23 +91,37 @@ def compare_json(obj1, obj2):
     return True
 
 
-try:
-    #Read the input file and compare the two json (target->result)
-    jsonTarget = json.loads(sys.argv[1])
-    jsonResult = json.loads(sys.argv[2])
-    res1=compare_json(jsonTarget, jsonResult)
+# Compare two json object. Returns true if equal, false if not equal
+# This function is intended to be used from other python scipts using json object (instead of files)
+def compare(target, result):
+    try:
+        res1=compare_json(target, result)
+        res2=compare_json(target, result)
+        if (res1 and res2):
+            return True
+        else:
+            return False
+    except Exception:
+        return False
 
-    #Read the json again (in case the previous calls has re-arranged the jsons)
-    jsonTarget = json.loads(sys.argv[1])
-    jsonResult = json.loads(sys.argv[2])
-    #Compare the opposite order (result->target) to catch special duplicate json key cases
-    res2=compare_json(jsonResult, jsonTarget)
+if __name__ == '__main__':
+    try:
+        #Read the input file and compare the two json (target->result)
+        jsonTarget = json.loads(sys.argv[1])
+        jsonResult = json.loads(sys.argv[2])
+        res1=compare_json(jsonTarget, jsonResult)
 
-    if (res1 and res2):
-        print (0)
-    else:
+        #Read the json again (in case the previous calls has re-arranged the jsons)
+        jsonTarget = json.loads(sys.argv[1])
+        jsonResult = json.loads(sys.argv[2])
+        #Compare the opposite order (result->target) to catch special duplicate json key cases
+        res2=compare_json(jsonResult, jsonTarget)
+
+        if (res1 and res2):
+            print (0)
+        else:
+            print (1)
+
+    except Exception:
         print (1)
-
-except Exception as e:
-    print (1)
-sys.exit()
+    sys.exit()

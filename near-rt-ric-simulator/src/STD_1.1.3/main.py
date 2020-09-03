@@ -26,8 +26,10 @@ from pathlib import Path
 from flask import Flask, escape, request, Response
 from jsonschema import validate
 from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
-from maincommon import *
+from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
 
+#Constants
+TEXT_PLAIN='text/plain'
 
 check_apipath()
 
@@ -37,7 +39,7 @@ app = connexion.App(__name__, specification_dir=apipath)
 @app.route('/', methods=['GET'])
 def test():
 
-  return Response("OK", 200, mimetype='text/plain')
+  return Response("OK", 200, mimetype=TEXT_PLAIN)
 
 #Return the current and all supported yamls for the this container
 @app.route('/container_interfaces', methods=['GET'])
@@ -55,7 +57,7 @@ def delete_instances():
   forced_settings['code']=None
   forced_settings['delay']=None
   policy_fingerprint.clear()
-  return Response("All policy instances deleted", 200, mimetype='text/plain')
+  return Response("All policy instances deleted", 200, mimetype=TEXT_PLAIN)
 
 #Delete all - all reset
 #(same as delete_instances but kept to in order to use the same interface as other version of the simulator)
@@ -70,9 +72,9 @@ def forceresponse():
 
   try:
     forced_settings['code']=request.args.get('code')
-  except:
+  except Exception:
     forced_settings['code']=None
-  return Response("Force response code: " + str(forced_settings['code']) + " set for one single A1 response", 200, mimetype='text/plain')
+  return Response("Force response code: " + str(forced_settings['code']) + " set for one single A1 response", 200, mimetype=TEXT_PLAIN)
 
 #Set force delay response, in seconds, for all A1 responses
 #/froceesponse?delay=<seconds>
@@ -81,9 +83,9 @@ def forcedelay():
 
   try:
     forced_settings['delay']=request.args.get('delay')
-  except:
+  except Exception:
     forced_settings['delay']=None
-  return Response("Force delay: " + str(forced_settings['delay']) + " sec set for all A1 responses", 200, mimetype='text/plain')
+  return Response("Force delay: " + str(forced_settings['delay']) + " sec set for all A1 responses", 200, mimetype=TEXT_PLAIN)
 
 
 #Set status and reason
@@ -91,14 +93,14 @@ def forcedelay():
 @app.route('/status', methods=['PUT'])
 def setstatus():
 
-  policyId=request.args.get('policyid')
-  if (policyId is None):
-    return Response('Parameter <policyid> missing in request', status=400, mimetype='text/plain')
-  if policyId not in policy_instances.keys():
-    return Response('Policyid: '+policyId+' not found.', status=404, mimetype='text/plain')
+  policy_id=request.args.get('policyid')
+  if (policy_id is None):
+    return Response('Parameter <policyid> missing in request', status=400, mimetype=TEXT_PLAIN)
+  if policy_id not in policy_instances.keys():
+    return Response('Policyid: '+policy_id+' not found.', status=404, mimetype=TEXT_PLAIN)
   status=request.args.get('status')
   if (status is None):
-    return Response('Parameter <status> missing in request', status=400, mimetype='text/plain')
+    return Response('Parameter <status> missing in request', status=400, mimetype=TEXT_PLAIN)
   reason=request.args.get('reason')
   ps = {}
   ps["enforceStatus"] = status
@@ -106,9 +108,9 @@ def setstatus():
   if (reason is not None):
     ps["enforceReason"] = reason
     msg=msg+" and "+reason
-  policy_status[policyId] = ps
-  msg=msg+" for policy: " + policyId
-  return Response(msg, 200, mimetype='text/plain')
+  policy_status[policy_id] = ps
+  msg=msg+" for policy: " + policy_id
+  return Response(msg, 200, mimetype=TEXT_PLAIN)
 
 #Send status
 #/status?policyid=<policyid>
@@ -116,19 +118,19 @@ def setstatus():
 def sendstatus():
   policyid=request.args.get('policyid')
   if (policyid is None):
-    return Response('Parameter <policyid> missing in request', status=400, mimetype='text/plain')
+    return Response('Parameter <policyid> missing in request', status=400, mimetype=TEXT_PLAIN)
 
   if (policyid not in policy_status.keys()):
-    return Response('Policyid: '+policyid+' not found.', status=404, mimetype='text/plain')
+    return Response('Policyid: '+policyid+' not found.', status=404, mimetype=TEXT_PLAIN)
 
   ps=policy_status[policyid]
   cb=callbacks[policyid]
   try:
-    resp=requests.post(cb,json=json.dumps(ps), verify=False)
+    resp=requests.post(cb,json=json.dumps(ps), verify=False) # NOSONAR
   except:
-    return Response('Post status failed, could not send to: '+str(cb), status=500, mimetype='text/plain')
+    return Response('Post status failed, could not send to: '+str(cb), status=500, mimetype=TEXT_PLAIN)
   if (resp.status_code<199 & resp.status_code > 299):
-    return Response('Post status failed with code: '+resp.status_code, status=500, mimetype='text/plain')
+    return Response('Post status failed with code: '+resp.status_code, status=500, mimetype=TEXT_PLAIN)
 
   data = resp.json()
   return Response(data, 200, mimetype='application/json')
@@ -140,29 +142,29 @@ def statustest():
   try:
     data = request.data
     data = json.loads(data)
-  except:
-    return Response("The status data is corrupt or missing.", 400, mimetype='text/plain')
+  except Exception:
+    return Response("The status data is corrupt or missing.", 400, mimetype=TEXT_PLAIN)
 
   return Response(json.dumps(data), 200, mimetype='application/json')
 
 #Metrics function
 #Get a named counter
 @app.route('/counter/<string:countername>', methods=['GET'])
-def getCounter(countername):
+def getcounter(countername):
 
   if (countername == "num_instances"):
-    return Response(str(len(policy_instances)), 200, mimetype='text/plain')
+    return Response(str(len(policy_instances)), 200, mimetype=TEXT_PLAIN)
   elif (countername == "num_types"):
-    return Response("0",200, mimetype='text/plain')
+    return Response("0",200, mimetype=TEXT_PLAIN)
   elif (countername == "interface"):
     p=Path(os.getcwd())
     pp=p.parts
-    return Response(str(pp[len(pp)-1]),200, mimetype='text/plain')
+    return Response(str(pp[len(pp)-1]),200, mimetype=TEXT_PLAIN)
   elif (countername == "remote_hosts"):
     hosts=",".join(hosts_set)
     return str(hosts),200
   else:
-    return Response("Counter name: "+countername+" not found.",404, mimetype='text/plain')
+    return Response("Counter name: "+countername+" not found.",404, mimetype=TEXT_PLAIN)
 
 port_number = 2222
 if len(sys.argv) >= 2:
@@ -171,4 +173,5 @@ if len(sys.argv) >= 2:
 
 app.add_api('STD_A1.yaml')
 
-app.run(port=port_number, host="127.0.0.1", threaded=False)
+if __name__ == '__main__':
+  app.run(port=port_number, host="127.0.0.1", threaded=False)

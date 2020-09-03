@@ -47,7 +47,7 @@ RESULT="OK"
 do_curl GET / 200
 
 echo "=== Check used and implemented interfaces ==="
-RESULT="Current interface: OSC_2.1.0 All supported A1 interface yamls in this container: ['1.1.x-alpha.2', 'OSC_2.1.0', 'STD_1.1.3']"
+RESULT="Current interface: OSC_2.1.0 All supported A1 interface yamls in this container: ['OSC_2.1.0', 'STD_1.1.3']"
 do_curl GET /container_interfaces 200
 
 echo "=== Reset simulator instances ==="
@@ -136,11 +136,11 @@ do_curl GET '/a1-p/policytypes/1/policies/pi1/status' 200
 
 echo "=== Load a policy type: 2 ==="
 RESULT="Policy type 2 is OK."
-do_curl PUT '/policytype?id=2' 201 jsonfiles/pt1.json
+do_curl PUT '/policytype?id=2' 201 jsonfiles/pt2.json
 
 echo "=== Load a policy type: 2 again. ==="
 RESULT="Policy type 2 is OK."
-do_curl PUT '/policytype?id=2' 200 jsonfiles/pt1.json
+do_curl PUT '/policytype?id=2' 200 jsonfiles/pt2.json
 
 echo "=== API: Get policy type ids, shall contain type 1 and 2 =="
 RESULT="json:[ 1, 2 ]"
@@ -151,12 +151,12 @@ RESULT="json:[\"1\", \"2\"]"
 do_curl GET /policytypes 200
 
 echo "=== API: Get policy type 2 =="
-RESULT="json:{\"name\": \"pt1\", \"description\": \"pt1 policy type\", \"policy_type_id\": 1, \"create_schema\": {\"\$schema\": \"http://json-schema.org/draft-07/schema#\", \"title\": \"STD_QoSNudging_0.2.0\", \"description\": \"QoS policy type\", \"type\": \"object\", \"properties\": {\"scope\": {\"type\": \"object\", \"properties\": {\"ueId\": {\"type\": \"string\"}, \"qosId\": {\"type\": \"string\"}}, \"additionalProperties\": false, \"required\": [\"ueId\", \"qosId\"]}, \"statement\": {\"type\": \"object\", \"properties\": {\"priorityLevel\": {\"type\": \"number\"}}, \"additionalProperties\": false, \"required\": [\"priorityLevel\"]}}}}"
+RESULT="json:{\"name\": \"pt2\", \"description\": \"pt2 policy type\", \"policy_type_id\": 2, \"create_schema\": {\"\$schema\": \"http://json-schema.org/draft-07/schema#\", \"title\": \"STD_QoSNudging_0.2.0\", \"description\": \"QoS policy type\", \"type\": \"object\", \"properties\": {\"scope\": {\"type\": \"object\", \"properties\": {\"ueId\": {\"type\": \"string\"}, \"qosId\": {\"type\": \"string\"}}, \"additionalProperties\": false, \"required\": [\"ueId\", \"qosId\"]}, \"statement\": {\"type\": \"object\", \"properties\": {\"priorityLevel\": {\"type\": \"number\"}}, \"additionalProperties\": false, \"required\": [\"priorityLevel\"]}}}}"
 do_curl GET /a1-p/policytypes/2 200
 
 echo "=== Delete policy type: 2 ==="
 RESULT=""
-do_curl DELETE '/policytype?id=2' 204 jsonfiles/pt1.json
+do_curl DELETE '/policytype?id=2' 204 jsonfiles/pt2.json
 
 echo "=== API: Get policy type ids, shall contain type 1 =="
 RESULT="json:[ 1 ]"
@@ -167,8 +167,8 @@ RESULT="Policy type 2 is OK."
 do_curl PUT '/policytype?id=2' 201 jsonfiles/pt2.json
 
 echo "=== API: Get policy type 2 =="
-RESULT="json:{\"name\": \"pt1\", \"description\": \"pt1 policy type\", \"policy_type_id\": 1, \"create_schema\": {\"\$schema\": \"http://json-schema.org/draft-07/schema#\", \"title\": \"STD_QoSNudging_0.2.0\", \"description\": \"QoS policy type\", \"type\": \"object\", \"properties\": {\"scope\": {\"type\": \"object\", \"properties\": {\"ueId\": {\"type\": \"string\"}, \"qosId\": {\"type\": \"string\"}}, \"additionalProperties\": false, \"required\": [\"ueId\", \"qosId\"]}, \"statement\": {\"type\": \"object\", \"properties\": {\"priorityLevel\": {\"type\": \"number\"}}, \"additionalProperties\": false, \"required\": [\"priorityLevel\"]}}}}"
-do_curl GET /a1-p/policytypes/1 200
+RESULT="json:{\"name\": \"pt2\", \"description\": \"pt2 policy type\", \"policy_type_id\": 2, \"create_schema\": {\"\$schema\": \"http://json-schema.org/draft-07/schema#\", \"title\": \"STD_QoSNudging_0.2.0\", \"description\": \"QoS policy type\", \"type\": \"object\", \"properties\": {\"scope\": {\"type\": \"object\", \"properties\": {\"ueId\": {\"type\": \"string\"}, \"qosId\": {\"type\": \"string\"}}, \"additionalProperties\": false, \"required\": [\"ueId\", \"qosId\"]}, \"statement\": {\"type\": \"object\", \"properties\": {\"priorityLevel\": {\"type\": \"number\"}}, \"additionalProperties\": false, \"required\": [\"priorityLevel\"]}}}}"
+do_curl GET /a1-p/policytypes/2 200
 
 echo "=== API: Get instances for type 2, shall be empty ==="
 RESULT="json:[]"

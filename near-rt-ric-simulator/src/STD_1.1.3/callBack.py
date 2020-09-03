@@ -18,7 +18,7 @@
 import json
 from flask import Flask, request, Response
 
-app = Flask(__name__)
+app = Flask(__name__) #NOSONAR
 
 #Check alive function
 @app.route('/', methods=['GET'])
@@ -33,7 +33,7 @@ def statustest():
   try:
     data = request.data
     data = json.loads(data)
-  except:
+  except Exception:
     return Response("The status data is corrupt or missing.", 400, mimetype='text/plain')
 
   return Response(json.dumps(data), 200, mimetype='application/json')
