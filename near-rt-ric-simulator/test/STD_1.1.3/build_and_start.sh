@@ -27,4 +27,4 @@ docker build -t a1test .
 
 echo "Starting ric-sim"
 #Run the container in interactive mode, unsecure port 8085, secure port 8185
-docker run -it -p 8085:8085 -p 8185:8185 -e A1_VERSION=STD_1.1.3 -e ALLOW_HTTP=true -e REMOTE_HOSTS_LOGGING=1 --volume "$PWD/certificate:/usr/src/app/cert" a1test
+docker run -it -p 8085:8085 -p 8185:8185 -e A1_VERSION=STD_1.1.3 -e ALLOW_HTTP=true -e REMOTE_HOSTS_LOGGING=1 --volume "$PWD/certificate:/usr/src/app/cert" --name a1StdSimulator a1test
