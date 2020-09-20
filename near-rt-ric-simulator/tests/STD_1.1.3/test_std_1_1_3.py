@@ -26,9 +26,9 @@ import json
 
 #Constants for the test case
 INTERFACE_VERSION="STD_1.1.3"
-PORT_NUMBER=2224
-HOST_IP="127.0.0.1"
-SERVER_URL="http://127.0.0.1:"+str(PORT_NUMBER)+"/"
+PORT_NUMBER="2224"
+HOST_IP="localhost"
+SERVER_URL="http://"+HOST_IP+":"+PORT_NUMBER+"/"
 
 cwd=os.getcwd()+"/"
 # Env TESTS_BASE_PATH is set when executed via tox.ini
@@ -342,7 +342,7 @@ class TestCase1(TestCase):
 
         # API: Update policy instance pi2
         # Reuse same policy data
-        response=requests.put(SERVER_URL+'A1-P/v1/policies/pi2?notificationDestination=http://localhost:2224/statustest', headers=header, data=json.dumps(data_pi2))
+        response=requests.put(SERVER_URL+'A1-P/v1/policies/pi2?notificationDestination=http://'+HOST_IP+':'+PORT_NUMBER+'/statustest', headers=header, data=json.dumps(data_pi2))
         self.assertEqual(response.status_code, 200)
         result=json.loads(response.text)
         res=compare(data_pi2, result)
