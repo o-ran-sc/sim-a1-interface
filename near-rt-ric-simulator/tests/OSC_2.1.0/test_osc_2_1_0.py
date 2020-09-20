@@ -27,9 +27,9 @@ import json
 
 #Constants for the test case
 INTERFACE_VERSION="OSC_2.1.0"
-PORT_NUMBER=2222
-HOST_IP="127.0.0.1"
-SERVER_URL="http://127.0.0.1:"+str(PORT_NUMBER)+"/"
+PORT_NUMBER="2222"
+HOST_IP="localhost"
+SERVER_URL="http://"+HOST_IP+":"+PORT_NUMBER+"/"
 
 cwd=os.getcwd()+"/"
 # Env TESTS_BASE_PATH is set when executed via tox.ini
