@@ -17,55 +17,25 @@
 
 # This test case test the OSC_2.1.0 version of the simulator
 
-import pytest
-import sys
-import os
 import json
 
-
-#Constants for the test case
+#Version of simulator
 INTERFACE_VERSION="OSC_2.1.0"
-PORT_NUMBER="2222"
-HOST_IP="localhost"
-SERVER_URL="http://"+HOST_IP+":"+PORT_NUMBER+"/"
 
-cwd=os.getcwd()+"/"
-# Env TESTS_BASE_PATH is set when executed via tox.ini
-# If basic test is executed from cmd line, that env var is not needed
-if 'TESTS_BASE_PATH' in os.environ:
-     cwd=os.environ['TESTS_BASE_PATH']+"/"+INTERFACE_VERSION+"/"
-TESTDATA=cwd+"/../../test/"+INTERFACE_VERSION+"/jsonfiles/"
+from unittest_setup import SERVER_URL, setup_env, get_testdata_dir, client
 
-#Env var to setup version and host logging
-os.environ['APIPATH'] = cwd+"/../../api/"+INTERFACE_VERSION
-os.environ['REMOTE_HOSTS_LOGGING'] = "ON"
+#Setup env and import paths
+setup_env(INTERFACE_VERSION)
 
-# Paths need to run the sim, including needed source file dirs
-sys.path.append(os.path.abspath(cwd+'../../src/common'))
-sys.path.append(os.path.abspath(cwd+'../../test/common'))
-sys.path.append(os.path.abspath(cwd+'../../src/'+INTERFACE_VERSION))
-os.chdir(cwd+"../../src/"+INTERFACE_VERSION)
-
-import main
-from main import app
 from compare_json import compare
-
-@pytest.fixture
-def client():
-    with app.app.test_client() as c:
-        yield c
 
 def test_apis(client):
 
-    # Header for json payload
-    header = {
-        "Content-Type" : "application/json"
-    }
+    testdata=get_testdata_dir()
 
     # Simulator hello world
     response=client.get(SERVER_URL)
     assert response.status_code == 200
-
 
     # Check used and implemented interfaces
     response=client.get(SERVER_URL+'container_interfaces')
@@ -100,14 +70,19 @@ def test_apis(client):
     response=client.get(SERVER_URL+'a1-p/policytypes/1/policies')
     assert response.status_code == 404
 
+    # Header for json payload
+    header = {
+        "Content-Type" : "application/json"
+    }
+
     # API: Put a policy type: 1
-    with open(TESTDATA+'pt1.json') as json_file:
+    with open(testdata+'pt1.json') as json_file:
         policytype_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1', headers=header, data=json.dumps(policytype_1))
         assert response.status_code == 201
 
     # API: Put a policy type: 1 again
-    with open(TESTDATA+'pt1.json') as json_file:
+    with open(testdata+'pt1.json') as json_file:
         policytype_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1', headers=header, data=json.dumps(policytype_1))
         assert response.status_code == 201
@@ -125,7 +100,7 @@ def test_apis(client):
     assert res == True
 
     # API: Put a policy type: 1
-    with open(TESTDATA+'pt1.json') as json_file:
+    with open(testdata+'pt1.json') as json_file:
         policytype_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1', headers=header, data=json.dumps(policytype_1))
         assert response.status_code == 201
@@ -147,13 +122,13 @@ def test_apis(client):
     assert res == True
 
     # API: Create policy instance pi1 of type: 1
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1/policies/pi1', headers=header, data=json.dumps(policy_1))
         assert response.status_code == 202
 
     # API: Get policy instance pi1 of type: 1
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_1 = json.load(json_file)
         response=client.get(SERVER_URL+'a1-p/policytypes/1/policies/pi1')
         assert response.status_code == 200
@@ -162,13 +137,13 @@ def test_apis(client):
         assert res == True
 
     # API: Update policy instance pi1 of type: 1
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1/policies/pi1', headers=header, data=json.dumps(policy_1))
         assert response.status_code == 202
 
     # API: Update policy type: 1, shall fail
-    with open(TESTDATA+'pt1.json') as json_file:
+    with open(testdata+'pt1.json') as json_file:
         policytype_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1', headers=header, data=json.dumps(policytype_1))
         assert response.status_code == 400
@@ -182,7 +157,7 @@ def test_apis(client):
     assert res == True
 
     # API: Create policy instance pi2 (copy of pi1) of type: 1. Shall fail
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_2 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1/policies/pi2', headers=header, data=json.dumps(policy_2))
         assert response.status_code == 400
@@ -208,14 +183,14 @@ def test_apis(client):
     assert res == True
 
     # Load a policy type: 2
-    with open(TESTDATA+'pt2.json') as json_file:
+    with open(testdata+'pt2.json') as json_file:
         policytype_2 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype?id=2', headers=header, data=json.dumps(policytype_2))
         assert response.status_code == 201
         assert response.data == b"Policy type 2 is OK."
 
     # Load a policy type: 2, again
-    with open(TESTDATA+'pt2.json') as json_file:
+    with open(testdata+'pt2.json') as json_file:
         policytype_2 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype?id=2', headers=header, data=json.dumps(policytype_2))
         assert response.status_code == 200
@@ -238,7 +213,7 @@ def test_apis(client):
     assert res == True
 
     # API: Get policy type 2
-    with open(TESTDATA+'pt2.json') as json_file:
+    with open(testdata+'pt2.json') as json_file:
         policytype_2 = json.load(json_file)
         response=client.get(SERVER_URL+'a1-p/policytypes/2')
         assert response.status_code == 200
@@ -259,14 +234,14 @@ def test_apis(client):
     assert res == True
 
     # Load a policy type: 2
-    with open(TESTDATA+'pt2.json') as json_file:
+    with open(testdata+'pt2.json') as json_file:
         policytype_2 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype?id=2', headers=header, data=json.dumps(policytype_2))
         assert response.status_code == 201
         assert response.data == b"Policy type 2 is OK."
 
     # API: Get policy type 2
-    with open(TESTDATA+'pt2.json') as json_file:
+    with open(testdata+'pt2.json') as json_file:
         policytype_2 = json.load(json_file)
         response=client.get(SERVER_URL+'a1-p/policytypes/2')
         assert response.status_code == 200
@@ -283,24 +258,24 @@ def test_apis(client):
     assert res == True
 
     # API: Create policy instance pi1 of type: 2, shall fail
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/2/policies/pi1', headers=header, data=json.dumps(policy_1))
         assert response.status_code == 400
 
     # API: Create policy instance pi2 of type: 2. Missing param, shall fail
-    with open(TESTDATA+'pi2_missing_param.json') as json_file:
+    with open(testdata+'pi2_missing_param.json') as json_file:
         policy_2 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/2/policies/pi1', headers=header, data=json.dumps(policy_2))
         assert response.status_code == 400
 
     # API: Create policy instance pi2 of type: 2
-    with open(TESTDATA+'pi2.json') as json_file:
+    with open(testdata+'pi2.json') as json_file:
         policy_2 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/2/policies/pi2', headers=header, data=json.dumps(policy_2))
         assert response.status_code == 202
 
-    with open(TESTDATA+'pi2.json') as json_file:
+    with open(testdata+'pi2.json') as json_file:
         policy_2 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/2/policies/pi2', headers=header, data=json.dumps(policy_2))
         assert response.status_code == 202
@@ -322,7 +297,7 @@ def test_apis(client):
     assert res == True
 
     # API: Create policy instance pi11 (copy of pi1) of type: 1. Shall fail
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1/policies/pi11', headers=header, data=json.dumps(policy_1))
         assert response.status_code == 400
@@ -469,7 +444,7 @@ def test_apis(client):
     response=client.post(SERVER_URL+'forceresponse?code=503')
     assert response.status_code == 200
 
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_1 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1/policies/pi11', headers=header, data=json.dumps(policy_1))
         assert response.status_code == 503
@@ -504,7 +479,7 @@ def test_apis(client):
     assert response.status_code == 404
 
     # API: Create policy instance pi80 of type: 5
-    with open(TESTDATA+'pi1.json') as json_file:
+    with open(testdata+'pi1.json') as json_file:
         policy_80 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/5/policies/pi80', headers=header, data=json.dumps(policy_80))
         assert response.status_code == 404
@@ -523,13 +498,13 @@ def test_apis(client):
     assert response.status_code == 404
 
     # Load policy type, no type in url - shall faill
-    with open(TESTDATA+'pt2.json') as json_file:
+    with open(testdata+'pt2.json') as json_file:
         policytype_2 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype', headers=header, data=json.dumps(policytype_2))
         assert response.status_code == 400
 
     # Load policy type - duplicatee - shall faill
-    with open(TESTDATA+'pt1.json') as json_file:
+    with open(testdata+'pt1.json') as json_file:
         policytype_1 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype?id=2', headers=header, data=json.dumps(policytype_1))
         assert response.status_code == 400

@@ -17,49 +17,19 @@
 
 # This test case test the STD_1.1.3 version of the simulator
 
-import pytest
-import sys
-import os
 import json
 
-#Constants for the test case
+#Version of simulator
 INTERFACE_VERSION="STD_1.1.3"
-PORT_NUMBER="2224"
-HOST_IP="localhost"
-SERVER_URL="http://"+HOST_IP+":"+PORT_NUMBER+"/"
 
-cwd=os.getcwd()+"/"
-# Env TESTS_BASE_PATH is set when executed via tox.ini
-# If basic test is executed from cmd line, that env var is not needed
-if 'TESTS_BASE_PATH' in os.environ:
-     cwd=os.environ['TESTS_BASE_PATH']+"/"+INTERFACE_VERSION+"/"
-TESTDATA=cwd+"/../../test/"+INTERFACE_VERSION+"/jsonfiles/"
+from unittest_setup import SERVER_URL, HOST_IP, PORT_NUMBER, setup_env, client
 
-#Env var to setup api version and host logging
-os.environ['APIPATH'] = cwd+"/../../api/"+INTERFACE_VERSION
-os.environ['REMOTE_HOSTS_LOGGING'] = "ON"
+#Setup env and import paths
+setup_env(INTERFACE_VERSION)
 
-# Paths need to run the sim, including needed source file dirs
-sys.path.append(os.path.abspath(cwd+'../../src/common'))
-sys.path.append(os.path.abspath(cwd+'../../test/common'))
-sys.path.append(os.path.abspath(cwd+'../../src/'+INTERFACE_VERSION))
-os.chdir(cwd+"../../src/"+INTERFACE_VERSION)
-
-import main
-from main import app
 from compare_json import compare
 
-@pytest.fixture
-def client():
-    with app.app.test_client() as c:
-        yield c
-
 def test_apis(client):
-
-    # header for json payload
-    header = {
-        "Content-Type" : "application/json"
-    }
 
     # Simulator hello world
     response=client.get(SERVER_URL)
@@ -98,6 +68,10 @@ def test_apis(client):
         "statement": {
             "priorityLevel": 5
         }
+    }
+    # header for json payload
+    header = {
+        "Content-Type" : "application/json"
     }
     response=client.put(SERVER_URL+'A1-P/v1/policies/pi1', headers=header, data=json.dumps(data_pi1))
     assert response.status_code == 201

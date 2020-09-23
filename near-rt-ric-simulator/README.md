@@ -16,7 +16,8 @@ The overall folder structure is \(relative to the location of this README file\)
 |.                 |Dockerfile and README |
 |api               |The open api yaml for each supported version |
 |src               |Python source code for each supported version |
-|test              |Basic test |
+|test              |Basic test using script|
+|tests             |Basic test using pytest unit test|
 |certificate       |A self-signed certificate and a key
 
 The simulator handles the requests that are defined in the A1 open API yaml file. All these requests are implemented in the a1.py file in the source folder. In addition, a number of administrative functions are also supported and implemented by the main.py in the source folder.
@@ -168,11 +169,11 @@ This script runs a number of tests towards the simulator to make sure it works p
 Basic test, or unit test, using a python script is also supported. This test basically the same thing as the bash script mentioned in the section above. Follow the instruction of how to clone the repo described in that section.
 Only http is tested as the internal flask server is only using http (https is part of the webserver inteface).
 
-Navigate to 'near-rt-ric-simulator/tests'. This location contains one dir for each simulator version. Choose the version to test and go to that sub dir.
+Navigate to 'near-rt-ric-simulator/tests'. Choose the version to test and use that file for test.
 
-Use 'python3 -m unittest' to run unit test only with no coverage check
+Use 'python3 -m pytest <filename>' to run unit test only with no coverage check
 
-Or use 'coverage run  -m unittest' to run unit test and produce coverage data.
+Or use 'coverage run  -m pytest <filename>' to run unit test and produce coverage data.
 List coverage data by 'coverage report -m --include=../../*' - the include flag makes the list to only contain coverage data from the simulator python file.
 
 To use the 'coverage' cmd, coverage need to be installed use 'pip install coverage'
