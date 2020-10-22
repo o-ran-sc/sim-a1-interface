@@ -7,3 +7,7 @@ docs/_build/
 # IDE
 .project
 .vscode
+
+.coverage
+coverage.xml
+htmlcov/

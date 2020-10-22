@@ -25,7 +25,7 @@ import requests
 from pathlib import Path
 from flask import Flask, escape, request, Response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
+from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, data_delivery_counter
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
 
 #Constants
@@ -51,7 +51,8 @@ def container_interfaces():
 @app.route('/deleteinstances', methods=['POST'])
 def delete_instances():
 
-  policy_instances.clear()
+  for i in policy_instances.keys():
+    policy_instances[i]={}
   policy_status.clear()
   callbacks.clear()
   forced_settings['code']=None
@@ -63,7 +64,68 @@ def delete_instances():
 #(same as delete_instances but kept to in order to use the same interface as other version of the simulator)
 @app.route('/deleteall', methods=['POST'])
 def delete_all():
-  return delete_instances()
+
+  policy_instances.clear()
+  policy_types.clear()
+  policy_status.clear()
+  callbacks.clear()
+  forced_settings['code']=None
+  forced_settings['delay']=None
+  policy_fingerprint.clear()
+  return Response("All policy instances and types deleted", 200, mimetype=TEXT_PLAIN)
+
+#Load a policy type
+@app.route('/policytype', methods=['PUT'])
+def policytype():
+
+  policy_type_id=request.args.get('id')
+  if (policy_type_id is None):
+    return Response('Parameter <id> missing in request', status=400, mimetype=TEXT_PLAIN)
+
+  try:
+    data = request.data
+    data = json.loads(data)
+  except Exception:
+    return Response("The policy type is corrupt or missing", 400, mimetype=TEXT_PLAIN)
+
+  if ('policySchema' not in data.keys()):
+    return Response("The policy type atribute policySchema is missing", 400, mimetype=TEXT_PLAIN)
+
+  retcode=201
+  if (policy_type_id in policy_types.keys()):
+    retcode=200
+    if (len(policy_instances[policy_type_id]) > 0):
+      return Response("The policy type already exists and instances exists", 400, mimetype=TEXT_PLAIN)
+
+  policy_types[policy_type_id]=data
+  policy_instances[policy_type_id]={}
+  return Response("Policy type " + policy_type_id + " is OK.", retcode, mimetype=TEXT_PLAIN)
+
+#Delete a policy type
+@app.route('/policytype', methods=['DELETE'])
+def del_policytype():
+
+  policy_type_id=request.args.get('id')
+  if (policy_type_id is None):
+    return Response('Parameter <id> missing in request', status=400, mimetype=TEXT_PLAIN)
+
+  if (policy_type_id in policy_types.keys()):
+    if (len(policy_instances[policy_type_id]) > 0):
+      return Response("The policy type already exists and instances exists", 400, mimetype=TEXT_PLAIN)
+
+    del policy_types[policy_type_id]
+    del policy_instances[policy_type_id]
+    return Response("Policy type " + policy_type_id + " is OK.", 204, mimetype=TEXT_PLAIN)
+
+  return Response("Policy type " + policy_type_id + " not found.", 204, mimetype=TEXT_PLAIN)
+
+
+# Get all policy type ids
+@app.route('/policytypes', methods=['GET'])
+def get_policytype_ids():
+
+  return (json.dumps(list(policy_instances.keys())), 200)
+
 
 #Set force response for one A1 response
 #/forceresponse?code=<responsecode>
@@ -96,7 +158,7 @@ def setstatus():
   policy_id=request.args.get('policyid')
   if (policy_id is None):
     return Response('Parameter <policyid> missing in request', status=400, mimetype=TEXT_PLAIN)
-  if policy_id not in policy_instances.keys():
+  if policy_id not in policy_status.keys():
     return Response('Policyid: '+policy_id+' not found.', status=404, mimetype=TEXT_PLAIN)
   status=request.args.get('status')
   if (status is None):
@@ -126,6 +188,7 @@ def sendstatus():
   ps=policy_status[policyid]
   cb=callbacks[policyid]
   try:
+    print("Callback url: " + str(cb))
     resp=requests.post(cb,json=json.dumps(ps), verify=False) # NOSONAR
   except:
     return Response('Post status failed, could not send to: '+str(cb), status=500, mimetype=TEXT_PLAIN)
@@ -147,15 +210,28 @@ def statustest():
 
   return Response(json.dumps(data), 200, mimetype='application/json')
 
+#Receive a data delivery package
+#/datadelivery
+@app.route('/datadelivery', methods=['POST'])
+def datadelivery():
+  global data_delivery_counter
+  try:
+    data = request.data
+    data = json.loads(data)
+  except Exception:
+    return Response("The data is corrupt or missing.", 400, mimetype=TEXT_PLAIN)
+  data_delivery_counter += 1
+  return Response("", 200, mimetype=TEXT_PLAIN)
+
 #Metrics function
 #Get a named counter
 @app.route('/counter/<string:countername>', methods=['GET'])
 def getcounter(countername):
 
   if (countername == "num_instances"):
-    return Response(str(len(policy_instances)), 200, mimetype=TEXT_PLAIN)
+    return Response(str(len(policy_fingerprint)), 200, mimetype=TEXT_PLAIN)
   elif (countername == "num_types"):
-    return Response("0",200, mimetype=TEXT_PLAIN)
+    return Response(str(len(policy_instances)),200, mimetype=TEXT_PLAIN)
   elif (countername == "interface"):
     p=Path(os.getcwd())
     pp=p.parts
@@ -164,7 +240,7 @@ def getcounter(countername):
     hosts=",".join(hosts_set)
     return str(hosts),200
   elif (countername == "datadelivery"):
-    return Response(str(0),200, mimetype=TEXT_PLAIN)
+    return Response(str(data_delivery_counter),200, mimetype=TEXT_PLAIN)
   else:
     return Response("Counter name: "+countername+" not found.",404, mimetype=TEXT_PLAIN)
 
@@ -173,7 +249,7 @@ if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-app.add_api('STD_A1.yaml')
+app.add_api('ORAN_A1-p_V2.0.0_api.yaml')
 
 if __name__ == '__main__':
   app.run(port=port_number, host="127.0.0.1", threaded=False)

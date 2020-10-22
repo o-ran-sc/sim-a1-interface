@@ -7,6 +7,7 @@ The simulator supports multiple A1 interface versions (version of the open API y
 | --------------------- | ------------------- |
 | OSC 2.1.0,            |      OSC\_2.1.0     |
 | A1 Standard 1.1.3,    |      STD\_1.1.3     |
+| A1 Standard 2.0.0,    |      STD\_2.0.0     |
 
 All versions are supported by the same container, see section 'Configuring the simulator' below for details about how to the start the simulator with the intended version id.
 
@@ -87,7 +88,7 @@ URIs for A1:
 |  PUT a policy instance(create or update it) | http://localhost:8085/A1-P/v1/policies/{policyId} |
 |  GET a policy | http://localhost:8085/A1-P/v1/policies/{policyId} |
 |  DELETE a policy instance | http://localhost:8085/A1-P/v1/policies/{policyId} |
-|  GET a policy status | http://localhost:8085/A1-P/v1/policies/{policyid} |
+|  GET a policy status | http://localhost:8085/A1-P/v1/policies/{policyid}/status |
 Swagger UI at: http://localhost:8085/A1-P/v1/ui/
 
 For the documentation of the admin API, see [A1 Standard 1.1.3](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#a1-standard-1-1-3).
@@ -104,6 +105,41 @@ URIs for admin operations:
 |  PUT, set status and optional reason | http://localhost:8085/status?status=&lt;status&gt;[&amp;reason=&lt;reason&gt;] |
 |  POST, send status for policy | http://localhost:8085/sendstatus?policyid=&lt;policyid&gt; |
 |  GET a counter <br> (counter-name: 'num\_instances', 'num\_types'(always 0), 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
+
+# Supported operations in simulator A1 Standard 2.0.0
+
+For the complete yaml specification, see [ORAN_A1-p_V2.0.0_api.yaml](../near-rt-ric-simulator/api/STD_2.0.0/ORAN_A1-p_V2.0.0_api.yaml).
+
+URIs for A1:
+| Function              | Path and parameters |
+| --------------------- | ------------------- |
+|  GET all policy type identities | http://localhost:8085/A1-P/v2/policytypes |
+|  GET a policy type | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId} |
+|  GET all policy identities | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies |
+|  PUT a policy instance(create or update it) | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies/{policyId} |
+|  GET a policy | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies/{policyId} |
+|  DELETE a policy instance | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies/{policyId} |
+|  GET a policy status | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies/{policyid}/status |
+Swagger UI at: http://localhost:8085/A1-P/v2/ui/
+
+For the documentation of the admin API, see [A1 Standard 2.0.0](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#a1-standard-2-0-0).
+
+URIs for admin operations:
+| Function              | Path and parameters |
+| --------------------- | ------------------- |
+|  GET, a basic healthcheck | http://localhost:8085/ |
+|  GET, a list of all supported interfaces | http://localhost:8085/container\_interfaces |
+|  POST, delete all policy instances | http://localhost:8085/deleteinstances |
+|  POST, full reset | http://localhost:8085/deleteall |
+|  PUT, create/update a policy type | http://localhost:8085/policytype?id=&lt;policytypeid&gt; |
+|  DELETE, delete a policy type | http://localhost:8085/policytype?id=&lt;policytypeid&gt; |
+|  GET, list of policy type id | http://localhost:8085/policytypes |
+|  POST, force a specific response code for an A1 operation | http://localhost:8085/forceresponse?code=&lt;http-code&gt; |
+|  POST, force delayed response of all A1 operations | http://localhost:8085/forcedelay?delay=&lt;seconds&gt; |
+|  PUT, set status and optional reason | http://localhost:8085/status?status=&lt;status&gt;[&amp;reason=&lt;reason&gt;] |
+|  POST, send status for policy | http://localhost:8085/sendstatus?policyid=&lt;policyid&gt; |
+|  POST, deliver data | http://localhost:8085/datadelivery |
+|  GET a counter <br> (counter-name: 'num\_instances', 'num\_types'(always 0), 'interface', 'remote\_hosts' or 'datadelivery') | http://localhost:8085/counter/&lt;counter-name&gt; |
 
 
 

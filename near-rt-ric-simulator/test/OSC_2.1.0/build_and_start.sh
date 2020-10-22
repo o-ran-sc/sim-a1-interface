@@ -25,6 +25,9 @@ cd ../../
 #Build the image
 docker build -t a1test .
 
+docker stop a1OscSimulator > /dev/null 2>&1
+docker rm -f a1OscSimulator > /dev/null 2>&1
+
 echo "Starting $1 mode"
 #Run the container in interactive mode, unsecure port 8085, secure port 8185.
 docker run -it -p 8085:8085 -p 8185:8185 -e A1_VERSION=OSC_2.1.0 -e ALLOW_HTTP=true -e REMOTE_HOSTS_LOGGING=1 --volume "$PWD/certificate:/usr/src/app/cert" --name a1OscSimulator a1test

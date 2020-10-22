@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -17,17 +15,13 @@
 #  ============LICENSE_END=================================================
 #
 
-# Script to build and start the container
-
-echo "Building image"
-cd ../../
-
-#Build the image
-docker build -t a1test .
-
-docker stop a1StdSimulator > /dev/null 2>&1
-docker rm -f a1StdSimulator > /dev/null 2>&1
-
-echo "Starting ric-sim"
-#Run the container in interactive mode, unsecure port 8085, secure port 8185
-docker run -it -p 8085:8085 -p 8185:8185 -e A1_VERSION=STD_1.1.3 -e ALLOW_HTTP=true -e REMOTE_HOSTS_LOGGING=1 --volume "$PWD/certificate:/usr/src/app/cert" --name a1StdSimulator a1test
+policy_types={}
+policy_instances = {}
+policy_status = {}
+callbacks = {}
+forced_settings = {}
+forced_settings['code']=None
+forced_settings['delay']=None
+policy_fingerprint={}
+hosts_set=set()
+data_delivery_counter=0

@@ -206,6 +206,8 @@ def getcounter(countername):
   elif (countername == "remote_hosts"):
     hosts=",".join(hosts_set)
     return str(hosts),200
+  elif (countername == "datadelivery"):
+    return Response(str(0),200, mimetype=TEXT_PLAIN)
   else:
     return Response("Counter name: "+countername+" not found.",404, mimetype=TEXT_PLAIN)
 

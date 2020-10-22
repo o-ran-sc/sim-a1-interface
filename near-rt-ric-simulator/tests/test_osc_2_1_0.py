@@ -40,7 +40,7 @@ def test_apis(client):
     # Check used and implemented interfaces
     response=client.get(SERVER_URL+'container_interfaces')
     assert response.status_code == 200
-    assert response.data ==  b"Current interface: OSC_2.1.0  All supported A1 interface yamls in this container: ['OSC_2.1.0', 'STD_1.1.3']"
+    assert response.data ==  b"Current interface: OSC_2.1.0  All supported A1 interface yamls in this container: ['OSC_2.1.0', 'STD_1.1.3', 'STD_2.0.0']"
 
     # Reset simulator instances
     response=client.post(SERVER_URL+'deleteinstances')

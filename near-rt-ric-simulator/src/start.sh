@@ -41,7 +41,7 @@ cd $1
 nginx -c /usr/src/app/nginx.conf
 
 #start callBack server
-if [ ${A1_VERSION} == "STD_1.1.3" ]; then
+if [[ ${A1_VERSION} == "STD"* ]]; then
     echo "Path to callBack.py: "$PWD
     python -u callBack.py &
 fi

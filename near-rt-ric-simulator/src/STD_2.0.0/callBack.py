@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2020 Nordix Foundation. All rights reserved.
 #  ========================================================================
@@ -17,17 +15,29 @@
 #  ============LICENSE_END=================================================
 #
 
-# Script to build and start the container
+import json
+from flask import Flask, request, Response
 
-echo "Building image"
-cd ../../
+app = Flask(__name__) #NOSONAR
 
-#Build the image
-docker build -t a1test .
+#Check alive function
+@app.route('/', methods=['GET'])
+def test():
 
-docker stop a1StdSimulator > /dev/null 2>&1
-docker rm -f a1StdSimulator > /dev/null 2>&1
+  return Response("OK", 200, mimetype='text/plain')
 
-echo "Starting ric-sim"
-#Run the container in interactive mode, unsecure port 8085, secure port 8185
-docker run -it -p 8085:8085 -p 8185:8185 -e A1_VERSION=STD_1.1.3 -e ALLOW_HTTP=true -e REMOTE_HOSTS_LOGGING=1 --volume "$PWD/certificate:/usr/src/app/cert" --name a1StdSimulator a1test
+#Receive status (only for testing callbacks)
+#/statustest
+@app.route('/statustest', methods=['POST', 'PUT'])
+def statustest():
+  try:
+    data = request.data
+    data = json.loads(data)
+  except Exception:
+    return Response("The status data is corrupt or missing.", 400, mimetype='text/plain')
+
+  return Response(json.dumps(data), 200, mimetype='application/json')
+
+port_number = 2223
+
+app.run(port=port_number, host="127.0.0.1", threaded=False)

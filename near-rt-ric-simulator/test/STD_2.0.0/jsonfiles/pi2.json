@@ -1,0 +1,10 @@
+{
+  "scope": {
+    "ueId": "ue2",
+    "qosId": "qos2"
+  },
+  "statement": {
+    "priorityLevel": 5
+  }
+}
+

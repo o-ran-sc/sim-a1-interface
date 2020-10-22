@@ -47,7 +47,7 @@ RESULT="OK"
 do_curl GET / 200
 
 echo "=== Check used and implemented interfaces ==="
-RESULT="Current interface: OSC_2.1.0 All supported A1 interface yamls in this container: ['OSC_2.1.0', 'STD_1.1.3']"
+RESULT="Current interface: OSC_2.1.0 All supported A1 interface yamls in this container: ['OSC_2.1.0', 'STD_1.1.3', 'STD_2.0.0']"
 do_curl GET /container_interfaces 200
 
 echo "=== Reset simulator instances ==="

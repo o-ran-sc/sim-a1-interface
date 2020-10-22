@@ -36,7 +36,7 @@ do_curl() {
     if [ $# -gt 3 ]; then
         curlstr=$curlstr" -H Content-Type:application/json --data-binary @"$4
     fi
-    echo "  CMD:"$curlstr
+    echo "  CMD (${BASH_LINENO[0]}):"$curlstr
     res=$($curlstr)
     status=${res:${#res}-3}
     body=${res:0:${#res}-3}
@@ -53,7 +53,6 @@ do_curl() {
         elif [[ "$RESULT" == "json:"* ]]; then
             result=${RESULT:5:${#RESULT}} #Remove 'json:' from the result string
             res=$(python ../common/compare_json.py "$result" "$body")
-            echo $res
             if [ $res -eq 0 ]; then
                 echo "  Expected json body :"$result
                 echo "  Body as expected"
