@@ -12,10 +12,11 @@
 A1 Simulator Overview
 =====================
 
-The A1 Simulator terminates the A1 interface and provides a way of testing services without the need for any real
-Near |nbh| RT |nbsp| RICs.
+The A1 Simulator terminates the A1 interface and provides a way to test Non-RT RIC services without the need to deploy Near |nbh| RT |nbsp| RICs.
 
 Apart from providing the A1 API, the simulator also provides an administrative API to manage policy types and manipulate
 the simulator, see ":ref:`simulator-api`".
 
-For information on how to run the simulator, see the README.md file in the repository.
+The A1 Simulator supports running multiple simulations using different versions of the A1 Application protocol and A1 Policy behaviors.
+
+For information on how to run the simulator, see the *README.md* file in the repository.
