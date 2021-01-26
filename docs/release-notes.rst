@@ -67,6 +67,6 @@ Cherry
 |                             |                                                       |
 +-----------------------------+-------------------------------------------------------+
 | **Purpose of the delivery** | Add support for ORAN Spec A1-P v2 and introduce       |
-|                             | Enrichement simulator.                                |
+|                             | Enrichment simulator.                                |
 |                             |                                                       |
 +-----------------------------+-------------------------------------------------------+
