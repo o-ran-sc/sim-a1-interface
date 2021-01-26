@@ -1,6 +1,6 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
-.. Copyright (C) 2020 Nordix
+.. Copyright (C) 2021 Nordix
 
 =============
 Release-Notes
@@ -67,6 +67,6 @@ Cherry
 |                             |                                                       |
 +-----------------------------+-------------------------------------------------------+
 | **Purpose of the delivery** | Add support for ORAN Spec A1-P v2 and introduce       |
-|                             | Enrichement simulator.                                |
+|                             | Enrichment simulator.                                 |
 |                             |                                                       |
 +-----------------------------+-------------------------------------------------------+
