@@ -1,0 +1,8 @@
+Verified+1: ORAN Jobbuilder <releng+oran-jobbuilder@linuxfoundation.org>
+Verified+1: Maxime Bonneau <maxime.bonneau@est.tech>
+Code-Review+2: Maxime Bonneau <maxime.bonneau@est.tech>
+Submitted-by: Maxime Bonneau <maxime.bonneau@est.tech>
+Submitted-at: Wed, 02 Jun 2021 13:06:02 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/sim/a1-interface/+/6197
+Project: sim/a1-interface
+Branch: refs/heads/master
