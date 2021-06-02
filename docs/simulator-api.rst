@@ -10,7 +10,7 @@ Simulator API
 
 This document describes the API used to manage policy types and manipulate the simulator.
 
-The simulator supports different versions of the A1 interface. Some functions are common for all version, and some are
+The simulator supports different versions of the A1 interface. Some functions are common for all versions, and some are
 specific for a certain version.
 
 Common Functions
