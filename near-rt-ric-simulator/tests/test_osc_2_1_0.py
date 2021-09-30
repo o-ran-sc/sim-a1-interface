@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -156,11 +156,15 @@ def test_apis(client):
     res=compare(data_policies_get, result)
     assert res == True
 
-    # API: Create policy instance pi2 (copy of pi1) of type: 1. Shall fail
+    # API: Create policy instance pi2 (copy of pi1) of type: 1.
     with open(testdata+'pi1.json') as json_file:
         policy_2 = json.load(json_file)
         response=client.put(SERVER_URL+'a1-p/policytypes/1/policies/pi2', headers=header, data=json.dumps(policy_2))
-        assert response.status_code == 400
+        assert response.status_code == 202
+
+    # API: DELETE policy instance pi1
+    response=client.delete(SERVER_URL+'a1-p/policytypes/1/policies/pi2')
+    assert response.status_code == 202
 
     # Set force response code 401
     response=client.post(SERVER_URL+'forceresponse?code=401')
@@ -266,7 +270,7 @@ def test_apis(client):
     # API: Create policy instance pi2 of type: 2. Missing param, shall fail
     with open(testdata+'pi2_missing_param.json') as json_file:
         policy_2 = json.load(json_file)
-        response=client.put(SERVER_URL+'a1-p/policytypes/2/policies/pi1', headers=header, data=json.dumps(policy_2))
+        response=client.put(SERVER_URL+'a1-p/policytypes/2/policies/pi2', headers=header, data=json.dumps(policy_2))
         assert response.status_code == 400
 
     # API: Create policy instance pi2 of type: 2
@@ -295,12 +299,6 @@ def test_apis(client):
     result=json.loads(response.data)
     res=compare(data_policies_get, result)
     assert res == True
-
-    # API: Create policy instance pi11 (copy of pi1) of type: 1. Shall fail
-    with open(testdata+'pi1.json') as json_file:
-        policy_1 = json.load(json_file)
-        response=client.put(SERVER_URL+'a1-p/policytypes/1/policies/pi11', headers=header, data=json.dumps(policy_1))
-        assert response.status_code == 400
 
     # Set force response code 409. ==="
     response=client.post(SERVER_URL+'forceresponse?code=401')

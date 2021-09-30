@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,14 +18,25 @@
 #
 
 # Script for basic test of the simulator.
-# Run the build_and_start with the same arg as this script
-if [ $# -ne 1 ]; then
-    echo "Usage: ./basic_test.sh nonsecure|secure"
+# Run the build_and_start with the same arg, except arg 'nonsecure|secure', as this script
+
+print_usage() {
+    echo "Usage: ./basic_test.sh nonsecure|secure duplicate-check|ignore-duplicate "
     exit 1
+}
+
+if [ $# -ne 2 ]; then
+    print_usage
 fi
 if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
-    echo "Usage: ./basic_test.sh nonsecure|secure"
-    exit 1
+    print_usage
+fi
+if [ "$2" == "duplicate-check" ]; then
+    DUP_CHECK=1
+elif [ "$2" == "ignore-duplicate" ]; then
+    DUP_CHECK=0
+else
+    print_usage
 fi
 
 if [ $1 == "nonsecure" ]; then
@@ -118,9 +129,19 @@ echo "=== API: Get instances for type 1, shall contain pi1 ==="
 RESULT="json:[ \"pi1\" ]"
 do_curl GET '/a1-p/policytypes/1/policies' 200
 
-echo "=== API: Create policy instance pi2 (copy of pi1) of type: 1. Shall fail ==="
-RESULT=""
-do_curl PUT '/a1-p/policytypes/1/policies/pi2' 400 jsonfiles/pi1.json
+if [ $DUP_CHECK == 1 ]; then
+    echo "=== API: Create policy instance pi2 (copy of pi1) of type: 1. Shall fail ==="
+    RESULT=""
+    do_curl PUT '/a1-p/policytypes/1/policies/pi2' 400 jsonfiles/pi1.json
+else
+    echo "=== API: Create policy instance pi2 (copy of pi1) of type: 1. Shall succeed ==="
+    RESULT=""
+    do_curl PUT '/a1-p/policytypes/1/policies/pi2' 202 jsonfiles/pi1.json
+
+    echo "=== Delete policy instance: pi2 ==="
+    RESULT=""
+    do_curl DELETE '/a1-p/policytypes/1/policies/pi2' 202
+fi
 
 echo "=== Set force response code 401. ==="
 RESULT="*"
@@ -174,7 +195,7 @@ echo "=== API: Get instances for type 2, shall be empty ==="
 RESULT="json:[]"
 do_curl GET '/a1-p/policytypes/2/policies' 200
 
-echo "=== API: Create policy instance pi1 of type: 2, shall fail==="
+echo "=== API: Create duplicate policy instance id pi1 of type: 2 (pi1 exist for type 1), shall fail==="
 RESULT=""
 do_curl PUT '/a1-p/policytypes/2/policies/pi1' 400 jsonfiles/pi1.json
 
@@ -198,9 +219,44 @@ echo "=== API: Get instances for type 2, shall contain pi2 ==="
 RESULT="json:[ \"pi2\" ]"
 do_curl GET '/a1-p/policytypes/2/policies' 200
 
-echo "=== API: Create policy instance pi11 (copy of pi1) of type: 1. Shall fail ==="
-RESULT=""
-do_curl PUT '/a1-p/policytypes/1/policies/pi11' 400 jsonfiles/pi1.json
+if [ $DUP_CHECK == 1 ]; then
+    echo "=== API: Create policy instance pi11 (copy of pi1) of type: 1. Shall fail ==="
+    RESULT=""
+    do_curl PUT '/a1-p/policytypes/1/policies/pi11' 400 jsonfiles/pi1.json
+else
+    echo "=== API: Create policy instance pi11 (copy of pi1) of type: 1. Shall succeed ==="
+    RESULT=""
+    do_curl PUT '/a1-p/policytypes/1/policies/pi11' 202 jsonfiles/pi1.json
+
+    echo "=== Delete policy instance: pi11 ==="
+    RESULT=""
+    do_curl DELETE '/a1-p/policytypes/1/policies/pi11' 202
+fi
+
+if [ $DUP_CHECK == 1 ]; then
+    echo "=== API: Create policy instance pi3 (copy of pi1) of type: 2. Shall fail ==="
+    RESULT=""
+    do_curl PUT '/a1-p/policytypes/1/policies/pi3' 400 jsonfiles/pi1.json
+else
+    echo "=== API: Create policy instance pi3 (copy of pi1) of type: 1. Shall succeed ==="
+    RESULT=""
+    do_curl PUT '/a1-p/policytypes/1/policies/pi3' 202 jsonfiles/pi1.json
+
+    echo "=== Delete policy instance: pi3 ==="
+    RESULT=""
+    do_curl DELETE '/a1-p/policytypes/1/policies/pi3' 202
+fi
+
+
+echo "=== API: Get instances for type 1, shall contain pi1 ==="
+RESULT="json:[ \"pi1\" ]"
+do_curl GET '/a1-p/policytypes/1/policies' jsonfiles/200
+
+echo "=== API: Get instances for type 2, shall contain pi2 ==="
+RESULT="json:[ \"pi2\" ]"
+do_curl GET '/a1-p/policytypes/2/policies' 200
+
+
 
 echo "=== Set force response code 401. ==="
 RESULT="*"

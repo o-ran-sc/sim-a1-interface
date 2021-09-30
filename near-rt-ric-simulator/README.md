@@ -75,6 +75,9 @@ URIs for admin operations:
 |  POST, force delayed response of all A1 operations | http://localhost:8085/forcedelay?delay=&lt;seconds&gt; |
 |  PUT, set status and optional reason, delete and timestamp | http://localhost:8085/status?status=&lt;status&gt;&amp;reason=&lt;reason&gt;[&amp;deleted=&lt;boolean&gt;][&amp;created\_at=&lt;timestamp&gt;]  |
 |  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types', 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
+|  Turn on http header and payload logging | http://localhost:8085payload_logging/on |
+|  Turn off http header and payload logging | http://localhost:8085payload_logging/off |
+
 
 
 # Supported operations in simulator A1 Standard 1.1.3
@@ -105,6 +108,8 @@ URIs for admin operations:
 |  PUT, set status and optional reason | http://localhost:8085/status?status=&lt;status&gt;[&amp;reason=&lt;reason&gt;] |
 |  POST, send status for policy | http://localhost:8085/sendstatus?policyid=&lt;policyid&gt; |
 |  GET a counter <br> (counter-name: 'num\_instances', 'num\_types'(always 0), 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
+|  Turn on http header and payload logging | http://localhost:8085payload_logging/on |
+|  Turn off http header and payload logging | http://localhost:8085payload_logging/off |
 
 # Supported operations in simulator A1 Standard 2.0.0
 
@@ -140,12 +145,17 @@ URIs for admin operations:
 |  POST, send status for policy | http://localhost:8085/sendstatus?policyid=&lt;policyid&gt; |
 |  POST, deliver data | http://localhost:8085/datadelivery |
 |  GET a counter <br> (counter-name: 'num\_instances', 'num\_types'(always 0), 'interface', 'remote\_hosts' or 'datadelivery') | http://localhost:8085/counter/&lt;counter-name&gt; |
-
+|  Turn on http header and payload logging | http://localhost:8085payload_logging/on |
+|  Turn off http header and payload logging | http://localhost:8085payload_logging/off |
 
 
 # Configuring the simulator
 An env variable, A1\_VERSION need to be passed to the container at start to select the desired interface version. The variable shall be set to one of the version-ids shown in the table in the first section. For example A1\_VERSIION=STD\_1.1.3.
+
 An env variable, REMOTE_HOSTS_LOGGING, can be set (any value is ok) and the the counter remote\_hosts will log the host names of all remote hosts that has accessed the A1 URIs. If host names cannot be resolved, the ip address of the remote host is logged instead. This logging is default off so must be configured to be enabled. If not configured, the counter remote\_hosts will return a fixed text indicating that host name logging is not enabled. Use this feature with caution, remote host lookup may take time in certain environments.
+
+And optional env variable, DUPLICATE_CHECK, can be set to '1' to turn on duplicate check of policiy json. A duplicate policy is when the policy json is exactly same as for a different policy id of the same type.  This function is default set off if the variable is not set at all or set to '0'.
+
 The simulator can also run using the https protocol. The enable https, a valid certificate and key need to provided. There is self-signed certificate available in the certificate dir and that dir shall be mounted to the container to make it available
 
 By default, this image has default certificates under /usr/src/app/cert
@@ -155,14 +165,16 @@ file "generate_cert_and_key.sh" is a shell script to generate certificate and ke
 file "pass" stores the password when you run the shell script
 
 Start the a1-interface container without specifing external certificates:
-'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 a1test'
+
+'docker run --rm -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e REMOTE_HOSTS_LOGGING=1 -e DUPLICATE_CHECK=0 a1test'
 
 It will listen to https 8185 port(using default certificates) by default.
 Http can be enabled on port 8085 using an environment variable "ALLOW_HTTP".
 If this environment variable is left out or set to false, the nginx server will send
 "444 Connection Closed Without Response" when making a call using http.
 Example command to enable http:
-'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=OSC\_2.1.0 -e ALLOW_HTTP=true a1test'
+
+'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=OSC\_2.1.0 -e ALLOW_HTTP=true -e DUPLICATE_CHECK=0 a1test'
 
 This certificates/key can be overriden by mounting a volume when using "docker run" or "docker-compose"
 In 'docker run', use field:
@@ -171,10 +183,17 @@ In 'docker-compose.yml', use field:
 volumes:
       - ./certificate:/usr/src/app/cert:ro
 
-In docker run the full command could look like this:<br> 'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e ALLOW_HTTP=true -e REMOTE_HOSTS_LOGGING=1 --volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert a1test'
+In docker run the full command could look like this:<br>
+'docker run -it -p 8085:8085 -p 8185:8185 -e A1\_VERSION=STD\_1.1.3 -e ALLOW_HTTP=true -e REMOTE_HOSTS_LOGGING=1 -e DUPLICATE_CHECK=0 --volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert a1test'
+
 http port 8085 and https port 8185
+
 The variable for A1 version is set with the '-e' flag.
+
 With logging of remote host enabled "-e REMOTE_HOSTS_LOGGING=1 "
+
+With policy json duplicate check set to off (0)
+
 With certificate dir mounted  "--volume /PATH_TO_CERT_DIR/certificate:/usr/src/app/cert"
 
 # Updating the openapi specs
@@ -193,11 +212,17 @@ Go to the test folder of the selected version, 'test/&lt;version&gt;/.
 
 Note that test can be performed both using the nonsecure http port and the secure https port.
 
-Build and start the simulator container using: ./build\_and\_start.sh
+Build and start the simulator container using:
+
+./build\_and\_start.sh duplicate-check|ignore-duplicate
+
+
 This will build and start the container in interactive mode. The built container only resides in the local docker repository.
 Note, the default port is 8085 for http and 8185 for https. When running the simulator as a container, the defualt ports can be re-mapped to any port on the localhost.
 
-In a second terminal, go to the same folder and run the basic test script, basic\_test.sh nonsecure|secure or commands.sh nonsecure|secure depending on version.
+In a second terminal, go to the same folder and run the basic test script, basic\_test.sh nonsecure|secure or commands.sh nonsecure|secure duplicate-check|ignore-duplicate
+
+Note that the arg for duplicate check must match in both scripts.
 This script runs a number of tests towards the simulator to make sure it works properply.
 
 # Basic test and code coverage
@@ -207,16 +232,17 @@ Only http is tested as the internal flask server is only using http (https is pa
 
 Navigate to 'near-rt-ric-simulator/tests'. Choose the version to test and use that file for test.
 
-Use 'python3 -m pytest <filename>' to run unit test only with no coverage check
+Use 'python3 -m pytest \<filename>' to run unit test only with no coverage check
 
-Or use 'coverage run  -m pytest <filename>' to run unit test and produce coverage data.
+Or use 'coverage run  -m pytest \<filename>' to run unit test and produce coverage data.
+
 List coverage data by 'coverage report -m --include=../../*' - the include flag makes the list to only contain coverage data from the simulator python file.
 
 To use the 'coverage' cmd, coverage need to be installed use 'pip install coverage'
 
 ## License
 
-Copyright (C) 2019 Nordix Foundation.
+Copyright (C) 2021 Nordix Foundation.
 Licensed under the Apache License, Version 2.0 (the "License")
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at

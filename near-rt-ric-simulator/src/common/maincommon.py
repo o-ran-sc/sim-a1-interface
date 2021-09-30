@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import ssl
 apipath=os.environ['APIPATH']
 #May exist
 remote_hosts_logging=os.getenv('REMOTE_HOSTS_LOGGING')
+duplicate_check=os.getenv('DUPLICATE_CHECK')
 
 # Make sure the api path for the interface yaml file is set, otherwise exit
 def check_apipath():
@@ -60,3 +61,13 @@ def extract_host_name(hosts_set, request):
             hosts_set.add(host_ip)
     else:
         hosts_set.add("logging_of_remote_host_names_not_enabled")
+
+# Function to check if duplicate check shall be made
+# True = check for duplicates
+# False = ignore duplicates
+def is_duplicate_check():
+    global duplicate_check
+
+    if ((duplicate_check is not None) and (duplicate_check == "1")):
+        return True
+    return False

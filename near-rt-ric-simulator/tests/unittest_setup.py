@@ -40,6 +40,7 @@ def setup_env(interface_version):
     #Env var to setup version and host logging
     os.environ['APIPATH'] = cwd+"../api/"+interface_version
     os.environ['REMOTE_HOSTS_LOGGING'] = "ON"
+    os.environ['DUPLICATE_CHECK'] = "0"
 
     # Paths need to run the sim, including needed source file dirs
     sys.path.append(os.path.abspath(cwd+'../src/common'))

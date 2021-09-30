@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -14,6 +14,12 @@
 #  limitations under the License.
 #  ============LICENSE_END=================================================
 #
+
+from maincommon import apipath
+import connexion
+
+#Main app
+app = connexion.FlaskApp(__name__, specification_dir=apipath)
 
 policy_types={}
 policy_instances={}

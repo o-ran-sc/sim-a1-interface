@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,14 +18,25 @@
 #
 
 # Script for basic test of the simulator.
-# Run the build_and_start with the same arg as this script
-if [ $# -ne 1 ]; then
-    echo "Usage: ./basic_test.sh nonsecure|secure"
+# Run the build_and_start with the same arg, except arg 'nonsecure|secure', as this script
+
+print_usage() {
+    echo "Usage: ./basic_test.sh nonsecure|secure duplicate-check|ignore-duplicate "
     exit 1
+}
+
+if [ $# -ne 2 ]; then
+    print_usage
 fi
 if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
-    echo "Usage: ./basic_test.sh nonsecure|secure"
-    exit 1
+    print_usage
+fi
+if [ "$2" == "duplicate-check" ]; then
+    DUP_CHECK=1
+elif [ "$2" == "ignore-duplicate" ]; then
+    DUP_CHECK=0
+else
+    print_usage
 fi
 
 if [ $1 == "nonsecure" ]; then
@@ -148,17 +159,43 @@ res=$(cat jsonfiles/pi1_updated.json)
 RESULT="json:$res"
 do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi1 200 jsonfiles/pi1_updated.json
 
-echo "=== API: Duplicate policy instance pi2 of type: STD_1==="
+echo "=== API: Duplicate policy instance json,  pi2 of type: STD_1==="
 res=$(cat jsonfiles/pi1_updated.json)
-RESULT="json:{\"title\": \"Duplicate, the policy json already exists.\", \"status\": 400, \"instance\": \"pi2\"}"
-do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi2 400 jsonfiles/pi1_updated.json
+if [ $DUP_CHECK == 1 ]; then
+    #Fail with dupl check
+    RESULT="json:{\"title\": \"Duplicate, the policy json already exists.\", \"status\": 400, \"instance\": \"pi2\"}"
+    do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi2 400 jsonfiles/pi1_updated.json
+else
+    #OK without dupl check
+    res=$(cat jsonfiles/pi1_updated.json)
+    RESULT="json:$res"
+    do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi2 201 jsonfiles/pi1_updated.json
+
+    echo "=== API: DELETE policy instance pi2 ==="
+    RESULT=""
+    do_curl DELETE /A1-P/v2/policytypes/STD_1/policies/pi2 204
+fi
 
 echo "=== API: Get policy instances, shall contain pi1=="
 RESULT="json:[ \"pi1\" ]"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies 200
 
-echo "=== Get counter: types (shall be 1)==="
-RESULT="1"
+echo "=== Put a policy type: STD_2 ==="
+RESULT="Policy type STD_2 is OK."
+do_curl PUT  '/policytype?id=STD_2' 201 jsonfiles/std_2.json
+
+
+echo "=== API: Duplicate policy instance id pi1 of type: STD_2==="
+res=$(cat jsonfiles/pi1_updated.json)
+RESULT="json:{\"title\": \"The policy id already exist for other policy type.\", \"status\": 400, \"instance\": \"pi1\"}"
+do_curl PUT /A1-P/v2/policytypes/STD_2/policies/pi1 400 jsonfiles/pi1_updated.json
+
+echo "=== API: Get policy type ids, shall contain type STD_1  and STD_2 =="
+RESULT="json:[ \"STD_1\", \"STD_2\" ]"
+do_curl GET /A1-P/v2/policytypes 200
+
+echo "=== Get counter: types (shall be 2)==="
+RESULT="2"
 do_curl GET /counter/num_types 200
 
 echo "=== Get counter: intstance ==="
@@ -192,8 +229,8 @@ echo "=== API: Get policy instances, shall contain pi1 and pi2=="
 RESULT="json:[ \"pi1\", \"pi2\" ]"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies 200
 
-echo "=== Get counter: types (shall be 1)==="
-RESULT="1"
+echo "=== Get counter: types (shall be 2)==="
+RESULT="2"
 do_curl GET /counter/num_types 200
 
 echo "=== Get counter: intstance ==="
@@ -271,8 +308,8 @@ echo "=== Get counter: intstance ==="
 RESULT="1"
 do_curl GET /counter/num_instances 200
 
-echo "=== Get counter: types (shall be 0)==="
-RESULT="1"
+echo "=== Get counter: types (shall be 2)==="
+RESULT="2"
 do_curl GET /counter/num_types 200
 
 echo "=== Get counter: interface ==="

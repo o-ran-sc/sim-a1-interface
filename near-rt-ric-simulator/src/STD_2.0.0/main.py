@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import requests
 from pathlib import Path
 from flask import Flask, escape, request, Response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, data_delivery_counter
+from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, data_delivery_counter, app
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
 
 #Constants
@@ -33,7 +33,9 @@ TEXT_PLAIN='text/plain'
 
 check_apipath()
 
-app = connexion.App(__name__, specification_dir=apipath)
+# app is created in var_declarations
+
+import payload_logging   # app var need to be initialized
 
 #Check alive function
 @app.route('/', methods=['GET'])
@@ -61,9 +63,9 @@ def delete_instances():
   return Response("All policy instances deleted", 200, mimetype=TEXT_PLAIN)
 
 #Delete all - all reset
-#(same as delete_instances but kept to in order to use the same interface as other version of the simulator)
 @app.route('/deleteall', methods=['POST'])
 def delete_all():
+  global data_delivery_counter
 
   policy_instances.clear()
   policy_types.clear()
@@ -72,6 +74,7 @@ def delete_all():
   forced_settings['code']=None
   forced_settings['delay']=None
   policy_fingerprint.clear()
+  data_delivery_counter=0
   return Response("All policy instances and types deleted", 200, mimetype=TEXT_PLAIN)
 
 #Load a policy type
@@ -188,9 +191,8 @@ def sendstatus():
   ps=policy_status[policyid]
   cb=callbacks[policyid]
   try:
-    print("Callback url: " + str(cb))
     resp=requests.post(cb,json=json.dumps(ps), verify=False) # NOSONAR
-  except:
+  except Exception:
     return Response('Post status failed, could not send to: '+str(cb), status=500, mimetype=TEXT_PLAIN)
   if (resp.status_code<199 & resp.status_code > 299):
     return Response('Post status failed with code: '+resp.status_code, status=500, mimetype=TEXT_PLAIN)

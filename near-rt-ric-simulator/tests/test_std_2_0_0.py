@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -211,15 +211,20 @@ def test_apis(client):
         res=compare(json_payload, result)
         assert res == True
 
-    # API: Duplicate policy instance pi2 of type: STD_1
+    # # API: Duplicate policy instance pi2 of type: STD_1 - and delete it
+
     with open(testdata+'pi1_updated.json') as json_file:
-        data_response = {"title": "Duplicate, the policy json already exists.", "status": 400, "instance": "pi2"}
         json_payload=json.load(json_file)
         response=client.put(SERVER_URL+'A1-P/v2/policytypes/STD_1/policies/pi2', headers=header, data=json.dumps(json_payload))
-        assert response.status_code == 400
+        assert response.status_code == 201
         result=json.loads(response.data)
-        res=compare(data_response, result)
+        res=compare(json_payload, result)
         assert res == True
+    data_response = b""
+    response=client.delete(SERVER_URL+'A1-P/v2/policytypes/STD_1/policies/pi2')
+    assert response.status_code == 204
+    assert data_response == response.data
+
 
     # API: Get policy instances, shall contain pi1
     data_response = ["pi1"]

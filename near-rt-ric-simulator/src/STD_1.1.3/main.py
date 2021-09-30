@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import requests
 from pathlib import Path
 from flask import Flask, escape, request, Response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
+from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, app
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
 
 #Constants
@@ -33,7 +33,9 @@ TEXT_PLAIN='text/plain'
 
 check_apipath()
 
-app = connexion.App(__name__, specification_dir=apipath)
+# app is created in var_declarations
+
+import payload_logging   # app var need to be initialized
 
 #Check alive function
 @app.route('/', methods=['GET'])
@@ -127,7 +129,7 @@ def sendstatus():
   cb=callbacks[policyid]
   try:
     resp=requests.post(cb,json=json.dumps(ps), verify=False) # NOSONAR
-  except:
+  except Exception:
     return Response('Post status failed, could not send to: '+str(cb), status=500, mimetype=TEXT_PLAIN)
   if (resp.status_code<199 & resp.status_code > 299):
     return Response('Post status failed with code: '+resp.status_code, status=500, mimetype=TEXT_PLAIN)

@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,12 +15,15 @@
 #  ============LICENSE_END=================================================
 #
 
-#Calculate a fingerprint from sorted items of a dict
-def calcFingerprint(p):
+#Calculate a fingerprint from sorted items of a dict, appending an optional id
+def calcFingerprint(p, pid=None):
   m=''
+  ext=''
+  if (pid is not None):
+    ext=pid
   if (p is dict):
     for i in sorted (p.keys()):
       m = m+str(i)+calcFingerprint(p[i])
   else:
-    return str(p)
-  return m
+    return str(p)+ext
+  return m+ext

@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -110,17 +110,16 @@ def test_apis(client):
     res=compare(data_policy_get, result)
     assert res == True
 
-    # API: Create policy instance pi2 (copy of pi1). Shall fail
-    data_create_errror_pi1 = {
-        "title" : "The policy json already exists.",
-        "status" : 400,
-        "instance" : "pi2"
-    }
-    response=client.put(SERVER_URL+'A1-P/v1/policies/pi2', headers=header, data=json.dumps(data_pi1_updated))
-    assert response.status_code == 400
+    # API: Create policy instance pi3 (copy of pi1).
+    response=client.put(SERVER_URL+'A1-P/v1/policies/pi3', headers=header, data=json.dumps(data_pi1))
+    assert response.status_code == 201
     result=json.loads(response.data)
-    res=compare(data_create_errror_pi1, result)
+    res=compare(data_pi1, result)
     assert res == True
+
+    # API: DELETE policy instance pi1
+    response=client.delete(SERVER_URL+'A1-P/v1/policies/pi3')
+    assert response.status_code == 204
 
     # Set force response code 409. ==="
     response=client.post(SERVER_URL+'forceresponse?code=409')

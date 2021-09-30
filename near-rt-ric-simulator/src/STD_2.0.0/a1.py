@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ from flask import Flask, escape, request, Response, make_response
 from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from utils import calcFingerprint
-from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
+from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name, is_duplicate_check
 
 #Constsants
 APPL_JSON='application/json'
@@ -107,13 +107,21 @@ def put_policy(policyTypeId, policyId):
   retcode=201
   if policy_id in policy_instances[policy_type_id].keys():
     retcode=200
-    fp_previous=calcFingerprint(policy_instances[policy_type_id][policy_id])
+    if (is_duplicate_check()):
+      fp_previous=calcFingerprint(policy_instances[policy_type_id][policy_id], policy_type_id)
+    else:
+      fp_previous=policy_id
   else:
     if (policy_id in policy_fingerprint.values()):
-      return (None, 400)
+      pjson=create_problem_json(None, "The policy id already exist for other policy type.", 400, None, policy_id)
+      return Response(json.dumps(pjson), 400, mimetype=APPL_PROB_JSON)
 
-  fp=calcFingerprint(data)
-  if (fp in policy_fingerprint.keys()):
+  if (is_duplicate_check()):
+    fp=calcFingerprint(data, policy_type_id)
+  else:
+    fp=policy_id
+
+  if ((fp in policy_fingerprint.keys()) and is_duplicate_check()):
     p_id=policy_fingerprint[fp]
     if (p_id != policy_id):
       pjson=create_problem_json(None, "Duplicate, the policy json already exists.", 400, None, policy_id)
@@ -183,7 +191,11 @@ def delete_policy(policyTypeId, policyId):
     pjson=create_problem_json(None, "The requested policy does not exist.", 404, None, policy_id)
     return Response(json.dumps(pjson), 404, mimetype=APPL_PROB_JSON)
 
-  fp_previous=calcFingerprint(policy_instances[policy_type_id][policy_id])
+  if (is_duplicate_check()):
+    fp_previous=calcFingerprint(policy_instances[policy_type_id][policy_id], policy_type_id)
+  else:
+    fp_previous=policy_id
+
   policy_fingerprint.pop(fp_previous)
   policy_instances[policy_type_id].pop(policy_id)
   policy_status.pop(policy_id)

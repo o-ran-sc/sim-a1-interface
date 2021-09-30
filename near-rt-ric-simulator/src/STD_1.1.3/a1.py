@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ from connexion import NoContent
 from flask import Flask, escape, request, Response, make_response
 from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from utils import calcFingerprint
-from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
+from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name, is_duplicate_check
 
 #Constsants
 APPL_JSON='application/json'
@@ -61,9 +61,16 @@ def put_policy(policyId):
   retcode=201
   if policyId in policy_instances.keys():
     retcode=200
-    fp_previous=calcFingerprint(policy_instances[policyId])
+    if (is_duplicate_check()):
+      fp_previous=calcFingerprint(policy_instances[policyId])
+    else:
+      fp_previous=policyId
 
-  fp=calcFingerprint(data)
+  if (is_duplicate_check()):
+    fp=calcFingerprint(data)
+  else:
+    fp=policyId
+
   if (fp in policy_fingerprint.keys()):
     p_id=policy_fingerprint[fp]
     if (p_id != policyId):
@@ -113,7 +120,11 @@ def delete_policy(policyId):
     return r
 
   if policyId in policy_instances.keys():
-    fp_previous=calcFingerprint(policy_instances[policyId])
+    if (is_duplicate_check()):
+      fp_previous=calcFingerprint(policy_instances[policyId])
+    else:
+      fp_previous=policyId
+
     policy_fingerprint.pop(fp_previous)
     policy_instances.pop(policyId)
     policy_status.pop(policyId)

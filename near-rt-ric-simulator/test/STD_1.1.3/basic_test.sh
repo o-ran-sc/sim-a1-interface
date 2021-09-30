@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,14 +18,25 @@
 #
 
 # Script for basic test of the simulator.
-# Run the build_and_start with the same arg as this script
-if [ $# -ne 1 ]; then
-    echo "Usage: ./basic_test.sh nonsecure|secure"
+# Run the build_and_start with the same arg, except arg 'nonsecure|secure', as this script
+
+print_usage() {
+    echo "Usage: ./basic_test.sh nonsecure|secure duplicate-check|ignore-duplicate "
     exit 1
+}
+
+if [ $# -ne 2 ]; then
+    print_usage
 fi
 if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
-    echo "Usage: ./basic_test.sh nonsecure|secure"
-    exit 1
+    print_usage
+fi
+if [ "$2" == "duplicate-check" ]; then
+    DUP_CHECK=1
+elif [ "$2" == "ignore-duplicate" ]; then
+    DUP_CHECK=0
+else
+    print_usage
 fi
 
 if [ $1 == "nonsecure" ]; then
@@ -75,9 +86,19 @@ echo "=== API: Get policy instances, shall contain pi1=="
 RESULT="json:[ \"pi1\" ]"
 do_curl GET /A1-P/v1/policies 200
 
-echo "=== API: Create policy instance pi2 (copy of pi1). Shall fail ==="
-RESULT="json:{\"title\": \"The policy json already exists.\", \"status\": 400, \"instance\": \"pi2\"}"
-do_curl PUT /A1-P/v1/policies/pi2 400 jsonfiles/pi1_updated.json
+if [ $DUP_CHECK == 1 ]; then
+    echo "=== API: Create policy instance pi2 (copy of pi1). Shall fail ==="
+    RESULT="json:{\"title\": \"The policy json already exists.\", \"status\": 400, \"instance\": \"pi2\"}"
+    do_curl PUT /A1-P/v1/policies/pi2 400 jsonfiles/pi1_updated.json
+else
+    echo "=== API: Create policy instance pi2 (copy of pi1). Shall succeed ==="
+    RESULT="json:{\"scope\": {\"ueId\": \"ue1\", \"groupId\": \"group1\", \"sliceId\": \"slice1\", \"qosId\": \"qos1\", \"cellId\": \"cell1\"}, \"statement\": {\"priorityLevel\": 5}}"
+    do_curl PUT /A1-P/v1/policies/pi2 201 jsonfiles/pi1.json
+
+    echo "=== API: DELETE policy instance pi2 ==="
+    RESULT=""
+    do_curl DELETE /A1-P/v1/policies/pi2 204
+fi
 
 echo "=== Set force response code 409. ==="
 RESULT="*"
