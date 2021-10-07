@@ -72,6 +72,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "087f5f5a_eca25eb5",
+        "filename": "docs/overview.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2021-10-07T17:07:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e32f671_914bad75",
+      "range": {
+        "startLine": 20,
+        "startChar": 135,
+        "endLine": 20,
+        "endChar": 183
+      },
+      "revId": "041011b33c3d5fd9ba7e76f3ba34f44dace675a9",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "205a0737_bca8888f",
