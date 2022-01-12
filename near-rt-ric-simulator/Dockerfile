@@ -29,5 +29,19 @@ COPY nginx.conf nginx.conf
 COPY certificate /usr/src/app/cert
 COPY src src
 
+ARG user=nonrtric
+ARG group=nonrtric
+
+RUN groupadd $user && \
+    useradd -r -g $group $user
+RUN chown -R $user:$group /usr/src/app
+RUN chown -R $user:$group /var/log/nginx
+RUN chown -R $user:$group /var/lib/nginx
+RUN chown -R $user:$group /etc/nginx/conf.d
+RUN touch /var/run/nginx.pid
+RUN chown -R $user:$group /var/run/nginx.pid
+
+USER ${user}
+
 RUN chmod +x src/start.sh
 CMD src/start.sh ${A1_VERSION}
