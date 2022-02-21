@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "166b8e9a_7c263ffe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-02-21T13:35:24Z",
+      "side": 1,
+      "message": "Some minor comments. Otherwise ok.",
+      "revId": "3f519ca2fddb18c6e5a81fc800b9fefc4d3f8f69",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "357cf2a7_8df0a330",
+        "filename": "near-rt-ric-simulator/nginx.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-02-21T13:35:24Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "3f519ca2fddb18c6e5a81fc800b9fefc4d3f8f69",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c97d0c8_a1a0379c",
+        "filename": "near-rt-ric-simulator/nginx.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-02-21T13:35:24Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "3f519ca2fddb18c6e5a81fc800b9fefc4d3f8f69",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac9a889d_d1555296",
+        "filename": "near-rt-ric-simulator/nginx.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-02-21T13:35:24Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 138
+      },
+      "revId": "3f519ca2fddb18c6e5a81fc800b9fefc4d3f8f69",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
