@@ -18,6 +18,23 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3351b31e_56067198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000247
+      },
+      "writtenOn": "2022-02-21T15:54:43Z",
+      "side": 1,
+      "message": "stage-release",
+      "revId": "3f519ca2fddb18c6e5a81fc800b9fefc4d3f8f69",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "357cf2a7_8df0a330",
