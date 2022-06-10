@@ -4,50 +4,66 @@ project_creation_date: '2019-08-08'
 project_category: ''
 lifecycle_state: 'Incubation'
 project_lead: &oran_sim_a1-interface_ptl
-    name: 'Alex Stancu'
-    email: 'alexandru.stancu@highstreet-technologies.com'
-    id: 'alex.stancu'
-    company: 'highstreet technologies GmbH'
-    timezone: 'Europe/Bucharest'
+  name: 'Alex Stancu'
+  email: 'alexandru.stancu@highstreet-technologies.com'
+  id: 'alex.stancu'
+  company: 'highstreet technologies GmbH'
+  timezone: 'Europe/Bucharest'
 primary_contact: *oran_sim_a1-interface_ptl
 issue_tracking:
-    type: 'jira'
-    url: 'https://jira.o-ran-sc.org/projects/SIM'
-    key: 'SIM'
+  type: 'jira'
+  url: 'https://jira.o-ran-sc.org/projects/SIM'
+  key: 'SIM'
 mailing_list:
-    type: 'groups.io'
-    url: 'https://lists.o-ran-sc.org/g/discuss'
-    tag: '<[sim]>'
+  type: 'groups.io'
+  url: 'https://lists.o-ran-sc.org/g/discuss'
+  tag: '<[sim]>'
 realtime_discussion:
-    type: 'irc'
-    server: 'freenode.net'
-    channel: '#o-ran-sc'
+  type: 'irc'
+  server: 'freenode.net'
+  channel: '#o-ran-sc'
 meetings:
-    - type: 'zoom'
-      agenda: ''
-      url: ''
-      server: 'n/a'
-      channel: 'n/a'
-      repeats: 'weekly'
-      time: ''
+  - type: 'zoom'
+    agenda: ''
+    url: 'https://wiki.o-ran-sc.org/display/RICNR/Meetings'
+    server: 'n/a'
+    channel: 'n/a'
+    repeats: 'weekly'
+    time: ''
 repositories:
-    - 'sim/a1-interface'
+  - 'sim/a1-interface'
 committers:
-    - <<: *oran_sim_a1-interface_ptl
-    - name: 'Michael Duerre'
-      email: 'michael.duerre@highstreet-technologies.com'
-      company: 'highstreet technologies GmbH'
-      id: 'metaljackL'
-      timezone: 'Germany/Berlin'
-    - name: 'John Keeney'
-      email: 'John.Keeney@est.tech'
-      company: 'Ericsson Software Technology'
-      id: 'johnkeeney'
-      timezone: 'Europe/Dublin'
-    - name: 'Maxime Bonneau'
-      email: 'maxime.bonneau@est.tech'
-      company: 'Ericsson Software Technology'
-      id: 'maximesson'
-      timezone: 'Sweden/Stockholm'
+  - <<: *oran_sim_a1-interface_ptl
+  - name: 'Michael Duerre'
+    email: 'michael.duerre@highstreet-technologies.com'
+    company: 'highstreet technologies GmbH'
+    id: 'metaljackL'
+    timezone: 'Germany/Berlin'
+  - name: 'John Keeney'
+    email: 'John.Keeney@est.tech'
+    company: 'Ericsson Software Technology'
+    id: 'johnkeeney'
+    timezone: 'Europe/Dublin'
+  - name: 'Henrik Andersson'
+    email: 'henrik.b.andersson@est.tech'
+    company: 'Ericsson Software Technology'
+    id: 'elinuxhenrik'
+    timezone: 'Sweden/Stockholm'
+  - name: 'Bjorn Magnusson'
+    email: 'bjorn.magnusson@est.tech'
+    company: 'Ericsson Software Technology'
+    id: 'BjornMagnussonXA'
+    timezone: 'Sweden/Stockholm'
 tsc:
-    approval: 'https://lists.o-ran-sc.org/g/toc/message/102'
+  # yamllint disable rule:line-length
+  approval: "https://lists.o-ran-sc.org/g/toc/topic/32885711"
+  changes:
+    -
+      type: "Removal"
+      name: "Maxime Bonneau"
+    -
+      type: "Addition"
+      name: "Bjorn Magnusson"
+    -
+      type: "Addition"
+      name: "Henrik Andersson"
