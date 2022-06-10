@@ -25,7 +25,7 @@ realtime_discussion:
 meetings:
     - type: 'zoom'
       agenda: ''
-      url: ''
+      url: 'https://wiki.o-ran-sc.org/display/RICNR/Meetings'
       server: 'n/a'
       channel: 'n/a'
       repeats: 'weekly'
@@ -44,10 +44,26 @@ committers:
       company: 'Ericsson Software Technology'
       id: 'johnkeeney'
       timezone: 'Europe/Dublin'
-    - name: 'Maxime Bonneau'
-      email: 'maxime.bonneau@est.tech'
+    - name: 'Henrik Andersson'
+      email: 'henrik.b.andersson@est.tech'
       company: 'Ericsson Software Technology'
-      id: 'maximesson'
+      id: 'elinuxhenrik'
+      timezone: 'Sweden/Stockholm'
+    - name: 'Bjorn Magnusson'
+      email: 'bjorn.magnusson@est.tech'
+      company: 'Ericsson Software Technology'
+      id: 'BjornMagnussonXA'
       timezone: 'Sweden/Stockholm'
 tsc:
-    approval: 'https://lists.o-ran-sc.org/g/toc/message/102'
+  # yamllint disable rule:line-length
+  approval: "https://lists.o-ran-sc.org/g/toc/topic/32885711"
+  changes:
+    -
+      type: "Removal"
+      name: "Maxime Bonneau"
+    -
+      type: "Addition"
+      name: "Bjorn Magnusson"
+    -
+      type: "Addition"
+      name: "Henrik Andersson"
