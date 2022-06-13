@@ -70,7 +70,7 @@ def forcedelay():
   else:
     return Response("Force delay: " + str(forced_settings['delay']) + " sec set for all external server responses until it is resetted ", 200, mimetype=TEXT_PLAIN)
 
-port_number = 2222
+port_number = 3333
 if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
