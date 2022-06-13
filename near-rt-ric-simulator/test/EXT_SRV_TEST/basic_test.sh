@@ -34,12 +34,12 @@ fi
 
 if [ $1 == "nonsecure" ]; then
     #Default http port for the simulator
-    PORT=8085
+    PORT=9095
     # Set http protocol
     HTTPX="http"
 else
     #Default https port for the simulator
-    PORT=8185
+    PORT=9195
     # Set https protocol
     HTTPX="https"
 fi
@@ -47,11 +47,11 @@ fi
 . ../common/test_common.sh
 . ../common/elapse_time_curl.sh
 
-echo "=== Simulator hello world ==="
+echo "=== External server hello world ==="
 RESULT="OK"
 do_curl GET / 200
 
-echo "=== Reset simulator a1policy instances ==="
+echo "=== Reset external server a1policy instances ==="
 RESULT="All a1 policy instances deleted"
 do_curl POST /serveradmin/deleteinstances 200
 

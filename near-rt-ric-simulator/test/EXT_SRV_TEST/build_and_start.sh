@@ -42,4 +42,4 @@ echo "Starting external server for A1 simulator callouts..."
 echo "PWD path: "$PWD
 
 #Run the container in interactive mode, unsecure port 8085, secure port 8185
-docker run --rm -it -p 8085:8085 -p 8185:8185 -e ALLOW_HTTP=true --volume "$PWD/certificate:/usr/src/app/cert" --name externalserversimulator external_server
+docker run --rm -it -p 9095:9095 -p 9195:9195 -e ALLOW_HTTP=true --volume "$PWD/certificate:/usr/src/app/cert" --name externalserversimulator external_server
