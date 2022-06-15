@@ -3,6 +3,7 @@
 The O-RAN SC Near-RealTime RIC simulates the A1 as an generic REST API which can receive and send northbound messages. The simulator validates the payload and applies policy.
 
 The simulator supports multiple A1 interface versions (version of the open API yaml file\):
+
 | Yaml file version     | Version id|
 | --------------------- | ------------------- |
 | OSC 2.1.0,            |      OSC\_2.1.0     |
@@ -12,6 +13,7 @@ The simulator supports multiple A1 interface versions (version of the open API y
 All versions are supported by the same container, see section 'Configuring the simulator' below for details about how to the start the simulator with the intended version id.
 
 The overall folder structure is \(relative to the location of this README file\):
+
 | Dir              | Description |
 | ---------------- | ----------- |
 |.                 |Dockerfile and README |
@@ -44,6 +46,7 @@ The same urls are availables on both the http port 8085 and the https port 8185.
 For the complete yaml specification, see [openapi.yaml](../near-rt-ric-simulator/api/OSC_2.1.0/openapi.yaml).
 
 URIs for A1:
+
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
 |  GET, do a healthcheck |  http://localhost:8085/a1-p/healthcheck |
@@ -62,6 +65,7 @@ Swagger UI at: http://localhost:8085/ui/
 For the documentation of the admin API, see [OSC_2.1.0](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#osc-2-1-0).
 
 URIs for admin operations:
+
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
 |  GET, a basic healthcheck | http://localhost:8085/ |
@@ -85,6 +89,7 @@ URIs for admin operations:
 For the complete yaml specification, see [STD_A1.yaml](../near-rt-ric-simulator/api/STD_1.1.3/STD_A1.yaml).
 
 URIs for A1:
+
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
 |  GET all policy identities | http://localhost:8085/A1-P/v1/policies |
@@ -92,11 +97,13 @@ URIs for A1:
 |  GET a policy | http://localhost:8085/A1-P/v1/policies/{policyId} |
 |  DELETE a policy instance | http://localhost:8085/A1-P/v1/policies/{policyId} |
 |  GET a policy status | http://localhost:8085/A1-P/v1/policies/{policyid}/status |
+
 Swagger UI at: http://localhost:8085/A1-P/v1/ui/
 
 For the documentation of the admin API, see [A1 Standard 1.1.3](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#a1-standard-1-1-3).
 
 URIs for admin operations:
+
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
 |  GET, a basic healthcheck | http://localhost:8085/ |
@@ -116,6 +123,7 @@ URIs for admin operations:
 For the complete yaml specification, see [ORAN_A1-p_V2.0.0_api.yaml](../near-rt-ric-simulator/api/STD_2.0.0/ORAN_A1-p_V2.0.0_api.yaml).
 
 URIs for A1:
+
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
 |  GET all policy type identities | http://localhost:8085/A1-P/v2/policytypes |
@@ -125,11 +133,13 @@ URIs for A1:
 |  GET a policy | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies/{policyId} |
 |  DELETE a policy instance | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies/{policyId} |
 |  GET a policy status | http://localhost:8085/A1-P/v2/policytypes/{policyTypeId}/policies/{policyid}/status |
+
 Swagger UI at: http://localhost:8085/A1-P/v2/ui/
 
 For the documentation of the admin API, see [A1 Standard 2.0.0](https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/simulator-api.html#a1-standard-2-0-0).
 
 URIs for admin operations:
+
 | Function              | Path and parameters |
 | --------------------- | ------------------- |
 |  GET, a basic healthcheck | http://localhost:8085/ |
@@ -242,7 +252,7 @@ To use the 'coverage' cmd, coverage need to be installed use 'pip install covera
 
 ## License
 
-Copyright (C) 2021 Nordix Foundation.
+Copyright (C) 2022 Nordix Foundation.
 Licensed under the Apache License, Version 2.0 (the "License")
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
