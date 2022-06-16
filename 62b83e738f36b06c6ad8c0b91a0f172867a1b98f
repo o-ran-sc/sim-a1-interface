@@ -16,6 +16,23 @@
       "message": "This change does not seem to have bestowed committer rights according to https://wiki.o-ran-sc.org/display/ORAN/How+to+request+committer+changes\n\nTicket: https://jira.linuxfoundation.org/plugins/servlet/theme/portal/2/IT-24172 \n\nThanks.",
       "revId": "62b83e738f36b06c6ad8c0b91a0f172867a1b98f",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8976356d_b102a062",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000079
+      },
+      "writtenOn": "2022-06-16T16:55:02Z",
+      "side": 1,
+      "message": "remerge",
+      "revId": "62b83e738f36b06c6ad8c0b91a0f172867a1b98f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
