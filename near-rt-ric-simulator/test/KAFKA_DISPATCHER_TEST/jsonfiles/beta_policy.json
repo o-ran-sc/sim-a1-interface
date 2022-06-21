@@ -1,0 +1,11 @@
+{
+
+          "title": "A1 policy external server",
+          "description": "A1 policies notifying external server",
+          "type": "object",
+          "properties": {
+            "a1policyType": "beta_test_policy",
+            "url" : "http://www.com"
+          }
+
+}
