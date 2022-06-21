@@ -1,0 +1,215 @@
+openapi: 3.0.0
+info:
+  title: 'Kafka message dispatcher for A1 interface'
+  version: 2.0.0
+  description: |
+    Kafka message dispatcher server.
+    © 2022, O-RAN Alliance.
+    All rights reserved.
+externalDocs:
+  description: 'RestFUL APIs that create and dispatch Kafka messages to an southbound address'
+  url: 'https://www.kafkadispatcher/specifications'
+servers:
+  - url: '{apiRoot}'
+    variables:
+      apiRoot:
+        default: 'https://kafkadispatcher.com'
+paths:
+  '/kafkadispatcher/getallpolicies':
+    get:
+      operationId: dispatcher.get_all_policies
+      description: 'Get all policies'
+      tags:
+      - All policies
+      responses:
+        200:
+          description: 'Array of policies'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/A1PolicyObject"
+                minItems: 0
+        429:
+          "$ref": "#/components/responses/429-TooManyRequests"
+        503:
+          "$ref": "#/components/responses/503-ServiceUnavailable"
+  '/policytypes/{policyTypeId}/kafkadispatcher/{policyId}':
+    parameters:
+      - name: policyTypeId
+        in: path
+        required: true
+        schema:
+          "$ref": "#/components/schemas/PolicyTypeId"
+    parameters:
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          "$ref": "#/components/schemas/A1PolicyId"
+    get:
+      operationId: dispatcher.get_policy
+      description: 'Query for a policy'
+      tags:
+      - Single Policy Object
+      responses:
+        200:
+          description: 'The requested policy object'
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/A1PolicyObject"
+        404:
+          "$ref": "#/components/responses/404-NotFound"
+        409:
+          "$ref": "#/components/responses/409-Conflict"
+        429:
+          "$ref": "#/components/responses/429-TooManyRequests"
+        503:
+          "$ref": "#/components/responses/503-ServiceUnavailable"
+    put:
+      operationId: dispatcher.put_policy
+      description: 'Dispatch policy for create and update operation'
+      tags:
+      - Individual policy Object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/A1PolicyObject"
+      responses:
+        200:
+          description: 'Update operation dispatched'
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/A1PolicyObject"
+        201:
+          description: 'Create operation dispatched'
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/A1PolicyObject"
+          headers:
+            Location:
+              description: 'Contains the URI of the created or updated policy'
+              required: true
+              schema:
+                type: string
+        400:
+          "$ref": "#/components/responses/400-BadRequest"
+        409:
+          "$ref": "#/components/responses/409-Conflict"
+        429:
+          "$ref": "#/components/responses/429-TooManyRequests"
+        503:
+          "$ref": "#/components/responses/503-ServiceUnavailable"
+        507:
+          "$ref": "#/components/responses/507-InsufficientStorage"
+
+    delete:
+      operationId: dispatcher.delete_policy
+      description: 'Delete a policy'
+      tags:
+      - Individual policy Object
+      responses:
+        204:
+          description: 'Delete operation dispatched'
+        404:
+          "$ref": "#/components/responses/404-NotFound"
+        429:
+          "$ref": "#/components/responses/429-TooManyRequests"
+        503:
+          "$ref": "#/components/responses/503-ServiceUnavailable"
+
+components:
+  schemas:
+    #
+    # Representation objects
+    #
+    A1PolicyObject:
+      title: 'Title'
+      description: 'A generic policy object'
+      type: object
+
+    ProblemDetails:
+      description: 'A problem detail to carry details in a HTTP response according to RFC 7807'
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: number
+        detail:
+          type: string
+        instance:
+          type: string
+
+    #
+    # Simple data types
+    #
+    JsonSchema:
+      description: 'A JSON schema following http://json-schema.org/draft-07/schema'
+      type: object
+
+    A1PolicyId:
+      description: 'A1 policy identifier.'
+      type: string
+
+    PolicyTypeId:
+      description: 'Policy type identifier assigned by the A1-P Provider'
+      type: string
+
+  responses:
+    400-BadRequest:
+      description: 'A1 policy not properly formulated or not related to the method'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
+    404-NotFound:
+      description: 'No resource found at the URI'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
+    405-MethodNotAllowed:
+      description: 'Method not allowed for the URI'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
+    409-Conflict:
+      description: 'Request could not be processed in the current state of the resource'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
+    429-TooManyRequests:
+      description: 'Too many requests have been sent in a given amount of time'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
+    503-ServiceUnavailable:
+      description: 'The provider is currently unable to handle the request due to a temporary overload'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
+    507-InsufficientStorage:
+      description: 'The method could not be performed on the resource because the provider is unable to store the representation needed to successfully complete the request'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
