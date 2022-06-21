@@ -1,0 +1,14 @@
+{
+  "ANR": {
+    "request_topic": "kafkatopicreq",
+    "response_topic": "kafkatopicres"
+  },
+  "STD_1": {
+    "request_topic": "kafkatopicreq2",
+    "response_topic": "kafkatopicres"
+  },
+  "STD_2": {
+    "request_topic": "kafkatopicreq3",
+    "response_topic": "kafkatopicres"
+  }
+}
