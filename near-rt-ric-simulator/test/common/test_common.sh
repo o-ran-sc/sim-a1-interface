@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2020-2022 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@
 #Expects the env $RESULT to contain the expected RESULT.
 #If json, the RESULT shall begin with 'json:'.
 #Any json parameter with unknown value shall be given as "????" to skip checking the value.
+#The requestid parameter is being introduced in the fifth order.
 do_curl() {
     if [ $# -lt 3 ]; then
         echo "Need 3 or more parameters, <http-operation> <url> <response-code> [file]: "$@
@@ -33,8 +34,11 @@ do_curl() {
         exit 1
     fi
     curlstr="curl -X "$1" -skw %{http_code} $HTTPX://localhost:"${PORT}${2}" -H accept:*/*"
-    if [ $# -gt 3 ]; then
+    if [ $# -eq 4 ]; then
         curlstr=$curlstr" -H Content-Type:application/json --data-binary @"$4
+    fi
+    if [ $# -ge 5 ]; then
+        curlstr=$curlstr" -H Content-Type:application/json --data-binary @"$4" -H requestid:"$5
     fi
     echo "  CMD (${BASH_LINENO[0]}):"$curlstr
     res=$($curlstr)
@@ -75,6 +79,33 @@ do_curl() {
     fi
 }
 
+# Triggers publish_event_to_kafka_bus.py script to send msg to Kafka broker
+# The aim of this function is to realize error related test cases only
+# The request_id for the Kafka msg, should be passed here as a function parameter
+publish_response_event() {
+    if [ $# -lt 1 ]; then
+        echo "Need 1 parameter, <request_id>"
+        echo "Exiting test script....."
+        exit 1
+    fi
+    res=$(python ../common/publish_response_event_to_kafka_bus.py "$1")
+    if [ $res -eq 0 ]; then
+        echo "  Result as expected  "
+    else
+        echo "  Result not expected  "
+        echo "  Exiting.....  "
+        exit 1
+    fi
+}
+
+# Creates 16 digits random number using letters and numbers only
+get_random_number() {
+    r_num=$(tr -dc A-Za-z0-9 < /dev/urandom | head -c 16)
+    echo $r_num
+}
+
+# It is being used to cross-test-cases in between A1 sim and external server
+# The parameter it holds all with regards to External Server relates e.g. HTTPX_EXT_SRV and PORT_EXT_SRV
 do_curl_ext_srv() {
     if [ $# -lt 3 ]; then
         echo "Need 3 or more parameters, <http-operation> <url> <response-code> [file]: "$@

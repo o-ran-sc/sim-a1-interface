@@ -1,0 +1,4 @@
+{
+  "request_topic": "kafkatopicreq",
+  "response_topic": "kafkatopicres"
+}
