@@ -36,7 +36,7 @@ APPL_JSON='application/json'
 APPL_PROB_JSON='application/problem+json'
 
 EXT_SRV_URL=os.getenv('EXT_SRV_URL')
-
+KAFKA_DISPATCHER_URL=os.getenv('KAFKA_DISPATCHER_URL')
 
 # API Function: Get all policy type ids
 def get_all_policy_types():
@@ -132,6 +132,13 @@ def put_policy(policyTypeId, policyId):
       pjson=create_problem_json(None, "Duplicate, the policy json already exists.", 400, None, policy_id)
       return Response(json.dumps(pjson), 400, mimetype=APPL_PROB_JSON)
 
+  #Callout hooks for kafka dispatcher
+  if (KAFKA_DISPATCHER_URL is not None):
+    resp = callout_kafka_dispatcher(policy_type_id, policy_id, data, retcode)
+    if (resp != 200):
+      pjson=create_error_response(resp)
+      return Response(json.dumps(pjson), 500, mimetype=APPL_PROB_JSON)
+
   #Callout hooks for external server
   #When it fails, break and return 419 HTTP status code
   if (EXT_SRV_URL is not None):
@@ -203,6 +210,13 @@ def delete_policy(policyTypeId, policyId):
     pjson=create_problem_json(None, "The requested policy does not exist.", 404, None, policy_id)
     return Response(json.dumps(pjson), 404, mimetype=APPL_PROB_JSON)
 
+  #Callout hooks for kafka dispatcher
+  if (KAFKA_DISPATCHER_URL is not None):
+    resp = callout_kafka_dispatcher(policy_type_id, policy_id, None, 204)
+    if (resp != 200):
+      pjson=create_error_response(resp)
+      return Response(json.dumps(pjson), 500, mimetype=APPL_PROB_JSON)
+
   #Callout hooks for external server
   #When it fails, break and return 419 HTTP status code
   if (EXT_SRV_URL is not None):
@@ -241,7 +255,44 @@ def get_policy_status(policyTypeId, policyId):
     pjson=create_problem_json(None, "The requested policy does not exist.", 404, None, policy_id)
     return Response(json.dumps(pjson), 404, mimetype=APPL_PROB_JSON)
 
+  #Callout hooks for kafka dispatcher
+  if (KAFKA_DISPATCHER_URL is not None):
+    resp = callout_kafka_dispatcher(policy_type_id, policy_id, None, 202)
+    if (resp != 200):
+      pjson=create_error_response(resp)
+      return Response(json.dumps(pjson), 500, mimetype=APPL_PROB_JSON)
+
   return Response(json.dumps(policy_status[policy_id]), status=200, mimetype=APPL_JSON)
+
+
+# Helper: Callout kafka dispatcher server to notify it for policy operations
+def callout_kafka_dispatcher(policy_type_id, policy_id, payload, retcode):
+
+  target_url = KAFKA_DISPATCHER_URL + "/policytypes/" + policy_type_id + "/kafkadispatcher/" + policy_id
+  try:
+    # create operation, publish with payload
+    if (retcode == 201):
+      resp=requests.put(target_url, json=payload, timeout=30, verify=False)
+      return resp.status_code
+    # update operation, publish with payload
+    elif (retcode == 200):
+      # add headers an update-flag
+      headers = {'updateoper' : 'yes'}
+      resp=requests.put(target_url, json=payload, headers=headers, timeout=30, verify=False)
+      return resp.status_code
+    # delete operation, publish without payload
+    elif (retcode == 204):
+      resp=requests.delete(target_url, timeout=30, verify=False)
+      return resp.status_code
+    # get policy status operation, publish without payload
+    elif (retcode == 202):
+      # update endpoint
+      target_url = target_url + "/status"
+      resp=requests.get(target_url, timeout=30, verify=False)
+      return resp.status_code
+  except Exception:
+    return 419
+
 
 # Helper: Callout external server to notify it for policy operations
 # Returns 200, 201 and 204 for the success callout hooks, for the others returns 419
