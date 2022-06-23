@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c0641c5_71bc8912",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-06-23T13:09:56Z",
+      "side": 1,
+      "message": "Henrik, Bjorn Can you confirm that you can +2 and merge access for this change. \nThanks. ",
+      "revId": "fc48f0fad61ccee381283fadfe3e03fa1cd1c42d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
