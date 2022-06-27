@@ -21,23 +21,26 @@
 # Run the build_and_start with the same arg, except arg 'nonsecure|secure', as this script
 
 print_usage() {
-    echo "Usage: ./basic_test.sh nonsecure|secure duplicate-check|ignore-duplicate "
+    echo "Usage: ./basic_test.sh nonsecure|secure duplicate-check|ignore-duplicate ext-srv|ext-srv-secure|ignore-ext-srv"
     exit 1
 }
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
     print_usage
 fi
-if [ "$1" != "nonsecure" ] && [ "$1" != "secure" ]; then
+
+if [ $1 != "nonsecure" ] && [ $1 != "secure" ]; then
     print_usage
 fi
-if [ "$2" == "duplicate-check" ]; then
-    DUP_CHECK=1
-elif [ "$2" == "ignore-duplicate" ]; then
-    DUP_CHECK=0
-else
+
+if [ $2 != "duplicate-check" ] && [ $2 != "ignore-duplicate" ]; then
     print_usage
 fi
+
+if [ $3 != "ext-srv" ] && [ $3 != "ext-srv-secure" ] && [ $3 != "ignore-ext-srv" ]; then
+    print_usage
+fi
+
 
 if [ $1 == "nonsecure" ]; then
     #Default http port for the simulator
@@ -49,6 +52,28 @@ else
     PORT=8185
     # Set https protocol
     HTTPX="https"
+fi
+
+if [ $2 == "duplicate-check" ]; then
+    DUP_CHECK=1
+else
+    DUP_CHECK=0
+fi
+
+if [ $3 == "ext-srv" ]; then
+    #Default http port for the external server
+    PORT_EXT_SRV=9095
+    # Set http protocol for external server
+    HTTPX_EXT_SRV="http"
+    EXT_SRV_EXIST=1
+elif [ $3 == "ext-srv-secure" ]; then
+    #Default https port for the external server
+    PORT_EXT_SRV=9195
+    # Set https protocol for external server
+    HTTPX_EXT_SRV="https"
+    EXT_SRV_EXIST=1
+else
+    EXT_SRV_EXIST=0
 fi
 
 . ../common/test_common.sh
@@ -69,6 +94,21 @@ do_curl POST /deleteinstances 200
 echo "=== Reset simulator, all ==="
 RESULT="All policy instances and types deleted"
 do_curl POST /deleteall 200
+
+#Test all admin functions in the external server
+if [ $EXT_SRV_EXIST == 1 ]; then
+    echo "=== External server, hello world ==="
+    RESULT="OK"
+    do_curl_ext_srv GET / 200
+
+    echo "=== External server, reset all ==="
+    RESULT="All a1 policy instances deleted"
+    do_curl_ext_srv POST /serveradmin/deleteinstances 200
+
+    echo "=== External server, reset force delay ==="
+    RESULT="Force delay has been resetted for all external server responses"
+    do_curl_ext_srv POST /serveradmin/forcedelay 200
+fi
 
 echo "=== Get counter: interface ==="
 RESULT="STD_2.0.0"
@@ -144,6 +184,13 @@ res=$(cat jsonfiles/pi1.json)
 RESULT="json:$res"
 do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi1 201 jsonfiles/pi1.json
 
+if [ $EXT_SRV_EXIST == 1 ]; then
+    echo "=== External server, get a pi1 policy: pi1 ==="
+    res=$(cat jsonfiles/pi1.json)
+    RESULT="json:$res"
+    do_curl_ext_srv GET /a1policy/pi1 200
+fi
+
 echo "=== API: Get policy instance pi1 of type: STD_1 ==="
 res=$(cat jsonfiles/pi1.json)
 RESULT="json:$res"
@@ -154,10 +201,24 @@ res=$(cat jsonfiles/pi1.json)
 RESULT="json:$res"
 do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi1 200 jsonfiles/pi1.json
 
+if [ $EXT_SRV_EXIST == 1 ]; then
+    echo "=== External server, get a pi1 policy: pi1 ==="
+    res=$(cat jsonfiles/pi1.json)
+    RESULT="json:$res"
+    do_curl_ext_srv GET /a1policy/pi1 200
+fi
+
 echo "=== API: Update policy instance pi1 of type: STD_1==="
 res=$(cat jsonfiles/pi1_updated.json)
 RESULT="json:$res"
 do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi1 200 jsonfiles/pi1_updated.json
+
+if [ $EXT_SRV_EXIST == 1 ]; then
+    echo "=== External server, get a pi1 policy: pi1 ==="
+    res=$(cat jsonfiles/pi1_updated.json)
+    RESULT="json:$res"
+    do_curl_ext_srv GET /a1policy/pi1 200
+fi
 
 echo "=== API: Duplicate policy instance json,  pi2 of type: STD_1==="
 res=$(cat jsonfiles/pi1_updated.json)
@@ -171,19 +232,37 @@ else
     RESULT="json:$res"
     do_curl PUT /A1-P/v2/policytypes/STD_1/policies/pi2 201 jsonfiles/pi1_updated.json
 
+    if [ $EXT_SRV_EXIST == 1 ]; then
+        echo "=== External server, get a pi2 policy: pi2 ==="
+        res=$(cat jsonfiles/pi1_updated.json)
+        RESULT="json:$res"
+        do_curl_ext_srv GET /a1policy/pi2 200
+    fi
+
     echo "=== API: DELETE policy instance pi2 ==="
     RESULT=""
     do_curl DELETE /A1-P/v2/policytypes/STD_1/policies/pi2 204
+
+    if [ $EXT_SRV_EXIST == 1 ]; then
+        echo "=== External server, get a pi2 policy: policy instance not found ==="
+        RESULT="json:{\"title\": \"The A1 policy requested does not exist.\", \"status\": 404, \"instance\": \"pi2\"}"
+        do_curl_ext_srv GET /a1policy/pi2 404
+    fi
 fi
 
 echo "=== API: Get policy instances, shall contain pi1=="
 RESULT="json:[ \"pi1\" ]"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies 200
 
+if [ $EXT_SRV_EXIST == 1 ]; then
+    echo "=== External server, get policy instances, shall contain pi1=="
+    RESULT="json:[ \"pi1\" ]"
+    do_curl_ext_srv GET /a1policies 200
+fi
+
 echo "=== Put a policy type: STD_2 ==="
 RESULT="Policy type STD_2 is OK."
 do_curl PUT  '/policytype?id=STD_2' 201 jsonfiles/std_2.json
-
 
 echo "=== API: Duplicate policy instance id pi1 of type: STD_2==="
 res=$(cat jsonfiles/pi1_updated.json)
@@ -201,7 +280,6 @@ do_curl GET /counter/num_types 200
 echo "=== Get counter: intstance ==="
 RESULT="1"
 do_curl GET /counter/num_instances 200
-
 
 echo "=== Set force response code 409. ==="
 RESULT="*"
@@ -263,9 +341,15 @@ echo "=== API: DELETE policy instance pi1 ==="
 RESULT=""
 do_curl DELETE /A1-P/v2/policytypes/STD_1/policies/pi1 204
 
-echo "=== API: Get policy instances, shall contain pi1 and pi2=="
+echo "=== API: Get policy instances, shall contain pi2=="
 RESULT="json:[ \"pi2\" ]"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies 200
+
+if [ $EXT_SRV_EXIST == 1 ]; then
+    echo "=== External server, get policy instances, shall contain pi2=="
+    RESULT="json:[ \"pi2\" ]"
+    do_curl_ext_srv GET /a1policies 200
+fi
 
 echo "=== API: Get policy status ==="
 RESULT="json:{\"enforceStatus\": \"\", \"enforceReason\": \"\"}"
