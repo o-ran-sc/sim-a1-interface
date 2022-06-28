@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "691d559c_1bd60454",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/api/KAFKA_DISPATCHER_api.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "Not needed I think",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4746de3_a1039f9d",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "Suggest to use a single env var instead of two separate",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7fcf1ac_d8fa0c98",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7c24aca_d62b26d2",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "I guess that there need to be some code here to wait for the response on a different topic.",
+      "range": {
+        "startLine": 127,
+        "startChar": 1,
+        "endLine": 140,
+        "endChar": 0
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3e70675_9e4bd7ef",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/main.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 77
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3af41ed_cc4e7aaf",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/var_declaration.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "Not needed I think, policies should not be stored - just sent to kafka",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e5a2f9_89069ef9",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER_TEST/build_and_start.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "I guess there will be two topics - one for requests and one for responses.",
+      "range": {
+        "startLine": 45,
+        "startChar": 133,
+        "endLine": 45,
+        "endChar": 162
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad4183c_ff7a6683",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER_TEST/build_and_start.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-06-28T08:13:52Z",
+      "side": 1,
+      "message": "Could be one env var - easier to check.",
+      "range": {
+        "startLine": 45,
+        "startChar": 80,
+        "endLine": 45,
+        "endChar": 131
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
