@@ -191,6 +191,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3e8ab95_d50203db",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-06-30T10:37:09Z",
+      "side": 1,
+      "message": "Another questions, I want to ask, who is going to be responsible to replicate events from firstkafkatopic to secondkafkatopic and what should be the time-out for searching that event in secondkafkatopic?",
+      "parentUuid": "9d2cf2e8_71eda716",
+      "range": {
+        "startLine": 127,
+        "startChar": 1,
+        "endLine": 140,
+        "endChar": 0
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3e70675_9e4bd7ef",
         "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/main.py",
         "patchSetId": 2
