@@ -22,4 +22,3 @@ A1 Interface Simulator
    ./simulator-api.rst
    ./release-notes.rst
 
-* :ref:`search`
