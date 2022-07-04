@@ -213,6 +213,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6b0fb4f_a63a73cd",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-07-04T07:43:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e8ab95_d50203db",
+      "range": {
+        "startLine": 127,
+        "startChar": 1,
+        "endLine": 140,
+        "endChar": 0
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3e70675_9e4bd7ef",
@@ -391,6 +415,30 @@
       "side": 1,
       "message": "Do you mean that shall I write the record_metadata, returned by producer.send(message) in firstkafkatopic, to another topic called e.g. secondkafkatopic or responsekafkatopic?",
       "parentUuid": "15e5a2f9_89069ef9",
+      "range": {
+        "startLine": 45,
+        "startChar": 133,
+        "endLine": 45,
+        "endChar": 162
+      },
+      "revId": "cbc705c40b8431cb7615cee152330f7b8e1a58ea",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c5d6a04_5f1d3e7a",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER_TEST/build_and_start.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-07-04T07:43:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9aa0bbc_4f87564d",
       "range": {
         "startLine": 45,
         "startChar": 133,
