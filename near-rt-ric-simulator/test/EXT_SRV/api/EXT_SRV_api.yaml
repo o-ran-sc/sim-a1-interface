@@ -1,19 +1,19 @@
 openapi: 3.0.0
 info:
   title: 'External Server for A1 simulator'
-  version: 2.0.0
+  version: 0.0.1
   description: |
     External test server.
     © 2022, O-RAN Alliance.
     All rights reserved.
 externalDocs:
   description: 'An external server building CRUD RestFUL APIs which is provisioned by A1 simulator. It will be a refrence point for the callouts'
-  url: 'https://www.testserver/specifications'
+  url: 'https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/external-server.html'
 servers:
   - url: '{apiRoot}'
     variables:
       apiRoot:
-        default: 'https://testserver.com'
+        default: 'http://www.example.com'
 paths:
   '/a1policies':
     get:
