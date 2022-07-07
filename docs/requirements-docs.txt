@@ -1,5 +1,9 @@
 sphinx
 sphinx-rtd-theme
+sphinx-bootstrap-theme
 sphinxcontrib-httpdomain
+sphinxcontrib-redoc
+sphinxcontrib-needs
+sphinxcontrib-swaggerdoc
 recommonmark
 lfdocs-conf

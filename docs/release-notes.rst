@@ -1,21 +1,21 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
-.. Copyright (C) 2021 Nordix
+.. Copyright (C) 2021-2022 Nordix
 
 =============
 Release-Notes
 =============
 
 
-This document provides the release notes for the release of the Near-RT RIC A1 Interface Simulator.
+This document provides the release notes for the release of the A1 Simulator (previously called Near-RT RIC A1 Interface).
 
 .. contents::
    :depth: 3
    :local:
 
 
-Version history Near-RT RIC A1 Interface Simulator
-==================================================
+Version history A1 Simulator (previously called Near-RT RIC A1 Interface)
+=========================================================================
 
 +------------+----------+------------------+----------------+
 | **Date**   | **Ver.** | **Author**       | **Comment**    |

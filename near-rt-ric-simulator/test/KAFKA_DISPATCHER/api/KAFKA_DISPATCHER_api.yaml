@@ -1,75 +1,64 @@
 openapi: 3.0.0
 info:
-  title: 'External Server for A1 simulator'
+  title: 'Kafka message dispatcher for A1 interface'
   version: 0.0.1
   description: |
-    External test server.
-    © 2022, O-RAN Alliance.
-    All rights reserved.
+    Kafka message dispatcher server.
   license:
     name: Copyright (C) 2022 Nordix Foundation. Licensed under the Apache License.
     url: http://www.apache.org/licenses/LICENSE-2.0
 externalDocs:
-  description: 'An external server building CRUD RestFUL APIs which is provisioned by A1 simulator. It will be a refrence point for the callouts'
-  url: 'https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/EXT_SRV_api.html'
+  description: 'RestFUL APIs that create and dispatch Kafka messages to Kafka brokers'
+  url: 'https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/index.html'
 servers:
   - url: '{apiRoot}'
     variables:
       apiRoot:
-        default: 'http://www.example.com'
+        default: 'https://example.com'
 paths:
-  '/a1policies':
+  '/policytypetotopicmapping/{policyTypeId}':
+    parameters:
+      - name: policyTypeId
+        in: path
+        required: true
+        schema:
+          "$ref": "#/components/schemas/PolicyTypeId"
     get:
-      operationId: server.get_all_a1_policies
-      description: 'Get all a1 policies'
+      operationId: dispatcher.get_policy_type_to_topic_mapping
+      description: 'Get the kafka request and response topic map corresponding to policy type'
       tags:
-      - All a1policies
+      - The mapping from policy type to kafka topic request and response object
       responses:
         200:
-          description: 'Array of all a1 policies'
+          description: 'The policy type to topic map schemas'
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/A1PolicyObject"
-                minItems: 0
+                "$ref": "#/components/schemas/PolicyTypeToTopicMap"
+        404:
+          "$ref": "#/components/responses/404-NotFound"
         429:
           "$ref": "#/components/responses/429-TooManyRequests"
         503:
           "$ref": "#/components/responses/503-ServiceUnavailable"
-  '/a1policy/{a1policyId}':
+
+  '/policytypes/{policyTypeId}/kafkadispatcher/{policyId}':
     parameters:
-      - name: a1policyId
+      - name: policyTypeId
+        in: path
+        required: true
+        schema:
+          "$ref": "#/components/schemas/PolicyTypeId"
+      - name: policyId
         in: path
         required: true
         schema:
           "$ref": "#/components/schemas/A1PolicyId"
-    get:
-      operationId: server.get_a1_policy
-      description: 'Query for an A1 policy'
-      tags:
-      - Single A1 Policy Object
-      responses:
-        200:
-          description: 'The requested A1 policy object'
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/A1PolicyObject"
-        404:
-          "$ref": "#/components/responses/404-NotFound"
-        409:
-          "$ref": "#/components/responses/409-Conflict"
-        429:
-          "$ref": "#/components/responses/429-TooManyRequests"
-        503:
-          "$ref": "#/components/responses/503-ServiceUnavailable"
     put:
-      operationId: server.put_a1_policy
-      description: 'Create an A1 policy'
+      operationId: dispatcher.put_policy
+      description: 'Dispatch create and update operation as kafka message to kafka cluster'
       tags:
-      - Individual A1 policy Object
+      - Individual policy Object
       requestBody:
         required: true
         content:
@@ -78,44 +67,54 @@ paths:
               "$ref": "#/components/schemas/A1PolicyObject"
       responses:
         200:
-          description: 'The A1 policy was updated'
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/A1PolicyObject"
-        201:
-          description: 'The A1 policy was created'
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/A1PolicyObject"
-          headers:
-            Location:
-              description: 'Contains the URI of the created A1 policy'
-              required: true
-              schema:
-                type: string
+          description: 'Create or update operation dispatched'
         400:
           "$ref": "#/components/responses/400-BadRequest"
-        409:
-          "$ref": "#/components/responses/409-Conflict"
+        408:
+          "$ref": "#/components/responses/408-RequestTimeout"
+        419:
+          "$ref": "#/components/responses/419-KafkaMessagePublishFailed"
         429:
           "$ref": "#/components/responses/429-TooManyRequests"
         503:
           "$ref": "#/components/responses/503-ServiceUnavailable"
         507:
           "$ref": "#/components/responses/507-InsufficientStorage"
-
     delete:
-      operationId: server.delete_a1_policy
-      description: 'Delete an A1 policy'
-      tags:
-      - Individual a1policy Object
+      operationId: dispatcher.delete_policy
+      description: 'Dispatch policy delete opertion as kafka message to kafka cluster'
       responses:
-        204:
-          description: 'The A1 policy was deleted'
-        404:
-          "$ref": "#/components/responses/404-NotFound"
+        200:
+          description: 'Delete operation dispatched'
+        408:
+          "$ref": "#/components/responses/408-RequestTimeout"
+        419:
+          "$ref": "#/components/responses/419-KafkaMessagePublishFailed"
+        429:
+          "$ref": "#/components/responses/429-TooManyRequests"
+        503:
+          "$ref": "#/components/responses/503-ServiceUnavailable"
+
+  '/policytypes/{policyTypeId}/kafkadispatcher/{policyId}/status':
+    parameters:
+      - name: policyTypeId
+        in: path
+        required: true
+        schema:
+          "$ref": "#/components/schemas/PolicyTypeId"
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          "$ref": "#/components/schemas/A1PolicyId"
+    get:
+      operationId: dispatcher.get_policy_status
+      description: 'Dispatch policy status query opertion as kafka message to kafka cluster'
+      tags:
+      - Individual A1 Policy Status Object
+      responses:
+        200:
+          description: 'Query policy status operation dispatched'
         429:
           "$ref": "#/components/responses/429-TooManyRequests"
         503:
@@ -127,9 +126,26 @@ components:
     # Representation objects
     #
     A1PolicyObject:
-      title: 'Title'
-      description: 'A generic A1 policy object'
+      description: 'A generic policy object'
       type: object
+
+    A1Policy:
+      description: 'A generic policy string'
+      type: string
+
+    PolicyTypeToTopicMap:
+      description: 'Request and response topic map for each policy type'
+      type: object
+      properties:
+        policy_type:
+          type: object
+          properties:
+            request_topic:
+              type: string
+              example: kafkatopicreq
+            response_topic:
+              type: string
+              example: kafkatopicres
 
     ProblemDetails:
       description: 'A problem detail to carry details in a HTTP response according to RFC 7807'
@@ -157,6 +173,10 @@ components:
       description: 'A1 policy identifier.'
       type: string
 
+    PolicyTypeId:
+      description: 'Policy type identifier assigned by the A1-P Provider'
+      type: string
+
   responses:
     400-BadRequest:
       description: 'A1 policy not properly formulated or not related to the method'
@@ -179,8 +199,22 @@ components:
           schema:
             "$ref": "#/components/schemas/ProblemDetails"
 
+    408-RequestTimeout:
+      description: 'Request could not be processed in given amount of time'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
     409-Conflict:
       description: 'Request could not be processed in the current state of the resource'
+      content:
+        application/problem+json:
+          schema:
+            "$ref": "#/components/schemas/ProblemDetails"
+
+    419-KafkaMessagePublishFailed:
+      description: 'Publishing the kafka message to the broker gets fail'
       content:
         application/problem+json:
           schema:
