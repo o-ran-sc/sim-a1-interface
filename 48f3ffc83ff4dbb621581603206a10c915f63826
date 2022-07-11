@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73740fab_b15626de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-07-11T10:15:19Z",
+      "side": 1,
+      "message": "Thanks for the comments, please find replies in line. For more info, please chat 😊",
+      "revId": "48f3ffc83ff4dbb621581603206a10c915f63826",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d49a4c7b_30926ffb",
@@ -24,6 +41,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8f2d48b_e7d5cb3e",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-07-11T10:15:19Z",
+      "side": 1,
+      "message": "These code should not be inside of try-catch block since when the requestid does not exists it will not create an error but the variable will be assigned None.",
+      "parentUuid": "d49a4c7b_30926ffb",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 49
+      },
+      "revId": "48f3ffc83ff4dbb621581603206a10c915f63826",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61f6dcf0_f4f96a84",
@@ -37,6 +78,30 @@
       "writtenOn": "2022-07-11T08:36:11Z",
       "side": 1,
       "message": "maybe you could use req_id_from_header \u003d get_random_string(16) here instead.",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 34
+      },
+      "revId": "48f3ffc83ff4dbb621581603206a10c915f63826",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3e64cd2_9b5bc057",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-07-11T10:15:19Z",
+      "side": 1,
+      "message": "No, since req_id_from_header parameter should be sent from the test script (in the header) so that in the later stage of the error testing the same id can be used.",
+      "parentUuid": "61f6dcf0_f4f96a84",
       "range": {
         "startLine": 94,
         "startChar": 4,
