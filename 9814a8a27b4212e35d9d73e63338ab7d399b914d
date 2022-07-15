@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20baa383_ea047126",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-07-15T10:53:12Z",
+      "side": 1,
+      "message": "Review fixed, open API file validated with the swagger editor.",
+      "revId": "9814a8a27b4212e35d9d73e63338ab7d399b914d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
