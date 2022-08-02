@@ -8,6 +8,9 @@
 .. |nbh| unicode:: 0x2011
    :trim:
 
+.. |yaml-icon| image:: ./images/yaml_logo.png
+                  :width: 40px
+
 =====================
 Callout Server
 =====================
@@ -19,8 +22,16 @@ The O-RAN SC external server is an extension for Near-RealTime RIC simulator. It
 
 The details of API definitions are being explained below:
 
-.. Generates content from EXT_SRV_api.yaml
-.. openapi:: ../api/EXT_SRV_api.yaml
+See `Callout server API <./EXT_SRV_api.html>`_ for full details of the API.
+
+The API is also described in YAML:
+
+
+.. csv-table::
+   :header: "API name", "|yaml-icon|"
+   :widths: 10,5
+
+   "Callout Server API", ":download:`link <../near-rt-ric-simulator/test/EXT_SRV/api/EXT_SRV_api.yaml>`"
 
 
 Admin Functions
