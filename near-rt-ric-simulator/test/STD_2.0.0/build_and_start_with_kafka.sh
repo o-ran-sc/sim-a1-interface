@@ -89,7 +89,7 @@ fi
 # Runs kafka server in detached mode
 # In order to tail logs use:: docker logs -f kafkamessagedispatcher
 if [ ! -z "$URL" ]; then
-    docker run -d --network host --rm -it -p 7075:7075 -p 7175:7175 -e ALLOW_HTTP=true -e MSG_BROKER_URL=localhost:9092 -e KAFKA_TOPIC_RES=kafkatopicres -e TIME_OUT=30000 --volume "$dirkafkasrv/certificate:/usr/src/app/cert" --name kafkamessagedispatcher kafka_dispatcher
+    docker run -d --network host --rm -it -p 7075:7075 -p 7175:7175 -e ALLOW_HTTP=true -e MSG_BROKER_URL=localhost:9092 -e TIME_OUT=30 --volume "$dirkafkasrv/certificate:/usr/src/app/cert" --name kafkamessagedispatcher kafka_dispatcher
 fi
 
 # Runs A1 simulator

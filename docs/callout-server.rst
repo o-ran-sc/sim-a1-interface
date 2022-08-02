@@ -20,7 +20,7 @@ The O-RAN SC external server is an extension for Near-RealTime RIC simulator. It
 The details of API definitions are being explained below:
 
 .. Generates content from EXT_SRV_api.yaml
-.. openapi:: ../near-rt-ric-simulator/test/EXT_SRV/api/EXT_SRV_api.yaml
+.. openapi:: ../api/EXT_SRV_api.yaml
 
 
 Admin Functions
