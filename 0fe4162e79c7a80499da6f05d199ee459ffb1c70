@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9260e5fe_328a2df4",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/src/dispatcher.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-05T10:34:07Z",
+      "side": 1,
+      "message": "Try to have a flag for this rather than having to manually comment / uncomment to run certain tests",
+      "range": {
+        "startLine": 164,
+        "startChar": 37,
+        "endLine": 168,
+        "endChar": 46
+      },
+      "revId": "0fe4162e79c7a80499da6f05d199ee459ffb1c70",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
