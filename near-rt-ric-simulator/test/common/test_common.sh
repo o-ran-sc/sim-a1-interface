@@ -83,12 +83,12 @@ do_curl() {
 # The aim of this function is to realize error related test cases only
 # The request_id for the Kafka msg, should be passed here as a function parameter
 publish_response_event() {
-    if [ $# -lt 1 ]; then
-        echo "Need 1 parameter, <request_id>"
+    if [ $# -ne 2 ]; then
+        echo "Need 2 parameter, <request_id> <target_topic>"
         echo "Exiting test script....."
         exit 1
     fi
-    res=$(python ../common/publish_response_event_to_kafka_bus.py "$1")
+    res=$(python ../common/publish_response_event_to_kafka_bus.py "$1" "$2")
     if [ $res -eq 0 ]; then
         echo "  Result as expected  "
     else

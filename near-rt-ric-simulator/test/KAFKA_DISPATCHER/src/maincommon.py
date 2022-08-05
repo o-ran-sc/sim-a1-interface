@@ -65,9 +65,13 @@ def create_kafka_producer():
 # https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
 def create_kafka_consumer():
   consumer = KafkaConsumer(
-    #KAFKA_TOPIC_RES,
+    # kafka cluster endpoint
     bootstrap_servers = MSG_BROKER_URL,
+    # move to the earliest or latest available message
     auto_offset_reset = 'earliest',
+    # number of milliseconds to block during message iteration
+    # if no new message available during this period of time, iteration through a for-loop will stop automatically
+    consumer_timeout_ms = 100,
     value_deserializer = lambda m: json.loads(m.decode('ascii')),
     #enable_auto_commit=False
   )

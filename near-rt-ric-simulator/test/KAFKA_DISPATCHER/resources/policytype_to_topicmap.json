@@ -5,10 +5,10 @@
   },
   "STD_1": {
     "request_topic": "kafkatopicreq2",
-    "response_topic": "kafkatopicres"
+    "response_topic": "kafkatopicres2"
   },
   "STD_2": {
     "request_topic": "kafkatopicreq3",
-    "response_topic": "kafkatopicres"
+    "response_topic": "kafkatopicres3"
   }
 }

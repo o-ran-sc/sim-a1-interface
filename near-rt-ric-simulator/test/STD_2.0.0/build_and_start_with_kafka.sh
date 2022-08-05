@@ -21,11 +21,11 @@
 # Make sure to run the simulator with the same arg as this script
 
 print_usage() {
-    echo "Usage: ./build_and_start.sh duplicate-check|ignore-duplicate kafka-srv|kafka-srv-secure|ignore-kafka-srv"
+    echo "Usage: ./build_and_start.sh duplicate-check|ignore-duplicate kafka-srv|kafka-srv-secure publish-resp|ignore-publish"
     exit 1
 }
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
     print_usage
 fi
 
@@ -41,8 +41,14 @@ if [ $2 == "kafka-srv" ]; then
     URL="http://localhost:7075"
 elif  [ $2 == "kafka-srv-secure" ]; then
     URL="https://localhost:7175"
-elif  [ $2 == "ignore-kafka-srv" ]; then
-    URL=""
+else
+    print_usage
+fi
+
+if [ $3 == "publish-resp" ]; then
+    PUBLISH_RESP="-e PUBLISH_RESP=1"
+elif  [ $3 == "ignore-publish" ]; then
+    PUBLISH_RESP=""
 else
     print_usage
 fi
@@ -89,7 +95,7 @@ fi
 # Runs kafka server in detached mode
 # In order to tail logs use:: docker logs -f kafkamessagedispatcher
 if [ ! -z "$URL" ]; then
-    docker run -d --network host --rm -it -p 7075:7075 -p 7175:7175 -e ALLOW_HTTP=true -e MSG_BROKER_URL=localhost:9092 -e TIME_OUT=30 --volume "$dirkafkasrv/certificate:/usr/src/app/cert" --name kafkamessagedispatcher kafka_dispatcher
+    docker run -d --network host --rm -it -p 7075:7075 -p 7175:7175 -e ALLOW_HTTP=true -e MSG_BROKER_URL=localhost:9092 -e TIME_OUT=30 $PUBLISH_RESP --volume "$dirkafkasrv/certificate:/usr/src/app/cert" --name kafkamessagedispatcher kafka_dispatcher
 fi
 
 # Runs A1 simulator

@@ -78,7 +78,7 @@ do_curl PUT  /policytypes/ANR/kafkadispatcher/alpha 408 jsonfiles/alpha_policy.j
 proc_id=$!
 sleep $timeout
 # after time out duration, publish the event
-publish_response_event $req_id
+publish_response_event $req_id kafkatopicres
 # wait until the main process to be completed
 wait $proc_id
 
@@ -91,7 +91,7 @@ do_curl PUT  /policytypes/STD_1/kafkadispatcher/alpha 200 jsonfiles/alpha_policy
 proc_id=$!
 sleep 10
 # after 10s, publish the event
-publish_response_event $req_id
+publish_response_event $req_id kafkatopicres2
 # wait until the main process to be completed
 wait $proc_id
 
@@ -105,7 +105,7 @@ do_curl GET  /policytypes/STD_2/kafkadispatcher/alpha/status 408 jsonfiles/alpha
 proc_id=$!
 sleep $timeout
 # after time out duration, publish the event
-publish_response_event $req_id
+publish_response_event $req_id kafkatopicres3
 # wait until the main process to be completed
 wait $proc_id
 
@@ -118,7 +118,7 @@ do_curl GET  /policytypes/ANR/kafkadispatcher/alpha/status 200 jsonfiles/alpha_p
 proc_id=$!
 sleep 15
 # after 15s, publish the event
-publish_response_event $req_id
+publish_response_event $req_id kafkatopicres
 # wait until the main process to be completed
 wait $proc_id
 
@@ -129,7 +129,7 @@ RESULT=""
 # asynch callout
 do_curl DELETE  /policytypes/STD_1/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json $req_id &
 proc_id=$!
-publish_response_event $req_id
+publish_response_event $req_id kafkatopicres2
 # wait until the main process to be completed
 wait $proc_id
 

@@ -51,7 +51,7 @@ def create_kafka_producer():
   return producer
 
 # Helper: Publishes (to) the target broker and the topic in synch
-def publish(kafka_evet, req_id):
+def publish(kafka_evet, req_id, targettopic):
 
   # Instantiate KafkaProducer with keyword arguments
   producer = create_kafka_producer()
@@ -62,7 +62,7 @@ def publish(kafka_evet, req_id):
 
     # synch-publish
     # KafkaProducer.send(topicname, value=broker_message, key=req_id, headers=None, partition=None, timestamp_ms=None)
-    fut_rec_metadata = producer.send('kafkatopicres', kafka_evet, req_id)
+    fut_rec_metadata = producer.send(targettopic, kafka_evet, req_id)
     return fut_rec_metadata.get()
 
   except Exception as err:
@@ -74,8 +74,9 @@ if __name__ == '__main__':
     try:
 
         requestid = sys.argv[1]
+        targettopic = sys.argv[2]
         # response_data_JSON is str
-        future = publish(response_data_JSON, requestid)
+        future = publish(response_data_JSON, requestid, targettopic)
 
         if (future is not None):
             print (0)

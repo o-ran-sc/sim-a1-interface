@@ -61,65 +61,105 @@ RESULT="json:$res"
 do_curl GET /policytypetotopicmapping/ANR 200
 
 echo "=== Put policy: shall publish and consume for put policy operation ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl PUT  /policytypes/ANR/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json
+do_curl PUT  /policytypes/ANR/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres
+wait $proc_id
 
 echo "=== Get policy status: shall publish and consume for get policy status operation ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl GET  /policytypes/ANR/kafkadispatcher/alpha/status 200 jsonfiles/alpha_policy.json
+do_curl GET  /policytypes/ANR/kafkadispatcher/alpha/status 200 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres
+wait $proc_id
 
 echo "=== Put policy: shall publish and consume for put policy operation for alpha ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl PUT  /policytypes/STD_1/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json
+do_curl PUT  /policytypes/STD_1/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres2
+wait $proc_id
 
 echo "=== Delete policy: shall publish and consume for delete policy operation for alpha ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl DELETE  /policytypes/STD_1/kafkadispatcher/alpha 200
+do_curl DELETE  /policytypes/STD_1/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres2
+wait $proc_id
 
 echo "=== Set force delay 5 sec ==="
 RESULT="Force delay: 5 sec set for all dispatcher responses until it is resetted"
 do_curl POST '/dispatcheradmin/forcedelay?delay=5' 200
 
-echo "=== Put policy: shall wait at least <delay-time> sec and then respond while publishing and consuming ==="
-RESULT=""
-do_elapsetime_curl PUT  /policytypes/ANR/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json 5
+echo "=== Hello world: shall wait at least <delay-time> sec and then respond while hello world ==="
+RESULT="OK"
+do_elapsetime_curl GET / 200 jsonfiles/alpha_policy.json 5
 
 echo "=== Reset force delay ==="
 RESULT="Force delay has been resetted for all dispatcher responses"
 do_curl POST /dispatcheradmin/forcedelay 200
 
 echo "=== Put policy: shall publish and consume for put policy operation for beta ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl PUT  /policytypes/STD_1/kafkadispatcher/beta 200 jsonfiles/beta_policy.json
+do_curl PUT  /policytypes/STD_1/kafkadispatcher/beta 200 jsonfiles/beta_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres2
+wait $proc_id
 
 echo "=== Get policy status: shall publish and consume for get policy status operation ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl GET  /policytypes/ANR/kafkadispatcher/alpha/status 200 jsonfiles/beta_policy.json
+do_curl GET  /policytypes/ANR/kafkadispatcher/alpha/status 200 jsonfiles/beta_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres
+wait $proc_id
 
 echo "=== Put policy: shall publish and consume for put policy operation for alpha ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl PUT  /policytypes/STD_2/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json
+do_curl PUT  /policytypes/STD_2/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres3
+wait $proc_id
 
 echo "=== Set force response code: 500 ==="
 RESULT="Force response code: 500 set for all dispatcher response until it is resetted"
 do_curl POST  '/dispatcheradmin/forceresponse?code=500' 200
 
 echo "=== Put policy: shall not publish and consume for put policy operation for alpha ==="
+req_id=$(get_random_number)
 res=$(cat jsonfiles/forced_response.json)
 RESULT="json:$res"
-do_curl PUT  /policytypes/ANR/kafkadispatcher/alpha 500 jsonfiles/alpha_policy.json
+do_curl PUT  /policytypes/ANR/kafkadispatcher/alpha 500 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres
+wait $proc_id
 
 echo "=== Reset force response code ==="
 RESULT="Force response code has been resetted for dispatcher responses"
 do_curl POST  /dispatcheradmin/forceresponse 200
 
 echo "=== Get policy status: shall publish and consume for get policy status operation ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl GET  /policytypes/ANR/kafkadispatcher/alpha/status 200 jsonfiles/alpha_policy.json
+do_curl GET  /policytypes/ANR/kafkadispatcher/alpha/status 200 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres
+wait $proc_id
 
 echo "=== Delete policy: shall publish and consume for delete policy operation for alpha ==="
+req_id=$(get_random_number)
 RESULT=""
-do_curl DELETE  /policytypes/STD_1/kafkadispatcher/alpha 200
+do_curl DELETE  /policytypes/STD_1/kafkadispatcher/alpha 200 jsonfiles/alpha_policy.json $req_id &
+proc_id=$!
+publish_response_event $req_id kafkatopicres2
+wait $proc_id
 
 echo "********************"
 echo "*** All tests ok ***"
