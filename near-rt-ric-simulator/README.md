@@ -224,11 +224,15 @@ Note that test can be performed both using the nonsecure http port and the secur
 
 Build and start the simulator containers: STD_1.1.3 and OSC_2.1.0, using:
 
-./build\_and\_start.sh duplicate-check|ignore-duplicate
+./build_and_start.sh duplicate-check|ignore-duplicate
 
-Build and start the simulator container: STD_2.0.0, using:
+Build and start the simulator container version STD_2.0.0, using two alternatives: ext-srv or kafka-srv. However, both can not be used at the same time to start A1 sim.
 
-./build\_and\_start.sh duplicate-check|ignore-duplicate ext-srv|ext-srv-secure|ignore-ext-srv
+In order to start with ext-srv:
+./build_and_start.sh duplicate-check|ignore-duplicate ext-srv|ext-srv-secure|ignore-ext-srv
+
+In order to start with kafka-srv:
+./build_and_start.sh duplicate-check|ignore-duplicate kafka-srv|kafka-srv-secure publish-resp|ignore-publish
 
 STD_2.0.0 version is now including an external server that is a Python server building RESTful API. The external server supports HTTP/HTTPS protocols.
 The description of the start parameters are explained below:
@@ -236,17 +240,31 @@ ext-srv: Runs external server that supports HTTP protocol only.
 ext-srv-secure: Runs external server that supports HTTPS protocol as well.
 ignore-ext-srv: Ignores external server to run.
 
+STD_2.0.0 version also includes an kafka message dispatcher that is a Python server building RESTful APIs. The kafka server supports HTTP/HTTPS protocols.
+The description of the start parameters are explained below:
+kafka-srv: Runs kafka server that supports HTTP protocol only.
+kafka-srv-secure: Runs kafka server that supports HTTPS protocol as well.
+publish-resp: The flag controls the dispatcher module to decide auto responding to each requests for test purposes only.
+ignore-publish: If the A1 sim is being started using ignore flag, then the dispatcher module will look for a respone message published by south-bound module.
+
 This will build and start the container in interactive mode. The built container only resides in the local docker repository.
 Note, the default port is 8085 for http and 8185 for https. When running the simulator as a container, the defualt ports can be re-mapped to any port on the localhost.
 
-In a second terminal, go to the same folder and run the basic test script, basic\_test.sh nonsecure|secure or commands.sh nonsecure|secure duplicate-check|ignore-duplicate for STD_1.1.3 and OSC_2.1.0 versions.
+In a second terminal, go to the same folder and run the basic test script, basic_test.sh nonsecure|secure or commands.sh nonsecure|secure duplicate-check|ignore-duplicate for STD_1.1.3 and OSC_2.1.0 versions.
 
-For the STD_2.0.0 version, in a second terminal, go to the same folder and run the basic test script like:
+For the STD_2.0.0 version, in a second terminal, go to the same folder and run the basic test script for external server activated case:
 ./basic_test.sh nonsecure|secure duplicate-check|ignore-duplicate ext-srv|ext-srv-secure|ignore-ext-srv
 The description of the test script parameters are explained below:
 nonsecure|secure: Runs test cases with either support of HTTP/HTTPS protocol.
 duplicate-check|ignore-duplicate: Runs test cases with either support of duplicate/ignore-duplicate flag for the policies.
 ext-srv|ext-srv-secure|ignore-ext-srv: If the simulator started with ext-srv or ext-srv-secure parameter, then one of these options can be used. Otherwise, ignore-ext-srv parameter should be used.
+
+For the STD_2.0.0 version, in a second terminal, go to the same folder and run the basic test script for kafka dispatcher server activated case:
+./basic_test.sh nonsecure|secure duplicate-check|ignore-duplicate ext-srv|ext-srv-secure|ignore-ext-srv
+The description of the test script parameters are explained below:
+nonsecure|secure: Runs test cases with either support of HTTP/HTTPS protocol.
+duplicate-check|ignore-duplicate: Runs test cases with either support of duplicate/ignore-duplicate flag in accordance with the one which used while starting A1 sim.
+ext-srv|ext-srv-secure|ignore-ext-srv: If the simulator started with kafka-srv or kafka-srv-secure parameter, then ignore-ext-srv option should be used.
 
 Note that the arg for duplicate check must match in both scripts.
 This script runs a number of tests towards the simulator to make sure it works properply.

@@ -1,11 +1,14 @@
 openapi: 3.0.0
 info:
   title: 'Kafka message dispatcher for A1 interface'
-  version: 2.0.0
+  version: 0.0.1
   description: |
     Kafka message dispatcher server.
     © 2022, O-RAN Alliance.
     All rights reserved.
+  license:
+    name: Copyright (C) 2022 Nordix Foundation. Licensed under the Apache License.
+    url: http://www.apache.org/licenses/LICENSE-2.0
 externalDocs:
   description: 'RestFUL APIs that create and dispatch Kafka messages to Kafka brokers'
   url: 'https://docs.o-ran-sc.org/projects/o-ran-sc-sim-a1-interface/en/latest/index.html'
