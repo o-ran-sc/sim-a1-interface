@@ -1,0 +1,16 @@
+# Documentation
+.idea/
+.tox
+docs/_build/
+.DS_STORE
+
+# IDE
+.project
+.vscode
+
+.coverage
+coverage.xml
+htmlcov/
+
+# Python virtual env
+venv/

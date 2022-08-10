@@ -18,7 +18,7 @@ Callout Server
 API Documentation
 =================
 
-The O-RAN SC external server is an extension for Near-RealTime RIC simulator. It creates an external web server building RESTful API. It is capable of recieving Rest calls from the northbound simulator version STD_2.0.0 and responses back to it.
+The O-RAN SC external server is an extension for A1 simulator. It creates an external web server building RESTful API. It is capable of recieving Rest calls from the northbound simulator version STD_2.0.0 and responses back to it.
 
 The details of API definitions are being explained below:
 

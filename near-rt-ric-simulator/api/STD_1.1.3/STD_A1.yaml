@@ -6,6 +6,9 @@ info:
     API for Policy Management Service.
     © 2019, O-RAN Alliance.
     All rights reserved.
+  license:
+    name: Copyright (C) 2019-2022 Nordix Foundation. Licensed under the Apache License.
+    url: http://www.apache.org/licenses/LICENSE-2.0
 externalDocs:
   description: 'ORAN-WG2.A1.AP-v01.01 A1 interface: Application protocol'
   url: 'https://www.o-ran.org/specifications'
