@@ -1,6 +1,6 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
-.. Copyright (C) 2021-2022 Nordix
+.. Copyright (C) 2022 Nordix
 
 .. |nbsp| unicode:: 0xA0
    :trim:
@@ -8,19 +8,17 @@
 .. |nbh| unicode:: 0x2011
    :trim:
 
-.. _a1-interface-simulator:
+.. _a1-interface-kafka-dispatcher-module:
 
-======================
-A1 Interface Simulator
-======================
+====================================
+A1 Interface Kafka Dispatcher Module
+====================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    ./overview.rst
-   ./simulator-api.rst
-   ./callout-server.rst
-   ./kafka-message-dispatcher.rst
+   ./kafka-dispatcher-module-api.rst
    ./release-notes.rst
 

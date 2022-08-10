@@ -1,6 +1,6 @@
-# O-RAN-SC External Server extension for Near-RealTime RIC Simulator
+# O-RAN-SC External Server extension for A1 Simulator
 
-The O-RAN SC external server is an extension for Near-RealTime RIC simulator. It creates an external web server building RESTful API. It is capable of recieving Rest calls from the northbound simulator version and responses back to it.
+The O-RAN SC external server is an extension for A1 simulator. It creates an external web server building RESTful API. It is capable of recieving Rest calls from the northbound simulator version and responses back to it.
 
 The external server supports GET, PUT and DELETE operations (version of the open API yaml file\):
 

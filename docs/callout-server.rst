@@ -11,6 +11,8 @@
 .. |yaml-icon| image:: ./images/yaml_logo.png
                   :width: 40px
 
+.. _calloutserver:
+
 =====================
 Callout Server
 =====================
@@ -18,14 +20,11 @@ Callout Server
 API Documentation
 =================
 
-The O-RAN SC external server is an extension for Near-RealTime RIC simulator. It creates an external web server building RESTful API. It is capable of recieving Rest calls from the northbound simulator version STD_2.0.0 and responses back to it.
+The O-RAN SC external call-out server allows behavioral extensions to be added to the A1 Simulator. It creates an external call-out server, which provides a RESTful API. A1 Policy operations, for some A1 Policy Types, can then be redirected to the external call-out server, supporting supplemental simulator behavior for those A1 Policy Types. 
 
-The details of API definitions are being explained below:
+**Note:** call-out server functionality is only available for *'STD_2.0.0'* version simulators.
 
-See `Callout server API <./EXT_SRV_api.html>`_ for full details of the API.
-
-The API is also described in YAML:
-
+The external call-out server exposes a 'Callout server API' REST API. This internal API is invoked directly by the A1 Simulator, and is not intended to be used by any other client.  The 'Callout Server API' is documented in `Callout Server API (HTML)<./EXT_SRV_api.html>`_ and in OpenAPI YAML format: 
 
 .. csv-table::
    :header: "API name", "|yaml-icon|"
@@ -33,6 +32,7 @@ The API is also described in YAML:
 
    "Callout Server API", ":download:`link <../near-rt-ric-simulator/test/EXT_SRV/api/EXT_SRV_api.yaml>`"
 
+External call-out servers also expose an 'Admin API' to manipulate the behavior of the call-out server itself. The 'Callout Server Admin API' is documented below: 
 
 Admin Functions
 ================
