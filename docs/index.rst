@@ -21,5 +21,6 @@ A1 Interface Simulator
    ./overview.rst
    ./simulator-api.rst
    ./callout-server.rst
+   ./kafka-message-dispatcher.rst
    ./release-notes.rst
 
