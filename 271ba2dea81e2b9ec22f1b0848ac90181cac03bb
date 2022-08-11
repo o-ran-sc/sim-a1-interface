@@ -41,6 +41,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d8e79e4_3f98f1c2",
+        "filename": "near-rt-ric-simulator/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-11T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0861e617_4555d221",
+      "range": {
+        "startLine": 229,
+        "startChar": 69,
+        "endLine": 229,
+        "endChar": 80
+      },
+      "revId": "271ba2dea81e2b9ec22f1b0848ac90181cac03bb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "011a4f7c_d94d86b3",
@@ -64,6 +88,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4504e14_bf6b5d70",
+        "filename": "near-rt-ric-simulator/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-11T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "011a4f7c_d94d86b3",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 52
+      },
+      "revId": "271ba2dea81e2b9ec22f1b0848ac90181cac03bb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bde4f56_486e4d3a",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-08-11T07:57:05Z",
       "side": 1,
       "message": "APIs",
+      "range": {
+        "startLine": 3,
+        "startChar": 121,
+        "endLine": 3,
+        "endChar": 124
+      },
+      "revId": "271ba2dea81e2b9ec22f1b0848ac90181cac03bb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1a89c01_182d7f27",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-11T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bde4f56_486e4d3a",
       "range": {
         "startLine": 3,
         "startChar": 121,
@@ -133,6 +205,54 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9064135d_3e35ebde",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/docs/kafka-dispatcher-module-api.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-11T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94355b64_ea92c0d4",
+      "range": {
+        "startLine": 18,
+        "startChar": 233,
+        "endLine": 18,
+        "endChar": 243
+      },
+      "revId": "271ba2dea81e2b9ec22f1b0848ac90181cac03bb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6e49fb6_354a13b0",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/docs/kafka-dispatcher-module-api.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-11T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e34d2f34_37f9f2e9",
+      "range": {
+        "startLine": 18,
+        "startChar": 138,
+        "endLine": 18,
+        "endChar": 141
+      },
+      "revId": "271ba2dea81e2b9ec22f1b0848ac90181cac03bb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f85fd6a_d860921a",
@@ -146,6 +266,30 @@
       "writtenOn": "2022-08-11T07:57:05Z",
       "side": 1,
       "message": "you can delete this word",
+      "range": {
+        "startLine": 85,
+        "startChar": 164,
+        "endLine": 85,
+        "endChar": 168
+      },
+      "revId": "271ba2dea81e2b9ec22f1b0848ac90181cac03bb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9efea516_7a589220",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/docs/kafka-dispatcher-module-api.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-11T10:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f85fd6a_d860921a",
       "range": {
         "startLine": 85,
         "startChar": 164,
