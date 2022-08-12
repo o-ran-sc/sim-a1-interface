@@ -16,6 +16,52 @@
       "message": "Thanks, typos are fixed.",
       "revId": "40cd41e5c396f217538cbb59b84ee12cd2c0e8dc",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b38442f_c8c1fd1a",
+        "filename": "docs/kafka-message-dispatcher.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-08-12T13:56:28Z",
+      "side": 1,
+      "message": "Align names of the A1 sim. Also see \"A1 sim\" further down. Could be confusing to new readers.\nI think we should call it \"A1 sim\" since it simulates the A1 protocol rather than the Near-RT RIC.\nThere is also examples of other names like \u0027Near-RealTime RIC A1 simulator\u0027",
+      "range": {
+        "startLine": 21,
+        "startChar": 58,
+        "endLine": 21,
+        "endChar": 76
+      },
+      "revId": "40cd41e5c396f217538cbb59b84ee12cd2c0e8dc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0518a6d4_6dcb18f2",
+        "filename": "docs/kafka-message-dispatcher.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000261
+      },
+      "writtenOn": "2022-08-12T13:56:28Z",
+      "side": 1,
+      "message": "Align name",
+      "range": {
+        "startLine": 23,
+        "startChar": 427,
+        "endLine": 23,
+        "endChar": 433
+      },
+      "revId": "40cd41e5c396f217538cbb59b84ee12cd2c0e8dc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
