@@ -41,6 +41,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "471109d7_b45412cb",
+        "filename": "docs/kafka-message-dispatcher.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-15T10:28:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b38442f_c8c1fd1a",
+      "range": {
+        "startLine": 21,
+        "startChar": 58,
+        "endLine": 21,
+        "endChar": 76
+      },
+      "revId": "40cd41e5c396f217538cbb59b84ee12cd2c0e8dc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0518a6d4_6dcb18f2",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-08-12T13:56:28Z",
       "side": 1,
       "message": "Align name",
+      "range": {
+        "startLine": 23,
+        "startChar": 427,
+        "endLine": 23,
+        "endChar": 433
+      },
+      "revId": "40cd41e5c396f217538cbb59b84ee12cd2c0e8dc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05005b98_9c67b662",
+        "filename": "docs/kafka-message-dispatcher.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2022-08-15T10:28:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0518a6d4_6dcb18f2",
       "range": {
         "startLine": 23,
         "startChar": 427,
