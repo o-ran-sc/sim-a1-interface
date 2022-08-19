@@ -16,6 +16,155 @@
       "message": "Naming refactors done.",
       "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7d09599_8e75c6fa",
+        "filename": "docs/kafka-message-dispatcher.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-19T16:31:35Z",
+      "side": 1,
+      "message": "Is this file needed at all?\n\nHow is this file different than ./docs/test/KAFKA_DISPATCHER/docs/kafka-dispatcher-module-api.rst\nIs it a duplicate? \nShould it be removed?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 1
+      },
+      "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20b5b33a_1efbfc88",
+        "filename": "docs/kafka-message-dispatcher.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-19T16:31:35Z",
+      "side": 1,
+      "message": "This is not an API, and not YAML.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 129
+      },
+      "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "803b5324_cd1f2a9e",
+        "filename": "near-rt-ric-simulator/api/STD_1.1.3/STD_A1.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-19T16:31:35Z",
+      "side": 1,
+      "message": "We cant change the (c) for the oran alliance files",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 51
+      },
+      "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "734e5e0c_927623e0",
+        "filename": "near-rt-ric-simulator/test/EXT_SRV/api/EXT_SRV_api.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-19T16:31:35Z",
+      "side": 1,
+      "message": "Need to remember to update after branching",
+      "range": {
+        "startLine": 14,
+        "startChar": 72,
+        "endLine": 14,
+        "endChar": 78
+      },
+      "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c8bf6a3_205a8337",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/api/KAFKA_DISPATCHER_api.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-19T16:31:35Z",
+      "side": 1,
+      "message": "need to remember to update after branching",
+      "range": {
+        "startLine": 14,
+        "startChar": 72,
+        "endLine": 14,
+        "endChar": 78
+      },
+      "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff4a853_e8d40597",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/docs/kafka-dispatcher-module-api.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-19T16:31:35Z",
+      "side": 1,
+      "message": "How is this file different that ./docs/kafka-messge-dispatcher.rst ?\nIs it a duplicate? \nShould it be removed?\n\nOr should ./docs/kafka-messge-dispatcher.rst be removed with links updated to here?",
+      "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37b7a9ac_1d0ebdb5",
+        "filename": "near-rt-ric-simulator/test/KAFKA_DISPATCHER/docs/overview.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-19T16:31:35Z",
+      "side": 1,
+      "message": "This seems to be a duplication of information from the api document ... \nI guess it should be in one place only to help maintain consistency.",
+      "revId": "d0c4b819e75ac3429e8efdd05a63c10177eec41c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
