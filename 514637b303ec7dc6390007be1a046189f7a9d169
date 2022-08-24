@@ -16,6 +16,29 @@
       "message": "recheck\n",
       "revId": "514637b303ec7dc6390007be1a046189f7a9d169",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e9662fd_93479c79",
+        "filename": "docs/conf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2022-08-24T17:13:48Z",
+      "side": 1,
+      "message": "I think this needs to be updated to f-release ??? \nOr maybe removed ?  - So branch is automatically detected?",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 17
+      },
+      "revId": "514637b303ec7dc6390007be1a046189f7a9d169",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
