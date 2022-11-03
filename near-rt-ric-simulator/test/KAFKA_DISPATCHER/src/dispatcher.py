@@ -174,8 +174,18 @@ def publish_and_consume(kafka_event, req_id_from_header, pol_type_id):
 
       print("Consumer Record:", consumer_record)
       cons_rec_value = consumer_record.value
-      cons_rec_val_in_dict = json.loads(cons_rec_value)
-      resp_code = cons_rec_val_in_dict['response-code']
+      print('Class for cons_rec_value:', cons_rec_value.__class__)
+      if isinstance(cons_rec_value, str):
+        print('cons_rec_value isinstance str')
+        cons_rec_val_in_dict = json.loads(cons_rec_value) # json.loads: converts str to dict
+        resp_code = cons_rec_val_in_dict['response-code']
+      elif isinstance(cons_rec_value, dict):
+        print('cons_rec_value isinstance dict')
+        resp_code = cons_rec_value['response-code']
+      else:
+        print('cons_rec_value isinstance other')
+        cons_rec_val_in_dict = json.loads(cons_rec_value)
+        resp_code = cons_rec_val_in_dict['response-code']
 
       # if response code success, then check for time-out
       if (int(resp_code) == 200):
