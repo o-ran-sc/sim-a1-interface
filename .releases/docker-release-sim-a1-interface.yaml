@@ -7,4 +7,4 @@ project: sim
 ref: 514637b303ec7dc6390007be1a046189f7a9d169
 containers:
     - name: a1-simulator
-      version: 2.3.1
+      version: 2.4.0
