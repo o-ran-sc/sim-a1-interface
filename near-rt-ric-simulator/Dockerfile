@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,12 +15,11 @@
 #  ============LICENSE_END=================================================
 #
 
-FROM python:3.8-slim-buster
+FROM alpine:3.17.3
 
-RUN pip install connexion[swagger-ui]
+RUN apk add --update --no-cache python3 py3-pip nginx nginx-mod-http-lua
 
-#install nginx and curl
-RUN apt-get update && apt-get install -y nginx=1.14.* nginx-extras curl
+RUN pip3 install connexion[swagger-ui]
 
 WORKDIR /usr/src/app
 
@@ -32,12 +31,12 @@ COPY src src
 ARG user=nonrtric
 ARG group=nonrtric
 
-RUN groupadd $user && \
-    useradd -r -g $group $user
+RUN addgroup $user && \
+    adduser -S -G $group $user
 RUN chown -R $user:$group /usr/src/app
 RUN chown -R $user:$group /var/log/nginx
 RUN chown -R $user:$group /var/lib/nginx
-RUN chown -R $user:$group /etc/nginx/conf.d
+
 RUN touch /var/run/nginx.pid
 RUN chown -R $user:$group /var/run/nginx.pid
 
@@ -45,3 +44,4 @@ USER ${user}
 
 RUN chmod +x src/start.sh
 CMD src/start.sh ${A1_VERSION}
+
