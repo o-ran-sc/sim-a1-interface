@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29d6be12_670ae07b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2023-06-29T18:15:18Z",
+      "side": 1,
+      "message": "It looks like LF have helpfully replaced the python version on the RTD nodes to v3.9 - without warning. \nThis will likely break lots of our RTD verify/builds. \n\nProposal: \nAdd file \"/tox.ini\" \u0026 change line#51 \u0026 line#59 to: \n   basepython \u003d python3\nThen try again.",
+      "revId": "505691771d5123ec786b8641996deb7cc8dcf425",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
