@@ -1,3 +1,4 @@
+tox
 sphinx
 sphinx-rtd-theme
 sphinx-bootstrap-theme
@@ -7,3 +8,7 @@ sphinxcontrib-needs
 sphinxcontrib-swaggerdoc
 recommonmark
 lfdocs-conf
+urllib3~=1.26.15
+setuptools
+doc8
+docutils < 0.17
