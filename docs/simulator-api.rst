@@ -93,7 +93,7 @@ None.
 Counters
 --------
 
-The simulator keeps counts of different things that can be accessed.
+The simulator keeps count of different things that can be accessed.
 
 /counter
 ~~~~~~~~
@@ -286,7 +286,7 @@ Force delay: <expected delay> sec set for all A1 responses
 Configure logging
 -----------------
 Detailed logging of the http headers and payload are activated by default. However, it is possible to turn this logging on or off.
-The 'off' state will only logg ip, url and respose code.
+The 'off' state will only log ip, url and respose code.
 
 /payload_logging/
 ~~~~~~~~~~~~~~~~~

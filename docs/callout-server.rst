@@ -110,7 +110,7 @@ It is possible to manipulate the response of all operations on the external serv
 POST
 ++++
 
-Force a specific response code for the all (the next) external server operation. Unless it is reset, it will always respond the same response code back.
+Force a specific response code for the all (the next) external server operation. Unless it is reset, it will always send the same response code back.
 
 **URL path:**
 
