@@ -75,7 +75,7 @@ It is possible to manipulate the response of all operations on the Kafka Message
 POST
 ++++
 
-Force a specific response code for the all (the next) Kafka Message Dispatcher module operations. Unless it is reset, it will always respond the same response code back.
+Force a specific response code for the all (the next) Kafka Message Dispatcher module operations. Unless it is reset, it will always send the same response code back.
 
 **URL path:**
 
