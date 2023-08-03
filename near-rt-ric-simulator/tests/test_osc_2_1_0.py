@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -506,3 +506,42 @@ def test_apis(client):
         policytype_1 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype?id=2', headers=header, data=json.dumps(policytype_1))
         assert response.status_code == 400
+
+    # Get counter: data_delivery
+    response=client.get(SERVER_URL+'counter/datadelivery')
+    assert response.status_code == 200
+    assert response.data ==  b"0"
+
+    # Send data to data-delivery with empty payload
+    json_payload={}
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 400
+
+    # Send invalid data to data-delivery
+    json_payload={
+        "job":"200",
+        "payload":"payload"
+    }
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 404
+
+    # Send data to data-delivery with valid job
+    json_payload={
+        "job":"100",
+        "payload":"payload"
+    }
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 200
+
+    # Send data to data-delivery with valid job
+    json_payload={
+        "job":"101",
+        "payload":"another payload"
+    }
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 200
+
+    # Get counter: data_delivery
+    response=client.get(SERVER_URL+'counter/datadelivery')
+    assert response.status_code == 200
+    assert response.data ==  b"2"

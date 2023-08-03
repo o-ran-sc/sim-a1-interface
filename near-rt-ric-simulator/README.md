@@ -59,6 +59,7 @@ URIs for A1:
 |  GET, get a policy | http://localhost:8085/a1-p/policytypes/{policy\_type\_id}/policies/{policy\_instance\_id} |
 |  PUT, create/update a policy | http://localhost:8085/a1-p/policytypes/{policy\_type\_id}/policies/{policy\_instance\_id} |
 |  GET, get policy status | http://localhost:8085/a1-p/policytypes/{policy\_type\_id}/policies/{policy\_instance\_id}/status |
+|  PUT, deliver data produced by data producer | http://localhost:8085/data-delivery json payload = {"job":"101",    "payload":"another payload"}|
 
 Swagger UI at: http://localhost:8085/ui/
 
@@ -81,8 +82,6 @@ URIs for admin operations:
 |  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types', 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
 |  Turn on http header and payload logging | http://localhost:8085payload_logging/on |
 |  Turn off http header and payload logging | http://localhost:8085payload_logging/off |
-
-
 
 # Supported operations in simulator A1 Standard 1.1.3
 

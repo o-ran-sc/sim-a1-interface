@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -16,21 +16,19 @@
 #
 
 import json
-import datetime
+# import datetime
 import time
 
 from datetime import datetime
-from connexion import NoContent
-from flask import Flask, request, Response
+from flask import request, Response
 from jsonschema import validate
-from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set
+from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set, jobs, data_delivery
 from utils import calcFingerprint
 from maincommon import extract_host_name, is_duplicate_check
 from payload_logging import is_payload_logging
 
 #Constsants
 APPL_JSON='application/json'
-
 
 #Helper funtion to log http reponse
 def log_resp_text(msg):
@@ -40,7 +38,7 @@ def log_resp_text(msg):
     print(str(msg))
 
 # API Function: Health check
-def get_healthcheck():
+def a1_controller_get_healthcheck():
 
   extract_host_name(hosts_set, request)
 
@@ -50,8 +48,7 @@ def get_healthcheck():
   return (None, 200)
 
 # API Function: Get all policy type ids
-def get_all_policy_types():
-
+def a1_controller_get_all_policy_types():
   extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
@@ -62,8 +59,7 @@ def get_all_policy_types():
   return (res, 200)
 
 # API Function: Get a policy type
-def get_policy_type(policy_type_id):
-
+def a1_controller_get_policy_type(policy_type_id):
   extract_host_name(hosts_set, request)
 
   if ((r := check_modified_response()) is not None):
@@ -78,7 +74,7 @@ def get_policy_type(policy_type_id):
   return Response(json.dumps(policy_types[policy_type_id]), 200, mimetype=APPL_JSON)
 
 # API Function: Delete a policy type
-def delete_policy_type(policy_type_id):
+def a1_controller_delete_policy_type(policy_type_id):
 
   extract_host_name(hosts_set, request)
 
@@ -102,7 +98,7 @@ def delete_policy_type(policy_type_id):
 
 
 # API Function: Create a policy type
-def create_policy_type(policy_type_id):
+def a1_controller_create_policy_type(policy_type_id):
 
   extract_host_name(hosts_set, request)
 
@@ -141,7 +137,7 @@ def create_policy_type(policy_type_id):
 
 
 # API Function: Get all policy ids for a type
-def get_all_policy_identities(policy_type_id):
+def  a1_controller_get_all_instances_for_type(policy_type_id):
 
   extract_host_name(hosts_set, request)
 
@@ -156,7 +152,7 @@ def get_all_policy_identities(policy_type_id):
   return (list(policy_instances[policy_type_id].keys()), 200)
 
 # API Function: Get a policy instance
-def get_policy_instance(policy_type_id, policy_instance_id):
+def a1_controller_get_policy_instance(policy_type_id, policy_instance_id):
 
   extract_host_name(hosts_set, request)
 
@@ -176,7 +172,7 @@ def get_policy_instance(policy_type_id, policy_instance_id):
   return Response(json.dumps(policy_instances[policy_type_id][policy_instance_id]), 200, mimetype=APPL_JSON)
 
 # API function: Delete a policy
-def delete_policy_instance(policy_type_id, policy_instance_id):
+def a1_controller_delete_policy_instance(policy_type_id, policy_instance_id):
 
   extract_host_name(hosts_set, request)
 
@@ -204,8 +200,9 @@ def delete_policy_instance(policy_type_id, policy_instance_id):
 
   return (None, 202)
 
+
 # API function: Create/update a policy
-def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
+def a1_controller_create_or_replace_policy_instance(policy_type_id, policy_instance_id):
 
   extract_host_name(hosts_set, request)
 
@@ -268,8 +265,9 @@ def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
 
   return (None, 202)
 
+
 # API function: Get policy status
-def get_policy_instance_status(policy_type_id, policy_instance_id):
+def a1_controller_get_policy_instance_status(policy_type_id, policy_instance_id):
 
   extract_host_name(hosts_set, request)
 
@@ -286,6 +284,27 @@ def get_policy_instance_status(policy_type_id, policy_instance_id):
     return (None, 404)
 
   return Response(json.dumps(policy_status[policy_instance_id]), 200, mimetype=APPL_JSON)
+
+# API function: Receive a data delivery package
+def a1_controller_data_delivery():
+ 
+  extract_host_name(hosts_set, request)
+  if ((r := check_modified_response()) is not None):
+    return r
+
+  try:
+    data = request.data
+    data = json.loads(data)
+    job = data['job']
+    jobs.index(job)
+  except ValueError:
+    log_resp_text("no job id defined for this data delivery")
+    return (None, 404)
+  except Exception:
+    log_resp_text("The data is corrupt or missing.")
+    return (None, 400)
+  data_delivery.append(data)
+  return (None, 200) # Should A1 and the A1 Simulator return 201 for creating a new resource?
 
 # Helper: Create a response object if forced http response code is set
 def get_forced_response():

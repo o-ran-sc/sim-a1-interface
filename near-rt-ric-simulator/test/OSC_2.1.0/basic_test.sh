@@ -326,6 +326,10 @@ echo "=== Get counter: instances ==="
 RESULT="1"
 do_curl GET /counter/num_instances 200
 
+echo "=== Get counter: datadelivery ==="
+RESULT="0"
+do_curl GET /counter/datadelivery 200
+
 echo "********************"
 echo "*** All tests ok ***"
 echo "********************"

@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,17 +15,15 @@
 #  ============LICENSE_END=================================================
 #
 
-import connexion
 import json
 import sys
 import os
-import requests
 
+from connexion.resolver import RelativeResolver
 from pathlib import Path
-from flask import Flask, escape, request, Response, jsonify
-from jsonschema import validate
-from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set, app
-from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
+from flask import request, Response, jsonify
+from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set, app, data_delivery
+from maincommon import check_apipath, get_supported_interfaces_response
 from time import sleep
 
 #Constants
@@ -34,8 +32,6 @@ TEXT_PLAIN='text/plain'
 check_apipath()
 
 # app is created in var_declarations
-
-import payload_logging   # app var need to be initialized
 
 #Check alive function
 @app.route('/', methods=['GET'])
@@ -73,13 +69,13 @@ def deleteinstances():
 #Delete all - all reset
 @app.route('/deleteall', methods=['POST'])
 def deleteall():
-
   policy_instances.clear()
   policy_types.clear()
   policy_status.clear()
   forced_settings['code']=None
   forced_settings['delay']=None
   policy_fingerprint.clear()
+  data_delivery.clear()
   return Response("All policy instances and types deleted", 200, mimetype=TEXT_PLAIN)
 
 #Load a policy type
@@ -209,7 +205,8 @@ def getcounter(countername):
     hosts=",".join(hosts_set)
     return str(hosts),200
   elif (countername == "datadelivery"):
-    return Response(str(0),200, mimetype=TEXT_PLAIN)
+    data_delivery_counter = str(len(data_delivery))
+    return Response(data_delivery_counter,200, mimetype=TEXT_PLAIN)
   else:
     return Response("Counter name: "+countername+" not found.",404, mimetype=TEXT_PLAIN)
 
@@ -218,7 +215,7 @@ if len(sys.argv) >= 2 :
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-app.add_api('openapi.yaml')
+app.add_api('openapi.yaml', resolver=RelativeResolver('controllers.a1_mediator_controller'))
 
 if __name__ == '__main__':
   app.run(port=port_number, host="127.0.0.1", threaded=False)
