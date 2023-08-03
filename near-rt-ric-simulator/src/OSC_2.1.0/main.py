@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,32 +15,31 @@
 #  ============LICENSE_END=================================================
 #
 
-import connexion
 import json
 import sys
 import os
 import requests
 
+from connexion.resolver import RelativeResolver
 from pathlib import Path
-from flask import Flask, escape, request, Response, jsonify
-from jsonschema import validate
-from var_declaration import policy_instances, policy_types, policy_status, policy_fingerprint, forced_settings, hosts_set, app
-from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
+from flask import request, Response, jsonify
+from var_declaration import policy_instances, policy_types, policy_status, callbacks, policy_fingerprint, forced_settings, hosts_set, app, data_delivery
+from models.enforceStatus import EnforceStatus
+from maincommon import check_apipath, get_supported_interfaces_response
 from time import sleep
 
-#Constants
-TEXT_PLAIN='text/plain'
+
+# Constants
+TEXT_PLAIN = 'text/plain'
+APPL_JSON  = 'application/json'
 
 check_apipath()
 
 # app is created in var_declarations
 
-import payload_logging   # app var need to be initialized
-
-#Check alive function
+# Check alive function
 @app.route('/', methods=['GET'])
 def test():
-
     return Response("OK", 200, mimetype=TEXT_PLAIN)
 
 @app.route('/ip', methods=['GET'])
@@ -53,17 +52,16 @@ def get_ip():
 #Return the current and all supported yamls for the this container
 @app.route('/container_interfaces', methods=['GET'])
 def container_interfaces():
-
     return get_supported_interfaces_response()
 
 #Delete all created instances and status
 @app.route('/deleteinstances', methods=['POST'])
 def deleteinstances():
-
   for i in policy_instances.keys():
     policy_instances[i]={}
 
   policy_status.clear()
+  callbacks.clear()
   forced_settings.clear()
   forced_settings['code']=None
   forced_settings['delay']=None
@@ -73,13 +71,14 @@ def deleteinstances():
 #Delete all - all reset
 @app.route('/deleteall', methods=['POST'])
 def deleteall():
-
   policy_instances.clear()
   policy_types.clear()
   policy_status.clear()
+  callbacks.clear()
   forced_settings['code']=None
   forced_settings['delay']=None
   policy_fingerprint.clear()
+  data_delivery.clear()
   return Response("All policy instances and types deleted", 200, mimetype=TEXT_PLAIN)
 
 #Load a policy type
@@ -138,7 +137,6 @@ def del_policytype():
 # Get all policy type ids
 @app.route('/policytypes', methods=['GET'])
 def get_policytype_ids():
-
   return (json.dumps(list(policy_instances.keys())), 200)
 
 #Set force response for one A1 response
@@ -164,36 +162,40 @@ def forcedelay():
   return Response("Force delay: " + str(forced_settings['delay']) + " sec set for all A1 responses", 200, mimetype=TEXT_PLAIN)
 
 
-#Set status and reason
-#/status?policyid=<policyid>&status=<status>[&deleted=<boolean>][&created_at=<timestamp>]
+# Set status and reason
+#/status?policyid=<policyid>&status=<status>[&reason=<reason>]
 @app.route('/status', methods=['PUT'])
 def setstatus():
 
   policy_id=request.args.get('policyid')
   if (policy_id is None):
     return Response('Parameter <policyid> missing in request', status=400, mimetype=TEXT_PLAIN)
-
   if policy_id not in policy_status.keys():
     return Response('Policyid: '+policy_id+' not found.', status=404, mimetype=TEXT_PLAIN)
+
   status=request.args.get('status')
   if (status is None):
     return Response('Parameter <status> missing in request', status=400, mimetype=TEXT_PLAIN)
-  policy_status[policy_id]["instance_status"]=status
-  msg = "Status set to "+status
-  deleted_policy=request.args.get('deleted')
-  if (deleted_policy is not None):
-    policy_status[policy_id]["has_been_deleted"]=deleted_policy
-    msg = msg + " and has_been_deleted set to "+deleted_policy
-  created_at = request.args.get('created_at')
-  if (created_at is not None):
-    policy_status[policy_id]["created_at"]=created_at
-    msg = msg + " and created_at set to "+created_at
-  msg=msg + " for policy: " + policy_id
+
+  enforceStatus = EnforceStatus()
+  try:
+    enforceStatus.enforce_status = status
+    msg = "Status set to " + status
+
+    reason = request.args.get('reason')
+    if (reason is not None):
+      enforceStatus.enforce_reason = reason
+      msg = msg + " and " + reason
+  
+    policy_status[policy_id] = enforceStatus.to_dict()
+    msg = msg + " for policy: " + policy_id
+  except ValueError as error:
+    return Response(str(error), status=400, mimetype=TEXT_PLAIN)
+
   return Response(msg, 200, mimetype=TEXT_PLAIN)
 
-
-#Metrics function
-#Get a named counter
+# Metrics function
+# Get a named counter
 @app.route('/counter/<string:countername>', methods=['GET'])
 def getcounter(countername):
 
@@ -209,7 +211,8 @@ def getcounter(countername):
     hosts=",".join(hosts_set)
     return str(hosts),200
   elif (countername == "datadelivery"):
-    return Response(str(0),200, mimetype=TEXT_PLAIN)
+    data_delivery_counter = str(len(data_delivery))
+    return Response(data_delivery_counter,200, mimetype=TEXT_PLAIN)
   else:
     return Response("Counter name: "+countername+" not found.",404, mimetype=TEXT_PLAIN)
 
@@ -218,7 +221,49 @@ if len(sys.argv) >= 2 :
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-app.add_api('openapi.yaml')
+
+# Send status
+# /sendstatus?policyid=<policyid>
+@app.route('/sendstatus', methods=['POST'])
+def sendstatus():
+  policyid = request.args.get('policyid')
+  if policyid is None:
+    return Response('Parameter <policyid> missing in request', status=400, mimetype=TEXT_PLAIN)
+  if policyid not in policy_status.keys():
+    return Response('Policyid: '+policyid+' not found.', status=404, mimetype=TEXT_PLAIN)
+
+  ps = policy_status[ policyid ]
+  cb_url = callbacks[ policyid ]
+
+  try:
+    resp = requests.post(cb_url, json = json.dumps(ps), headers = { "Content-Type": APPL_JSON, "Accept": "*/*" })
+    resp.raise_for_status()
+    if (resp.status_code >= 200 and resp.status_code <= 300):
+      return Response("OK", resp.status_code, mimetype = TEXT_PLAIN)
+    return Response('Post status failed', status = resp.status_code, mimetype = TEXT_PLAIN)
+
+  except requests.ConnectionError as error:
+    return Response('Post status failed with Connection Error, could not send to ' + str(cb_url), status = 502, mimetype = TEXT_PLAIN)
+  except requests.Timeout as error:
+    return Response('Post status failed with Timeout, could not send to ' + str(cb_url), status = 504, mimetype = TEXT_PLAIN)
+  except requests.HTTPError as error:
+    return Response('Post status failed with HTTP Error, could not send to ' + str(cb_url), status = 502, mimetype = TEXT_PLAIN)
+  except requests.RequestException as error:
+    return Response('Post status failed with RequestException, could not send to ' + str(cb_url), status = 500, mimetype = TEXT_PLAIN)
+
+# Receive status (only for testing callbacks)
+# /statustest
+@app.route('/statustest', methods=['POST', 'PUT'])
+def statustest():
+  try:
+    data = request.data
+    data = json.loads(data)
+  except Exception:
+    return Response("The status data is corrupt or missing.", 400, mimetype=TEXT_PLAIN)
+
+  return Response("OK", 201, mimetype=TEXT_PLAIN)
+
+app.add_api('openapi.yaml', resolver=RelativeResolver('controllers.a1_mediator_controller'))
 
 if __name__ == '__main__':
-  app.run(port=port_number, host="127.0.0.1", threaded=False)
+  app.run(port=port_number, host="127.0.0.1", threaded=True)

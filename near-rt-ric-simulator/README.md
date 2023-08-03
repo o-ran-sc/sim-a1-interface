@@ -59,6 +59,7 @@ URIs for A1:
 |  GET, get a policy | http://localhost:8085/a1-p/policytypes/{policy\_type\_id}/policies/{policy\_instance\_id} |
 |  PUT, create/update a policy | http://localhost:8085/a1-p/policytypes/{policy\_type\_id}/policies/{policy\_instance\_id} |
 |  GET, get policy status | http://localhost:8085/a1-p/policytypes/{policy\_type\_id}/policies/{policy\_instance\_id}/status |
+|  PUT, deliver data produced by data producer | http://localhost:8085/data-delivery json payload = {"job":"101",    "payload":"another payload"}|
 
 Swagger UI at: http://localhost:8085/ui/
 
@@ -81,8 +82,6 @@ URIs for admin operations:
 |  GET a counter  <br> (counter-name: 'num\_instances', 'num\_types', 'interface' or 'remote\_hosts') | http://localhost:8085/counter/&lt;counter-name&gt; |
 |  Turn on http header and payload logging | http://localhost:8085payload_logging/on |
 |  Turn off http header and payload logging | http://localhost:8085payload_logging/off |
-
-
 
 # Supported operations in simulator A1 Standard 1.1.3
 
@@ -164,7 +163,7 @@ An env variable, A1\_VERSION need to be passed to the container at start to sele
 
 An env variable, REMOTE_HOSTS_LOGGING, can be set (any value is ok) and the the counter remote\_hosts will log the host names of all remote hosts that has accessed the A1 URIs. If host names cannot be resolved, the ip address of the remote host is logged instead. This logging is default off so must be configured to be enabled. If not configured, the counter remote\_hosts will return a fixed text indicating that host name logging is not enabled. Use this feature with caution, remote host lookup may take time in certain environments.
 
-And optional env variable, DUPLICATE_CHECK, can be set to '1' to turn on duplicate check of policiy json. A duplicate policy is when the policy json is exactly same as for a different policy id of the same type.  This function is default set off if the variable is not set at all or set to '0'.
+And optional env variable, DUPLICATE_CHECK, can be set to '1' to turn on duplicate check of policy json. A duplicate policy is when the policy json is exactly same as for a different policy id of the same type.  This function is default set off if the variable is not set at all or set to '0'.
 
 The simulator can also run using the https protocol. The enable https, a valid certificate and key need to provided. There is self-signed certificate available in the certificate dir and that dir shall be mounted to the container to make it available
 

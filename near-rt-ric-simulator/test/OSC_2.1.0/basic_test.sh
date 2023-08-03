@@ -115,11 +115,16 @@ do_curl GET '/a1-p/policytypes/1/policies' 200
 
 echo "=== API: Create policy instance pi1 of type: 1 ==="
 RESULT=""
+# res=$(cat jsonfiles/pi1.json)
+# RESULT="json:$res"
 do_curl PUT '/a1-p/policytypes/1/policies/pi1' 202 jsonfiles/pi1.json
 
 echo "=== API: Update policy instance pi1 of type: 1 ==="
 RESULT=""
 do_curl PUT '/a1-p/policytypes/1/policies/pi1' 202 jsonfiles/pi1.json
+# res=$(cat jsonfiles/pi1.json)
+# RESULT="json:$res"
+# do_curl PUT '/a1-p/policytypes/1/policies/pi1' 200 jsonfiles/pi1.json
 
 echo "=== API: Load a policy type: 1, shall fail ==="
 RESULT=""
@@ -137,6 +142,9 @@ else
     echo "=== API: Create policy instance pi2 (copy of pi1) of type: 1. Shall succeed ==="
     RESULT=""
     do_curl PUT '/a1-p/policytypes/1/policies/pi2' 202 jsonfiles/pi1.json
+    # res=$(cat jsonfiles/pi1.json)
+    # RESULT="json:$res"
+    # do_curl PUT '/a1-p/policytypes/1/policies/pi2' 200 jsonfiles/pi1.json
 
     echo "=== Delete policy instance: pi2 ==="
     RESULT=""
@@ -152,7 +160,7 @@ RESULT=""
 do_curl GET '/a1-p/policytypes/1' 401
 
 echo "=== API: Get policy status ==="
-RESULT="json:{\"instance_status\": \"NOT IN EFFECT\", \"has_been_deleted\": \"false\", \"created_at\": \"????\"}"
+RESULT="json:{\"enforceStatus\": \"NOT_ENFORCED\", \"enforceReason\": \"OTHER_REASON\"}"
 do_curl GET '/a1-p/policytypes/1/policies/pi1/status' 200
 
 echo "=== Load a policy type: 2 ==="
@@ -206,10 +214,21 @@ do_curl PUT '/a1-p/policytypes/2/policies/pi2' 400 jsonfiles/pi2_missing_param.j
 echo "=== API: Create policy instance pi2 of type: 2 ==="
 RESULT=""
 do_curl PUT '/a1-p/policytypes/2/policies/pi2' 202 jsonfiles/pi2.json
+# res=$(cat jsonfiles/pi2.json)
+# RESULT="json:$res"
+# do_curl PUT '/a1-p/policytypes/2/policies/pi2' 200 jsonfiles/pi2.json
 
 echo "=== API: Update policy instance pi2 of type: 2 ==="
 RESULT=""
 do_curl PUT '/a1-p/policytypes/2/policies/pi2' 202 jsonfiles/pi2.json
+
+echo "=== API: Update policy instance pi2 of type: 2 ==="
+RESULT=""
+do_curl PUT "/a1-p/policytypes/2/policies/pi2?notificationDestination=http://localhost:${PORT}/statustest" 202 jsonfiles/pi2.json
+
+echo "=== Send status for pi2==="
+RESULT="OK"
+do_curl POST '/sendstatus?policyid=pi2' 201 jsonfiles/pi2.json
 
 echo "=== API: Get instances for type 1, shall contain pi1 ==="
 RESULT="json:[ \"pi1\" ]"
@@ -227,6 +246,9 @@ else
     echo "=== API: Create policy instance pi11 (copy of pi1) of type: 1. Shall succeed ==="
     RESULT=""
     do_curl PUT '/a1-p/policytypes/1/policies/pi11' 202 jsonfiles/pi1.json
+    # res=$(cat jsonfiles/pi1.json)
+    # RESULT="json:$res"
+    # do_curl PUT '/a1-p/policytypes/1/policies/pi11' 200 jsonfiles/pi1.json
 
     echo "=== Delete policy instance: pi11 ==="
     RESULT=""
@@ -241,12 +263,14 @@ else
     echo "=== API: Create policy instance pi3 (copy of pi1) of type: 1. Shall succeed ==="
     RESULT=""
     do_curl PUT '/a1-p/policytypes/1/policies/pi3' 202 jsonfiles/pi1.json
+    # res=$(cat jsonfiles/pi1.json)
+    # RESULT="json:$res"
+    # do_curl PUT '/a1-p/policytypes/1/policies/pi3' 200 jsonfiles/pi1.json
 
     echo "=== Delete policy instance: pi3 ==="
     RESULT=""
     do_curl DELETE '/a1-p/policytypes/1/policies/pi3' 202
 fi
-
 
 echo "=== API: Get instances for type 1, shall contain pi1 ==="
 RESULT="json:[ \"pi1\" ]"
@@ -255,8 +279,6 @@ do_curl GET '/a1-p/policytypes/1/policies' jsonfiles/200
 echo "=== API: Get instances for type 2, shall contain pi2 ==="
 RESULT="json:[ \"pi2\" ]"
 do_curl GET '/a1-p/policytypes/2/policies' 200
-
-
 
 echo "=== Set force response code 401. ==="
 RESULT="*"
@@ -271,7 +293,7 @@ RESULT="Force delay: 10 sec set for all A1 responses"
 do_curl POST '/forcedelay?delay=10' 200
 
 echo "=== API: Get policy status for pi1. Shall delay 10 sec ==="
-RESULT="json:{\"instance_status\": \"NOT IN EFFECT\", \"has_been_deleted\": \"false\", \"created_at\": \"????\"}"
+RESULT="json:{\"enforceStatus\": \"NOT_ENFORCED\", \"enforceReason\": \"OTHER_REASON\"}"
 do_curl GET '/a1-p/policytypes/1/policies/pi1/status' 200
 
 echo "=== Reset force delay. ==="
@@ -279,19 +301,19 @@ RESULT="Force delay: None sec set for all A1 responses"
 do_curl POST '/forcedelay' 200
 
 echo "=== Set status for pi1 ==="
-RESULT="Status set to IN EFFECT for policy: pi1"
-do_curl PUT '/status?policyid=pi1&status=IN%20EFFECT' 200
+RESULT="Status set to ENFORCED for policy: pi1"
+do_curl PUT '/status?policyid=pi1&status=ENFORCED' 200
 
 echo "=== API: Get policy status for pi1 ==="
-RESULT="json:{\"instance_status\": \"IN EFFECT\", \"has_been_deleted\": \"false\", \"created_at\": \"????\"}"
+RESULT="json:{\"enforceStatus\": \"ENFORCED\", \"enforceReason\": null}"
 do_curl GET '/a1-p/policytypes/1/policies/pi1/status' 200
 
 echo "=== Set status for pi1 ==="
-RESULT="Status set to IN EFFECT and has_been_deleted set to true and created_at set to 2020-03-30 12:00:00 for policy: pi1"
-do_curl PUT '/status?policyid=pi1&status=IN%20EFFECT&deleted=true&created_at=2020-03-30%2012:00:00' 200
+RESULT="Status set to ENFORCED for policy: pi1"
+do_curl PUT '/status?policyid=pi1&status=ENFORCED' 200
 
 echo "=== API: Get policy status for pi1 ==="
-RESULT="json:{\"instance_status\": \"IN EFFECT\", \"has_been_deleted\": \"true\", \"created_at\": \"2020-03-30 12:00:00\"}"
+RESULT="json:{\"enforceStatus\": \"ENFORCED\", \"enforceReason\": null}"
 do_curl GET '/a1-p/policytypes/1/policies/pi1/status' 200
 
 echo "=== Get counter: instances ==="
@@ -325,6 +347,10 @@ do_curl GET /a1-p/policytypes/2/policies 200
 echo "=== Get counter: instances ==="
 RESULT="1"
 do_curl GET /counter/num_instances 200
+
+echo "=== Get counter: datadelivery ==="
+RESULT="0"
+do_curl GET /counter/datadelivery 200
 
 echo "********************"
 echo "*** All tests ok ***"

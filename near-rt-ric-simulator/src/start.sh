@@ -25,27 +25,27 @@ if [ $# -ne 1 ]; then
 fi
 echo "Version folder for simulator: "$1
 
-#Set path to open api
+# Set path to open api
 export APIPATH=$PWD/api/$1
 echo "APIPATH set to: "$APIPATH
 
 cd src
 
-#Include common module(s)
+# Include common module(s)
 export PYTHONPATH=$PWD/common
 echo "PYTHONPATH set to: "$PYTHONPATH
 
 cd $1
 
-#start nginx
+# start nginx
 nginx -c /usr/src/app/nginx.conf
 
-#start callBack server
+start callBack server
 if [[ ${A1_VERSION} == "STD"* ]]; then
     echo "Path to callBack.py: "$PWD
     python -u callBack.py &
 fi
 
-#start near-rt-ric-simulator
+# start near-rt-ric-simulator
 echo "Path to main.py: "$PWD
 python -u main.py

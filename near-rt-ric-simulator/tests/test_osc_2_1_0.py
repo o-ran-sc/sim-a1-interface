@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,19 +15,59 @@
 #  ============LICENSE_END=================================================
 #
 
-# This test case test the OSC_2.1.0 version of the simulator
+# This test case tests the OSC_2.1.0 version of the simulator
 
-import json
 
-#Version of simulator
+# Version of simulator
 INTERFACE_VERSION="OSC_2.1.0"
 
-from unittest_setup import SERVER_URL, setup_env, get_testdata_dir, client
+import json
+import pytest
+import requests
+import threading
+from unittest_setup import SERVER_URL, PORT_NUMBER, setup_env, get_testdata_dir, client
+# from unittest_setup import run_flask_app
 
-#Setup env and import paths
+# Setup env and import paths
 setup_env(INTERFACE_VERSION)
 
 from compare_json import compare
+from models.enforceStatus import EnforceStatus
+
+def test_enforce_reason(client):
+    """
+    Test that we can set a valid enforce status and reason, and that we reject invalid cases.
+    """
+    enforceStatus = EnforceStatus()
+
+    enforceStatus.enforce_status = 'NOT_ENFORCED'
+    enforceStatus.enforce_reason = 'SCOPE_NOT_APPLICABLE'
+    enforce_dict = enforceStatus.to_dict()
+    assert enforce_dict['enforceStatus'] == 'NOT_ENFORCED'
+    assert enforce_dict['enforceReason'] == 'SCOPE_NOT_APPLICABLE'
+
+    enforceStatus.enforce_status = 'ENFORCED'
+    enforceStatus.enforce_reason = 'STATEMENT_NOT_APPLICABLE'
+    enforce_dict = enforceStatus.to_dict()
+    assert enforce_dict['enforceStatus'] == 'ENFORCED'
+    assert enforce_dict['enforceReason'] == 'STATEMENT_NOT_APPLICABLE'
+    
+    enforceStatus.enforce_reason = 'OTHER_REASON'
+    enforce_dict = enforceStatus.to_dict()
+    assert enforce_dict['enforceReason'] == 'OTHER_REASON'
+
+    enforce_status = enforceStatus.enforce_status
+    assert str(enforce_status) == 'ENFORCED'
+
+    enforce_reason = enforceStatus.enforce_reason
+    assert str(enforce_reason) == 'OTHER_REASON'
+
+    with pytest.raises(ValueError):
+        enforceStatus.enforce_status = 'ERROR'
+
+    with pytest.raises(ValueError):
+        enforceStatus.enforce_reason = 'ERROR'
+
 
 def test_apis(client):
 
@@ -176,9 +216,8 @@ def test_apis(client):
 
     # API: Get policy status
     policy_status = {
-        "instance_status" : "NOT IN EFFECT",
-        "has_been_deleted" : "false",
-        "created_at" : "????"
+        "enforceStatus" : "NOT_ENFORCED",
+        "enforceReason" : "OTHER_REASON",
     }
     response=client.get(SERVER_URL+'a1-p/policytypes/1/policies/pi1/status')
     assert response.status_code == 200
@@ -315,9 +354,8 @@ def test_apis(client):
 
     # API: Get policy status for pi1. Shall delay 10 sec
     policy_status = {
-        "instance_status" : "NOT IN EFFECT",
-        "has_been_deleted" : "false",
-        "created_at" : "????"
+        "enforceStatus" : "NOT_ENFORCED",
+        "enforceReason" : "OTHER_REASON",
     }
     response=client.get(SERVER_URL+'a1-p/policytypes/1/policies/pi1/status')
     assert response.status_code == 200
@@ -331,14 +369,13 @@ def test_apis(client):
     assert response.data ==  b"Force delay: None sec set for all A1 responses"
 
     #  Set status for pi1
-    response=client.put(SERVER_URL+'status?policyid=pi1&status=IN%20EFFECT')
+    response=client.put(SERVER_URL+'status?policyid=pi1&status=ENFORCED')
     assert response.status_code == 200
 
     # API: Get policy status for pi1
     policy_status = {
-        "instance_status" : "IN EFFECT",
-        "has_been_deleted" : "false",
-        "created_at" : "????"
+        "enforceStatus" : "ENFORCED",
+        "enforceReason" : None,
     }
     response=client.get(SERVER_URL+'a1-p/policytypes/1/policies/pi1/status')
     assert response.status_code == 200
@@ -347,14 +384,13 @@ def test_apis(client):
     assert res == True
 
     #  Set status for pi1
-    response=client.put(SERVER_URL+'status?policyid=pi1&status=IN%20EFFECT&deleted=true&created_at=2020-03-30%2012:00:00')
+    response=client.put(SERVER_URL+'status?policyid=pi1&status=NOT_ENFORCED&reason=SCOPE_NOT_APPLICABLE')
     assert response.status_code == 200
 
     # API: Get policy status for pi1
     policy_status = {
-        "instance_status" : "IN EFFECT",
-        "has_been_deleted" : "true",
-        "created_at" : "????"
+        "enforceStatus" : "NOT_ENFORCED",
+        "enforceReason" : "SCOPE_NOT_APPLICABLE",
     }
     response=client.get(SERVER_URL+'a1-p/policytypes/1/policies/pi1/status')
     assert response.status_code == 200
@@ -362,7 +398,7 @@ def test_apis(client):
     res=compare(policy_status, result)
     assert res == True
 
-    # Get counter: intstance
+    # Get counter: num_instances
     response=client.get(SERVER_URL+'counter/num_instances')
     assert response.status_code == 200
     assert response.data ==  b"2"
@@ -495,14 +531,108 @@ def test_apis(client):
     response=client.get(SERVER_URL+'a1-p/policytypes/1/policies/pi111/status')
     assert response.status_code == 404
 
-    # Load policy type, no type in url - shall faill
+    # Load policy type, no type in url - shall fail
     with open(testdata+'pt2.json') as json_file:
         policytype_2 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype', headers=header, data=json.dumps(policytype_2))
         assert response.status_code == 400
 
-    # Load policy type - duplicatee - shall faill
+    # Load policy type - duplicatee - shall fail
     with open(testdata+'pt1.json') as json_file:
         policytype_1 = json.load(json_file)
         response=client.put(SERVER_URL+'policytype?id=2', headers=header, data=json.dumps(policytype_1))
         assert response.status_code == 400
+
+    # Get counter: data_delivery
+    response=client.get(SERVER_URL+'counter/datadelivery')
+    assert response.status_code == 200
+    assert response.data ==  b"0"
+
+    # Send data to data-delivery with empty payload
+    json_payload={}
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 400
+
+    # Send invalid data to data-delivery
+    json_payload={
+        "job":"200",
+        "payload":"payload"
+    }
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 404
+
+    # Send data to data-delivery with valid job
+    json_payload={
+        "job":"100",
+        "payload":"payload"
+    }
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 200
+
+    # Send data to data-delivery with valid job
+    json_payload={
+        "job":"101",
+        "payload":"another payload"
+    }
+    response=client.post(SERVER_URL+'data-delivery', headers=header, data=json.dumps(json_payload))
+    assert response.status_code == 200
+
+    # Get counter: data_delivery
+    response=client.get(SERVER_URL+'counter/datadelivery')
+    assert response.status_code == 200
+    assert response.data ==  b"2"
+
+
+def test_notificationDestination(client):
+    testdata=get_testdata_dir()
+    # Header for json payload
+    header = {
+        "Content-Type" : "application/json"
+    }
+
+    # === API: Update policy instance pi2 of type: 2 ==="
+    with open(testdata+'pi2.json') as json_file:
+        policytype_2 = json.load(json_file)
+        response = client.put(SERVER_URL+"a1-p/policytypes/2/policies/pi2?notificationDestination=http://localhost:8085/statustest", headers=header, data=json.dumps(policytype_2))
+        assert response.status_code == 202
+        result = response.data
+        assert result == b""   
+
+# def test_sendstatus(client):
+#     testdata=get_testdata_dir()
+#     # Header for json payload
+#     header = {
+#         "Content-Type" : "application/json"
+#     }
+
+#     # === Send status for pi2==="
+#     with open(testdata+'pi2.json') as json_file:
+#         policytype_2 = json.load(json_file)
+#         response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(policytype_2))
+#         assert response.status_code == 201
+#         result = response.data
+#         assert result == b"OK"
+
+
+# def test_multithreaded(client):
+#     # Create a new thread to run the Flask app
+#     app_thread = threading.Thread(target=run_flask_app)
+#     app_thread.start()
+
+#     # Perform your tests here
+#     testdata=get_testdata_dir()
+#     # Header for json payload
+#     header = {
+#         "Content-Type" : "application/json"
+#     }
+
+#     # === Send status for pi2==="
+#     with open(testdata+'pi2.json') as json_file:
+#         policytype_2 = json.load(json_file)
+#         response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(policytype_2))
+#         assert response.status_code == 201
+#         result = response.data
+#         assert result == b"OK"
+
+#     # Wait for the Flask app thread to finish
+#     app_thread.join()

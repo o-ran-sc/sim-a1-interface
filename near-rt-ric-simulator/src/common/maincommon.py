@@ -22,9 +22,9 @@ from flask import Response
 import socket
 import ssl
 
-#Must exist
+# Must exist
 apipath=os.environ['APIPATH']
-#May exist
+# May exist
 remote_hosts_logging=os.getenv('REMOTE_HOSTS_LOGGING')
 duplicate_check=os.getenv('DUPLICATE_CHECK')
 

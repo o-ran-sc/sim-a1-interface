@@ -28,8 +28,10 @@ from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, data_delivery_counter, app
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
 
-#Constants
+# Constants
 TEXT_PLAIN='text/plain'
+APPL_JSON='application/json'
+
 
 check_apipath()
 
@@ -198,7 +200,7 @@ def sendstatus():
     return Response('Post status failed with code: '+resp.status_code, status=500, mimetype=TEXT_PLAIN)
 
   data = resp.json()
-  return Response(data, 200, mimetype='application/json')
+  return Response(data, 200, mimetype=APPL_JSON)
 
 #Receive status (only for testing callbacks)
 #/statustest
@@ -210,7 +212,7 @@ def statustest():
   except Exception:
     return Response("The status data is corrupt or missing.", 400, mimetype=TEXT_PLAIN)
 
-  return Response(json.dumps(data), 200, mimetype='application/json')
+  return Response(json.dumps(data), 200, mimetype=APPL_JSON)
 
 #Receive a data delivery package
 #/datadelivery

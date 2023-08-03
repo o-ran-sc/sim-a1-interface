@@ -1,5 +1,5 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,14 +18,22 @@
 from maincommon import apipath
 import connexion
 
-#Main app
-app = connexion.FlaskApp(__name__, specification_dir=apipath)
+# Main app
+def create_app():
+    app = connexion.FlaskApp(__name__, specification_dir=apipath)
+    return app
 
-policy_types={}
-policy_instances={}
-policy_status={}
-forced_settings={}
-forced_settings['code']=None
-forced_settings['delay']=None
-policy_fingerprint={}
-hosts_set=set()
+app = create_app()
+
+policy_types = {}
+policy_instances = {}
+policy_status = {}
+callbacks = {}
+forced_settings = {}
+forced_settings['code'] = None
+forced_settings['delay'] = None
+policy_fingerprint = {}
+hosts_set = set()
+
+data_delivery = []
+jobs = ['100', '101']

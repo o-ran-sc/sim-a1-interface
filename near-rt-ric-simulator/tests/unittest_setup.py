@@ -25,7 +25,7 @@ PORT_NUMBER="2222"
 HOST_IP="localhost"
 SERVER_URL="http://"+HOST_IP+":"+PORT_NUMBER+"/"
 
-#Dir for json test data files
+# Dir for json test data files
 testdata=""
 
 def setup_env(interface_version):
@@ -51,9 +51,14 @@ def setup_env(interface_version):
 def get_testdata_dir():
     return testdata
 
-#Test client for rest calls
+# Test client for rest calls
 @pytest.fixture
 def client():
     from main import app
-    with app.app.test_client() as c:
-        yield c
+    with app.app.test_client() as client:
+        yield client
+
+# # Run the Flask app in a separate thread for testing
+# def run_flask_app():
+#     from main import app
+#     app.app.run(port=8085, host="127.0.0.1", threaded=True)
