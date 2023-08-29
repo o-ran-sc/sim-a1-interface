@@ -23,10 +23,9 @@ INTERFACE_VERSION="OSC_2.1.0"
 
 import json
 import pytest
-import requests
-import threading
+import multiprocessing
 from unittest_setup import SERVER_URL, PORT_NUMBER, setup_env, get_testdata_dir, client
-# from unittest_setup import run_flask_app
+from unittest_setup import run_flask_app
 
 # Setup env and import paths
 setup_env(INTERFACE_VERSION)
@@ -51,7 +50,7 @@ def test_enforce_reason(client):
     enforce_dict = enforceStatus.to_dict()
     assert enforce_dict['enforceStatus'] == 'ENFORCED'
     assert enforce_dict['enforceReason'] == 'STATEMENT_NOT_APPLICABLE'
-    
+
     enforceStatus.enforce_reason = 'OTHER_REASON'
     enforce_dict = enforceStatus.to_dict()
     assert enforce_dict['enforceReason'] == 'OTHER_REASON'
@@ -596,43 +595,46 @@ def test_notificationDestination(client):
         response = client.put(SERVER_URL+"a1-p/policytypes/2/policies/pi2?notificationDestination=http://localhost:8085/statustest", headers=header, data=json.dumps(policytype_2))
         assert response.status_code == 202
         result = response.data
-        assert result == b""   
+        assert result == b""
 
-# def test_sendstatus(client):
-#     testdata=get_testdata_dir()
-#     # Header for json payload
-#     header = {
-#         "Content-Type" : "application/json"
-#     }
+def test_notificationDestination(client):
+    test_data = get_testdata_dir() + 'pi2.json'
+    # Header for json payload
+    header = { "Content-Type" : "application/json" }
 
-#     # === Send status for pi2==="
-#     with open(testdata+'pi2.json') as json_file:
-#         policytype_2 = json.load(json_file)
-#         response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(policytype_2))
-#         assert response.status_code == 201
-#         result = response.data
-#         assert result == b"OK"
+    # === API: Update policy instance pi2 of type: 2 ==="
+    with open(test_data) as json_file:
+        payload = json.load(json_file)
+        response = client.put(SERVER_URL+"a1-p/policytypes/2/policies/pi2?notificationDestination=http://localhost:8085/statustest", headers=header, data=json.dumps(payload))
+
+    assert response.status_code == 202
+    result = response.data
+    assert result == b""
 
 
-# def test_multithreaded(client):
-#     # Create a new thread to run the Flask app
-#     app_thread = threading.Thread(target=run_flask_app)
-#     app_thread.start()
+def test_sendstatus(client):
+    # Create a new thread to run the Flask app in parallel on a different port so that we can call the callback.
+    proc = multiprocessing.Process(target=run_flask_app, args=())
+    proc.start()
 
-#     # Perform your tests here
-#     testdata=get_testdata_dir()
-#     # Header for json payload
-#     header = {
-#         "Content-Type" : "application/json"
-#     }
+    test_data = get_testdata_dir() + 'pi2.json'
+    header = { "Content-Type" : "application/json" }
 
-#     # === Send status for pi2==="
-#     with open(testdata+'pi2.json') as json_file:
-#         policytype_2 = json.load(json_file)
-#         response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(policytype_2))
-#         assert response.status_code == 201
-#         result = response.data
-#         assert result == b"OK"
+    # === Send status for pi2===
+    with open(test_data) as json_file:
+        payload = json.load(json_file)
+        response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(payload))
 
-#     # Wait for the Flask app thread to finish
-#     app_thread.join()
+    assert response.status_code == 201
+    result = response.data
+    assert result == b"OK"
+
+    # Send status, negative test with missing parameter
+    response = client.post(SERVER_URL+'sendstatus', headers=header, data="")
+    assert response.status_code == 400
+
+    # Send status pi9, negative test for policy id not found
+    response = client.post(SERVER_URL+'sendstatus?policyid=pi9', headers=header, data="")
+    assert response.status_code == 404
+
+    proc.terminate()
