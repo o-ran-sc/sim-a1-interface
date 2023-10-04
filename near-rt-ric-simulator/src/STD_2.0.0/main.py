@@ -199,8 +199,7 @@ def sendstatus():
   if (resp.status_code<199 & resp.status_code > 299):
     return Response('Post status failed with code: '+resp.status_code, status=500, mimetype=TEXT_PLAIN)
 
-  data = resp.json()
-  return Response(data, 200, mimetype=APPL_JSON)
+  return Response(None, 204, mimetype=APPL_JSON)
 
 #Receive status (only for testing callbacks)
 #/statustest

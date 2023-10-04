@@ -373,7 +373,7 @@ do_curl GET /A1-P/v2/policytypes/STD_1/policies/pi2/status 200
 
 echo "=== Send status for pi2==="
 RESULT="json:{\"enforceStatus\": \"NOTOK\", \"enforceReason\": \"notok_reason\"}"
-do_curl POST '/sendstatus?policyid=pi2' 200
+do_curl POST '/sendstatus?policyid=pi2' 204
 
 echo "=== Get counter: datadelivery ==="
 RESULT="0"
