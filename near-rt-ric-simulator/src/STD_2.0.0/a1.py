@@ -152,8 +152,8 @@ def put_policy(policyTypeId, policyId):
 
   policy_fingerprint[fp]=policy_id
 
-  noti=request.args.get('notificationDestination')
-  callbacks[policy_id]=noti
+  noti = request.args.get('notificationDestination')
+  callbacks[policy_id] = noti
 
   policy_instances[policy_type_id][policy_id]=data
 

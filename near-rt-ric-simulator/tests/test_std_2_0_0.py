@@ -15,20 +15,22 @@
 #  ============LICENSE_END=================================================
 #
 
-# This test case test the STD_2.0.0 version of the simulator
+# This test case tests the STD_2.0.0 version of the simulator.
 
 import json
 import time
+import multiprocessing
+from unittest_setup import SERVER_URL, HOST_IP, PORT_NUMBER, setup_env, get_testdata_dir, client
+from unittest_setup import run_flask_app
 
-#Version of simulator
+# Setup env and import paths
+
+# Version of simulator
 INTERFACE_VERSION="STD_2.0.0"
 
-from unittest_setup import SERVER_URL, HOST_IP, PORT_NUMBER, setup_env, get_testdata_dir, client
-
-#Setup env and import paths
 setup_env(INTERFACE_VERSION)
-
 from compare_json import compare
+
 
 def test_apis(client):
 
@@ -390,22 +392,6 @@ def test_apis(client):
     res=compare(data_response, result)
     assert res == True
 
-
-    # #Found no way to test these functions
-    # #'sendstatus' will send a http request that will fail
-    # #since no server will receive the call
-    # #These function is instead tested when running the bash script in the 'test' dir
-    # # # Send status for pi2
-    # # response=client.post(SERVER_URL+'sendstatus?policyid=pi2')
-    # # assert response.status_code == 200
-    # # result=json.loads(response.data)
-    # # res=compare(data_get_status, result)
-    # # assert res == True
-
-    # # # Send status, shall fail
-    # # response=client.post(SERVER_URL+'sendstatus')
-    # # assert response.status_code == 400
-
     # Get counter: data_delivery
     response=client.get(SERVER_URL+'counter/datadelivery')
     assert response.status_code == 200
@@ -439,3 +425,43 @@ def test_apis(client):
     response=client.get(SERVER_URL+'counter/num_types')
     assert response.status_code == 200
     assert response.data ==  b"1"
+
+def test_notificationDestination(client):
+    test_data = get_testdata_dir() + 'pi2.json'
+    # Header for json payload
+    header = { "Content-Type" : "application/json" }
+
+    # === API: Update policy instance pi2 of type: 2 ==="
+    with open(test_data) as json_file:
+        payload = json.load(json_file)
+        response = client.put(SERVER_URL+"A1-P/v2/policytypes/STD_1/policies/pi2?notificationDestination=http://localhost:8085/statustest", headers=header, data=json.dumps(payload))
+        assert response.status_code == 200
+        result = json.loads(response.data)
+        assert compare(payload, result) == True
+
+def test_sendstatus(client):
+    # Create a new thread to run the Flask app in parallel on a different port so that we can call the callback.
+    proc = multiprocessing.Process(target=run_flask_app, args=())
+    proc.start()
+
+    test_data = get_testdata_dir() + 'pi2.json'
+    header = { "Content-Type" : "application/json" }
+
+    # === Send status for pi2===
+    with open(test_data) as json_file:
+        payload = json.load(json_file)
+        response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(payload))
+
+    assert response.status_code == 204
+    result = response.data
+    assert result == b""
+
+    # Send status, negative test with missing parameter
+    response = client.post(SERVER_URL+'sendstatus', headers=header, data="")
+    assert response.status_code == 400
+
+    # Send status pi9, negative test for policy id not found
+    response = client.post(SERVER_URL+'sendstatus?policyid=pi9', headers=header, data="")
+    assert response.status_code == 404
+
+    proc.terminate()

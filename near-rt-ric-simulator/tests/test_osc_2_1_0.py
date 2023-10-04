@@ -581,22 +581,6 @@ def test_apis(client):
     assert response.status_code == 200
     assert response.data ==  b"2"
 
-
-def test_notificationDestination(client):
-    testdata=get_testdata_dir()
-    # Header for json payload
-    header = {
-        "Content-Type" : "application/json"
-    }
-
-    # === API: Update policy instance pi2 of type: 2 ==="
-    with open(testdata+'pi2.json') as json_file:
-        policytype_2 = json.load(json_file)
-        response = client.put(SERVER_URL+"a1-p/policytypes/2/policies/pi2?notificationDestination=http://localhost:8085/statustest", headers=header, data=json.dumps(policytype_2))
-        assert response.status_code == 202
-        result = response.data
-        assert result == b""
-
 def test_notificationDestination(client):
     test_data = get_testdata_dir() + 'pi2.json'
     # Header for json payload
