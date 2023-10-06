@@ -22,6 +22,30 @@
       },
       "revId": "c8869f47f6ab67e0a1516cb0eca517ef31ba9a10",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68d89750_f79d7226",
+        "filename": "near-rt-ric-simulator/tests/test_osc_2_1_0.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2023-10-06T09:45:12Z",
+      "side": 0,
+      "message": "its duplicated",
+      "parentUuid": "7eefb192_6d91ae9b",
+      "range": {
+        "startLine": 593,
+        "startChar": 0,
+        "endLine": 598,
+        "endChar": 28
+      },
+      "revId": "c8869f47f6ab67e0a1516cb0eca517ef31ba9a10",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
