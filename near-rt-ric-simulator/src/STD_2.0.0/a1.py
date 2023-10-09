@@ -30,8 +30,9 @@ from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from utils import calcFingerprint
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name, is_duplicate_check
+from models.enforceStatus import EnforceStatus
 
-#Constsants
+# Constants
 APPL_JSON='application/json'
 APPL_PROB_JSON='application/problem+json'
 
@@ -139,8 +140,8 @@ def put_policy(policyTypeId, policyId):
       pjson=create_error_response(resp)
       return Response(json.dumps(pjson), 500, mimetype=APPL_PROB_JSON)
 
-  #Callout hooks for external server
-  #When it fails, break and return 419 HTTP status code
+  # Callout hooks for external server
+  # When it fails, break and return HTTP status code 500
   if (EXT_SRV_URL is not None):
     resp = callout_external_server(policy_id, data, 'PUT')
     if (resp != retcode):
@@ -158,10 +159,8 @@ def put_policy(policyTypeId, policyId):
   policy_instances[policy_type_id][policy_id]=data
 
   if (policy_types[policy_type_id]['statusSchema'] is not None):
-    ps = {}
-    ps["enforceStatus"] = ""
-    ps["enforceReason"] = ""
-    policy_status[policy_id] = ps
+    enforceStatus = EnforceStatus("NOT_ENFORCED", "OTHER_REASON")
+    policy_status[policy_id] = enforceStatus.to_dict()
 
   if (retcode == 200):
     return Response(json.dumps(data), 200, mimetype=APPL_JSON)
@@ -217,8 +216,8 @@ def delete_policy(policyTypeId, policyId):
       pjson=create_error_response(resp)
       return Response(json.dumps(pjson), 500, mimetype=APPL_PROB_JSON)
 
-  #Callout hooks for external server
-  #When it fails, break and return 419 HTTP status code
+  # Callout hooks for external server
+  # When it fails, break and return HTTP status code 500
   if (EXT_SRV_URL is not None):
     resp = callout_external_server(policy_id, None, 'DELETE')
     if (resp != 204):

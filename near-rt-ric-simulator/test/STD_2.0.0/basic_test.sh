@@ -290,7 +290,7 @@ RESULT="json:{\"title\": \"Conflict\", \"status\": 409, \"detail\": \"Request co
 do_curl GET /A1-P/v2/policytypes/STD_1/policies 409
 
 echo "=== API: Get policy status ==="
-RESULT="json:{\"enforceStatus\": \"\", \"enforceReason\": \"\"}"
+RESULT="json:{\"enforceStatus\": \"NOT_ENFORCED\", \"enforceReason\": \"OTHER_REASON\"}"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies/pi1/status 200
 
 echo "=== API: Create policy instance pi2 of type: STD_1 ==="
@@ -352,27 +352,27 @@ if [ $EXT_SRV_EXIST == 1 ]; then
 fi
 
 echo "=== API: Get policy status ==="
-RESULT="json:{\"enforceStatus\": \"\", \"enforceReason\": \"\"}"
+RESULT="json:{\"enforceStatus\": \"NOT_ENFORCED\", \"enforceReason\": \"OTHER_REASON\"}"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies/pi2/status 200
 
 echo "=== Set status for policy instance pi2 ==="
-RESULT="Status set to OK for policy: pi2"
-do_curl PUT '/status?policyid=pi2&status=OK' 200
+RESULT="Status set to ENFORCED for policy: pi2"
+do_curl PUT '/status?policyid=pi2&status=ENFORCED' 200
 
 echo "=== API: Get policy status ==="
-RESULT="json:{\"enforceStatus\": \"OK\"}"
+RESULT="json:{\"enforceStatus\": \"ENFORCED\"}"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies/pi2/status 200
 
 echo "=== Set status for policy instance pi2 ==="
-RESULT="Status set to NOTOK and notok_reason for policy: pi2"
-do_curl PUT '/status?policyid=pi2&status=NOTOK&reason=notok_reason' 200
+RESULT="Status set to NOT_ENFORCED and SCOPE_NOT_APPLICABLE for policy: pi2"
+do_curl PUT '/status?policyid=pi2&status=NOT_ENFORCED&reason=SCOPE_NOT_APPLICABLE' 200
 
 echo "=== API: Get policy status ==="
-RESULT="json:{\"enforceStatus\": \"NOTOK\", \"enforceReason\":\"notok_reason\"}"
+RESULT="json:{\"enforceStatus\": \"NOT_ENFORCED\", \"enforceReason\":\"SCOPE_NOT_APPLICABLE\"}"
 do_curl GET /A1-P/v2/policytypes/STD_1/policies/pi2/status 200
 
 echo "=== Send status for pi2==="
-RESULT="json:{\"enforceStatus\": \"NOTOK\", \"enforceReason\": \"notok_reason\"}"
+RESULT=""
 do_curl POST '/sendstatus?policyid=pi2' 204
 
 echo "=== Get counter: datadelivery ==="

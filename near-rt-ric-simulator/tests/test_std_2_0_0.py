@@ -18,6 +18,7 @@
 # This test case tests the STD_2.0.0 version of the simulator.
 
 import json
+import pytest
 import time
 import multiprocessing
 from unittest_setup import SERVER_URL, HOST_IP, PORT_NUMBER, setup_env, get_testdata_dir, client
@@ -30,6 +31,42 @@ INTERFACE_VERSION="STD_2.0.0"
 
 setup_env(INTERFACE_VERSION)
 from compare_json import compare
+
+from models.enforceStatus import EnforceStatus
+
+def test_enforce_reason(client):
+    """
+    Test that we can set a valid enforce status and reason, and that we reject invalid cases.
+    """
+    enforceStatus = EnforceStatus()
+
+    enforceStatus.enforce_status = 'NOT_ENFORCED'
+    enforceStatus.enforce_reason = 'SCOPE_NOT_APPLICABLE'
+    enforce_dict = enforceStatus.to_dict()
+    assert enforce_dict['enforceStatus'] == 'NOT_ENFORCED'
+    assert enforce_dict['enforceReason'] == 'SCOPE_NOT_APPLICABLE'
+
+    enforceStatus.enforce_status = 'ENFORCED'
+    enforceStatus.enforce_reason = 'STATEMENT_NOT_APPLICABLE'
+    enforce_dict = enforceStatus.to_dict()
+    assert enforce_dict['enforceStatus'] == 'ENFORCED'
+    assert enforce_dict['enforceReason'] == 'STATEMENT_NOT_APPLICABLE'
+
+    enforceStatus.enforce_reason = 'OTHER_REASON'
+    enforce_dict = enforceStatus.to_dict()
+    assert enforce_dict['enforceReason'] == 'OTHER_REASON'
+
+    enforce_status = enforceStatus.enforce_status
+    assert str(enforce_status) == 'ENFORCED'
+
+    enforce_reason = enforceStatus.enforce_reason
+    assert str(enforce_reason) == 'OTHER_REASON'
+
+    with pytest.raises(ValueError):
+        enforceStatus.enforce_status = 'ERROR'
+
+    with pytest.raises(ValueError):
+        enforceStatus.enforce_reason = 'ERROR'
 
 
 def test_apis(client):
@@ -259,7 +296,7 @@ def test_apis(client):
     assert res == True
 
     # API: API: Get policy status
-    data_response = {"enforceStatus" : "", "enforceReason" : ""}
+    data_response = {"enforceStatus" : "NOT_ENFORCED", "enforceReason" : "OTHER_REASON"}
     response=client.get(SERVER_URL+'A1-P/v2/policytypes/STD_1/policies/pi1/status')
     assert response.status_code == 200
     result=json.loads(response.data)
@@ -360,7 +397,7 @@ def test_apis(client):
     assert res == True
 
     # API: API: Get policy status
-    data_response = {"enforceStatus" : "", "enforceReason" : ""}
+    data_response = {"enforceStatus" : "NOT_ENFORCED", "enforceReason" : "OTHER_REASON"}
     response=client.get(SERVER_URL+'A1-P/v2/policytypes/STD_1/policies/pi2/status')
     assert response.status_code == 200
     result=json.loads(response.data)
@@ -368,11 +405,11 @@ def test_apis(client):
     assert res == True
 
     # Set status for policy instance pi2
-    response=client.put(SERVER_URL+'status?policyid=pi2&status=OK')
+    response=client.put(SERVER_URL+'status?policyid=pi2&status=NOT_ENFORCED&reason=STATEMENT_NOT_APPLICABLE')
     assert response.status_code == 200
 
     # API: API: Get policy status
-    data_response = {"enforceStatus" : "OK"}
+    data_response = {"enforceStatus" : "NOT_ENFORCED", "enforceReason" : "STATEMENT_NOT_APPLICABLE"}
     response=client.get(SERVER_URL+'A1-P/v2/policytypes/STD_1/policies/pi2/status')
     assert response.status_code == 200
     result=json.loads(response.data)
@@ -381,11 +418,11 @@ def test_apis(client):
     assert res == True
 
     # Set status for policy instance pi2
-    response=client.put(SERVER_URL+'status?policyid=pi2&status=NOTOK&reason=notok_reason')
+    response=client.put(SERVER_URL+'status?policyid=pi2&status=NOT_ENFORCED&reason=OTHER_REASON')
     assert response.status_code == 200
 
     # API: API: Get policy status
-    data_response = {"enforceStatus" : "NOTOK", "enforceReason" : "notok_reason"}
+    data_response = {"enforceStatus" : "NOT_ENFORCED", "enforceReason" : "OTHER_REASON"}  
     response=client.get(SERVER_URL+'A1-P/v2/policytypes/STD_1/policies/pi2/status')
     assert response.status_code == 200
     result=json.loads(response.data)
