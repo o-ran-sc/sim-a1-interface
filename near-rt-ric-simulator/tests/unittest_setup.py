@@ -61,4 +61,4 @@ def client():
 # Run the Flask app in a separate thread for testing
 def run_flask_app():
     from main import app
-    app.app.run(port=8085, host="127.0.0.1")
+    app.app.run(port=8086, host="127.0.0.1")

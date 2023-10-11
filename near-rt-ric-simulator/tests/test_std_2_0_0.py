@@ -471,7 +471,7 @@ def test_notificationDestination(client):
     # === API: Update policy instance pi2 of type: 2 ==="
     with open(test_data) as json_file:
         payload = json.load(json_file)
-        response = client.put(SERVER_URL+"A1-P/v2/policytypes/STD_1/policies/pi2?notificationDestination=http://localhost:8085/statustest", headers=header, data=json.dumps(payload))
+        response = client.put(SERVER_URL+"A1-P/v2/policytypes/STD_1/policies/pi2?notificationDestination=http://localhost:8086/statustest", headers=header, data=json.dumps(payload))
         assert response.status_code == 200
         result = json.loads(response.data)
         assert compare(payload, result) == True
