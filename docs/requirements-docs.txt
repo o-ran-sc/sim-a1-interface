@@ -12,3 +12,4 @@ urllib3~=1.26.15
 setuptools
 doc8
 docutils < 0.17
+Flask==3.0.0
