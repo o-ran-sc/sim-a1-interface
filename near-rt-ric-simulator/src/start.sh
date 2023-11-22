@@ -40,7 +40,7 @@ cd $1
 # start nginx
 nginx -c /usr/src/app/nginx.conf
 
-start callBack server
+# start callBack server
 if [[ ${A1_VERSION} == "STD"* ]]; then
     echo "Path to callBack.py: "$PWD
     python -u callBack.py &
