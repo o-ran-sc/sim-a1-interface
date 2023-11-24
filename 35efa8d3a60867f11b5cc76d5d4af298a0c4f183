@@ -22,6 +22,30 @@
       },
       "revId": "35efa8d3a60867f11b5cc76d5d4af298a0c4f183",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1999b2ad_caf24b26",
+        "filename": "near-rt-ric-simulator/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002209
+      },
+      "writtenOn": "2023-11-24T18:06:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "83a282fe_0be047b7",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 39
+      },
+      "revId": "35efa8d3a60867f11b5cc76d5d4af298a0c4f183",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
