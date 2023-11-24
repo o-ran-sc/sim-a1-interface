@@ -17,9 +17,9 @@
 
 FROM alpine:3.17.3
 
-RUN apk add --update --no-cache python3 py3-pip nginx nginx-mod-http-lua
+RUN apk add --update --no-cache python3=3.10.13-r0 py3-pip nginx nginx-mod-http-lua
 
-RUN pip3 install connexion[swagger-ui]
+RUN pip3 install Flask==2.2.5 connexion[swagger-ui,flask,uvicorn]
 
 WORKDIR /usr/src/app
 
@@ -44,4 +44,3 @@ USER ${user}
 
 RUN chmod +x src/start.sh
 CMD src/start.sh ${A1_VERSION}
-
