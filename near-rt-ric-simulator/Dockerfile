@@ -1,5 +1,6 @@
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2021-2023 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023 OpenInfra Foundation Europe. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -17,9 +18,9 @@
 
 FROM alpine:3.17.3
 
-RUN apk add --update --no-cache python3 py3-pip nginx nginx-mod-http-lua
+RUN apk add --update --no-cache python3=3.10.13-r0 py3-pip nginx nginx-mod-http-lua
 
-RUN pip3 install connexion[swagger-ui]
+RUN pip3 install Flask==2.2.5 connexion[swagger-ui,flask,uvicorn]
 
 WORKDIR /usr/src/app
 
@@ -44,4 +45,3 @@ USER ${user}
 
 RUN chmod +x src/start.sh
 CMD src/start.sh ${A1_VERSION}
-

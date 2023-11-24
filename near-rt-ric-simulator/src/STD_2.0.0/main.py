@@ -1,5 +1,6 @@
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023 OpenInfra Foundation Europe. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -255,4 +256,4 @@ if len(sys.argv) >= 2:
 app.add_api('ORAN_A1-p_V2.0.0_api.yaml')
 
 if __name__ == '__main__':
-  app.run(port=port_number, host="127.0.0.1", threaded=False)
+  app.run(port=port_number, host="127.0.0.1")
