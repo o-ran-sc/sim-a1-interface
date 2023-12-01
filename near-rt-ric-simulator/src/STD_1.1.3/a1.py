@@ -23,7 +23,7 @@ import collections
 import time
 
 from connexion import NoContent
-from flask import Flask, escape, request, Response, make_response
+from flask import Flask, request, Response
 from var_declaration import policy_instances, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from utils import calcFingerprint
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name, is_duplicate_check
@@ -40,7 +40,8 @@ def get_all_policy_identities():
   if ((r := check_modified_response()) is not None):
     return r
 
-  return (list(policy_instances.keys()), 200)
+  res = list(policy_instances.keys())
+  return Response(json.dumps(res), 200, mimetype=APPL_JSON)
 
 # API Function: Create or update a policy
 def put_policy(policyId):

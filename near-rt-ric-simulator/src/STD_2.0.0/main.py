@@ -24,7 +24,7 @@ import requests
 
 
 from pathlib import Path
-from flask import Flask, escape, request, Response
+from flask import Flask, request, Response
 from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, data_delivery_counter, app
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name

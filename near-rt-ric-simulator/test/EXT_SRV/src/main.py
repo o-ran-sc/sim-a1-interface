@@ -79,4 +79,4 @@ if len(sys.argv) >= 2:
 app.add_api('EXT_SRV_api.yaml')
 
 if __name__ == '__main__':
-  app.run(port=port_number, host="127.0.0.1", threaded=False)
+  app.run(port=port_number, host="127.0.0.1")
