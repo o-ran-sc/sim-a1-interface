@@ -25,7 +25,7 @@ import time
 import requests
 
 from connexion import NoContent
-from flask import Flask, escape, request, Response, make_response
+from flask import Flask, request, Response
 from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set
 from utils import calcFingerprint
@@ -48,7 +48,7 @@ def get_all_policy_types():
     return r
 
   res = list(policy_types.keys())
-  return (res, 200)
+  return Response(json.dumps(res), 200, mimetype=APPL_JSON)
 
 # API Function: Get a policy type
 def get_policy_type(policyTypeId):
@@ -80,7 +80,8 @@ def get_all_policy_identities(policyTypeId):
     pjson=create_problem_json(None, "The policy type does not exist.", 404, None, policy_type_id)
     return Response(json.dumps(pjson), 404, mimetype=APPL_PROB_JSON)
 
-  return (list(policy_instances[policy_type_id].keys()), 200)
+  res = list(policy_instances[policy_type_id].keys())
+  return Response(json.dumps(res), 200, mimetype=APPL_JSON)
 
 # API Function: Create or update a policy
 def put_policy(policyTypeId, policyId):

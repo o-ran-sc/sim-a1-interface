@@ -20,7 +20,7 @@ FROM alpine:3.17.3
 
 RUN apk add --update --no-cache python3=3.10.13-r0 py3-pip nginx nginx-mod-http-lua
 
-RUN pip3 install Flask==2.2.5 connexion[swagger-ui,flask,uvicorn]
+RUN pip3 install Flask connexion[swagger-ui,flask,uvicorn]
 
 WORKDIR /usr/src/app
 

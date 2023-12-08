@@ -57,7 +57,7 @@ def a1_controller_get_all_policy_types():
 
   res = list(policy_instances.keys())
   res = list(map(int, res))
-  return (res, 200)
+  return Response(json.dumps(res), 200, mimetype=APPL_JSON)
 
 # API Function: Get a policy type
 def a1_controller_get_policy_type(policy_type_id):
@@ -150,7 +150,9 @@ def  a1_controller_get_all_instances_for_type(policy_type_id):
   if (policy_type_id not in policy_instances.keys()):
     log_resp_text("Policy type id not found")
     return (None, 404)
-  return (list(policy_instances[policy_type_id].keys()), 200)
+
+  res = list(policy_instances[policy_type_id].keys())
+  return Response(json.dumps(res), 200, mimetype=APPL_JSON)
 
 # API Function: Get a policy instance
 def a1_controller_get_policy_instance(policy_type_id, policy_instance_id):

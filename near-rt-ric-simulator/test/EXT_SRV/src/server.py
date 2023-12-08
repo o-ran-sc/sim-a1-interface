@@ -22,7 +22,7 @@ import logging
 import collections
 import time
 
-from flask import Flask, escape, request, Response, make_response
+from flask import Flask, request, Response
 from jsonschema import validate
 from var_declaration import a1_policy_instances, forced_settings
 

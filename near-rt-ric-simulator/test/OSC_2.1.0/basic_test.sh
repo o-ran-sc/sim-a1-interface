@@ -341,7 +341,7 @@ RESULT="[]"
 do_curl GET /a1-p/policytypes/1/policies 200
 
 echo "=== API: Get instances for type 2, shall contain pi2 ==="
-RESULT="[ \"pi2\" ]"
+RESULT="json:[ \"pi2\" ]"
 do_curl GET /a1-p/policytypes/2/policies 200
 
 echo "=== Get counter: instances ==="

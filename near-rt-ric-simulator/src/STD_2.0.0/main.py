@@ -17,6 +17,7 @@
 #
 
 import connexion
+import uvicorn
 import json
 import sys
 import os
@@ -24,7 +25,7 @@ import requests
 
 
 from pathlib import Path
-from flask import Flask, escape, request, Response
+from flask import Flask, request, Response
 from jsonschema import validate
 from var_declaration import policy_instances, policy_types, policy_status, callbacks, forced_settings, policy_fingerprint, hosts_set, data_delivery_counter, app
 from maincommon import check_apipath, apipath, get_supported_interfaces_response, extract_host_name
@@ -253,7 +254,6 @@ if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
-app.add_api('ORAN_A1-p_V2.0.0_api.yaml')
-
 if __name__ == '__main__':
-  app.run(port=port_number, host="127.0.0.1")
+  # Use Uvicorn to run the combined app
+  uvicorn.run(app, host="127.0.0.1", port=port_number, log_level="info")
