@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "660c07eb_8b46cc66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2023-12-08T13:09:20Z",
+      "side": 1,
+      "message": "Does this replace review https://gerrit.o-ran-sc.org/r/c/sim/a1-interface/+/12168 ?",
+      "revId": "d9b25321d9bce8a3db88102c127e2aa4436d81c8",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
