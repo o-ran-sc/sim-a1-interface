@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29717c4d_0f77e69b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2023-12-08T13:14:34Z",
+      "side": 1,
+      "message": "Abandon this one? \nCovered by https://gerrit.o-ran-sc.org/r/c/sim/a1-interface/+/12198 ?",
+      "revId": "c8a362b4d1b2a53cc96e718925e3d3dcf7879863",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
