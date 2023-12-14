@@ -16,8 +16,6 @@
 #  ============LICENSE_END=================================================
 #
 
-import connexion
-import uvicorn
 import json
 import sys
 import os
@@ -254,6 +252,7 @@ if len(sys.argv) >= 2:
   if isinstance(sys.argv[1], int):
     port_number = sys.argv[1]
 
+app.add_api('ORAN_A1-p_V2.0.0_api.yaml')
+
 if __name__ == '__main__':
-  # Use Uvicorn to run the combined app
-  uvicorn.run(app, host="127.0.0.1", port=port_number, log_level="info")
+  app.run(port=port_number, host="127.0.0.1")
