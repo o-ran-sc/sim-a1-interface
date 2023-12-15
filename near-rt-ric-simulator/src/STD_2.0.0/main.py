@@ -16,7 +16,6 @@
 #  ============LICENSE_END=================================================
 #
 
-import connexion
 import json
 import sys
 import os
