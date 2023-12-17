@@ -16,6 +16,23 @@
       "message": "Release did not complete.\nRe merge the release job when Jenkins Job is enabled: https://gerrit.o-ran-sc.org/r/c/ci-management/+/12359",
       "revId": "b06c6a3d9ab5142c6473f73e7b73286509e311aa",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "818b05ed_ede94193",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2023-12-17T14:39:13Z",
+      "side": 1,
+      "message": "remerge",
+      "revId": "b06c6a3d9ab5142c6473f73e7b73286509e311aa",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ],
   "submitRequirementResults": [
