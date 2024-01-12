@@ -23,6 +23,7 @@ INTERFACE_VERSION="OSC_2.1.0"
 
 import json
 import pytest
+import time
 import multiprocessing
 from unittest_setup import SERVER_URL, PORT_NUMBER, setup_env, get_testdata_dir, client
 from unittest_setup import run_flask_app
@@ -603,6 +604,8 @@ def test_sendstatus(client):
 
     test_data = get_testdata_dir() + 'pi2.json'
     header = { "Content-Type" : "application/json" }
+
+    time.sleep(10)
 
     # === Send status for pi2===
     with open(test_data) as json_file:
