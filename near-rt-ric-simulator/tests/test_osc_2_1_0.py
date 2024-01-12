@@ -604,9 +604,14 @@ def test_sendstatus(client):
     test_data = get_testdata_dir() + 'pi2.json'
     header = { "Content-Type" : "application/json" }
 
+    proc.join(timeout=5)
+
     # === Send status for pi2===
     with open(test_data) as json_file:
         payload = json.load(json_file)
+        # response = client.get("http://localhost:8086/statustest", headers=header, data=json.dumps(payload))
+        # print(f"response is : {response}")
+        # assert str(response)==""
         response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(payload))
 
     assert response.status_code == 201
