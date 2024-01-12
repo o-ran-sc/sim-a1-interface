@@ -23,6 +23,7 @@ INTERFACE_VERSION="OSC_2.1.0"
 
 import json
 import pytest
+import time
 import multiprocessing
 from unittest_setup import SERVER_URL, PORT_NUMBER, setup_env, get_testdata_dir, client
 from unittest_setup import run_flask_app
@@ -604,9 +605,14 @@ def test_sendstatus(client):
     test_data = get_testdata_dir() + 'pi2.json'
     header = { "Content-Type" : "application/json" }
 
+    time.sleep(5)
+
     # === Send status for pi2===
     with open(test_data) as json_file:
         payload = json.load(json_file)
+        # response = client.get("http://localhost:8086/statustest", headers=header, data=json.dumps(payload))
+        # print(f"response is : {response}")
+        # assert str(response)==""
         response = client.post(SERVER_URL+'sendstatus?policyid=pi2', headers=header, data=json.dumps(payload))
 
     assert response.status_code == 201
