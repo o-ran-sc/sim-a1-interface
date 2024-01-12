@@ -254,7 +254,7 @@ def sendstatus():
 
 # Receive status (only for testing callbacks)
 # /statustest
-@app.route('/statustest', methods=['POST', 'PUT'])
+@app.route('/statustest', methods=['POST', 'PUT', 'GET'])
 def statustest():
   try:
     data = request.data
