@@ -604,6 +604,8 @@ def test_sendstatus(client):
     test_data = get_testdata_dir() + 'pi2.json'
     header = { "Content-Type" : "application/json" }
 
+    proc.join(timeout=10)
+
     # === Send status for pi2===
     with open(test_data) as json_file:
         payload = json.load(json_file)
