@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00c8d1cb_2b9a3e74",
+        "filename": ".github/workflows/gerrit-novote-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000079
+      },
+      "writtenOn": "2024-01-31T22:32:24Z",
+      "side": 1,
+      "message": "I don\u0027t think these need to be included here or in the inputs. Since they\u0027re not required, you don\u0027t have to list or pass them. The workflow you\u0027re calling already has defaults in place. Same for using \".\" as the TOX_DIR too.",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "b3563a1ce7b5f03de9120ddcf0d2d268db7dc88a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
