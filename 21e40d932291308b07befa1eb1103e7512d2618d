@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd77d68a_e78e4402",
+        "filename": ".github/workflows/gerrit-novote-verify.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000079
+      },
+      "writtenOn": "2024-01-31T22:59:04Z",
+      "side": 1,
+      "message": "Let\u0027s remove these too, if they\u0027re not being used in the job.",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "21e40d932291308b07befa1eb1103e7512d2618d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
