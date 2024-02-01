@@ -29,10 +29,6 @@ on:
         description: "The patch number for the change"
         required: true
         type: string
-      GERRIT_PATCHSET_REVISION:
-        description: "The revision sha"
-        required: true
-        type: string
       GERRIT_PROJECT:
         description: "Project in Gerrit"
         required: true
