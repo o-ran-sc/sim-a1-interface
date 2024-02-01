@@ -33,6 +33,24 @@
       "message": "@Jessica\nSure. TBH I\u0027m not sure what it actually does, but if you\u0027re all happy then I will merge now. \nThanks.",
       "revId": "57144fb6d46a64832668faaf95bc187a6cfaf360",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5061556e_9dbebc99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000059
+      },
+      "writtenOn": "2024-02-01T16:25:34Z",
+      "side": 1,
+      "message": "Thank you John. \nThis workflow should perform a tox verify like what the job \"sim-a1-interface-tox-verify-master\" does. \nThe idea is to have these Jenkins templates deprecated and move jobs to GH Actions",
+      "parentUuid": "60f5e80f_f614024f",
+      "revId": "57144fb6d46a64832668faaf95bc187a6cfaf360",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ],
   "submitRequirementResults": [
