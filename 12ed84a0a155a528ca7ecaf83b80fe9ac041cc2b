@@ -22,6 +22,30 @@
       },
       "revId": "12ed84a0a155a528ca7ecaf83b80fe9ac041cc2b",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "132e3266_c28da95f",
+        "filename": ".github/workflows/gerrit-novote-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000059
+      },
+      "writtenOn": "2024-02-06T19:04:52Z",
+      "side": 1,
+      "message": "Thanks Andy, I will remove it. I am confirming with Eric too since we will need to remove it from the reusable workflow as well. I don\u0027t think it was added on purpose.",
+      "parentUuid": "5c2e5001_2d0c87ad",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "12ed84a0a155a528ca7ecaf83b80fe9ac041cc2b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
