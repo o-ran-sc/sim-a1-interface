@@ -46,6 +46,30 @@
       },
       "revId": "12ed84a0a155a528ca7ecaf83b80fe9ac041cc2b",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d027920_94cef3bc",
+        "filename": ".github/workflows/gerrit-novote-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000059
+      },
+      "writtenOn": "2024-02-06T19:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "132e3266_c28da95f",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "12ed84a0a155a528ca7ecaf83b80fe9ac041cc2b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
