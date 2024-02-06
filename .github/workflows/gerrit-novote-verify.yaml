@@ -29,22 +29,16 @@ on:
         description: "The patch number for the change"
         required: true
         type: string
+      GERRIT_PATCHSET_REVISION:
+        description: "The revision sha"
+        required: true
+        type: string
       GERRIT_PROJECT:
         description: "Project in Gerrit"
         required: true
         type: string
       GERRIT_REFSPEC:
         description: "Gerrit refspec of change"
-        required: true
-        type: string
-      TARGET_REPO:
-        # yamllint disable-line rule:line-length
-        description: "The target GitHub repository needing the required workflow"
-        required: false
-        default: ${{ github.repository }}
-        type: string
-      TOX_ENVS:
-        description: "Map of versions and envs to run"
         required: true
         type: string
 
@@ -63,8 +57,8 @@ jobs:
         uses: lfit/gerrit-review-action@v0.4
         with:
           host: ${{ vars.GERRIT_SERVER }}
-          username: ${{ vars.GERRIT_SSH_REQUIRED_USER }}
-          key: ${{ secrets.GERRIT_SSH_REQUIRED_PRIVKEY }}
+          username: ${{ vars.GERRIT_SSH_USER }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
           known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
           gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
           gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
@@ -82,7 +76,6 @@ jobs:
       GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
       GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
-      TARGET_REPO: ${{ inputs.TARGET_REPO }}
       TOX_ENVS: "code"
 
   vote:
@@ -96,8 +89,8 @@ jobs:
         uses: lfit/gerrit-review-action@v0.4
         with:
           host: ${{ vars.GERRIT_SERVER }}
-          username: ${{ vars.GERRIT_SSH_REQUIRED_USER }}
-          key: ${{ secrets.GERRIT_SSH_REQUIRED_PRIVKEY }}
+          username: ${{ vars.GERRIT_SSH_USER }}
+          key: ${{ secrets.GERRIT_SSH_PRIVKEY }}
           known_hosts: ${{ vars.GERRIT_KNOWN_HOSTS }}
           gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
           gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
