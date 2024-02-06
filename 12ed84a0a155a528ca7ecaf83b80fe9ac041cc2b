@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c2e5001_2d0c87ad",
+        "filename": ".github/workflows/gerrit-novote-verify.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-02-06T18:58:42Z",
+      "side": 1,
+      "message": "Defining this for a non-required verify job doesn\u0027t make a lot of sense. Having it set as not required and a default does side-step this issue. In truth, it would be better to _not_ define it if it\u0027s not actually a required workflow.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "12ed84a0a155a528ca7ecaf83b80fe9ac041cc2b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
