@@ -76,7 +76,7 @@ jobs:
       GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
       GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
-      TOX_ENVS: "code"
+      TOX_ENVS: '["code"]'
 
   vote:
     if: ${{ always() }}
