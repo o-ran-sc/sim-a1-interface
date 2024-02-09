@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "533363e2_c7d2bc1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2024-02-09T14:34:12Z",
+      "side": 1,
+      "message": "please abandon this when every you\u0027re ready. Thanks.",
+      "revId": "a502ebe6b943fa74930a6cb64e201900c2b26dbe",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
