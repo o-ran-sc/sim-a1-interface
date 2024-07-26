@@ -1,5 +1,6 @@
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2022 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023-2024 OpenInfra Foundation Europe. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -17,8 +18,8 @@
 
 FROM python:3.8-slim-buster
 
-RUN pip install connexion[swagger-ui]
-RUN pip install kafka-python
+RUN pip3 install "connexion[swagger-ui,flask,uvicorn]"
+RUN pip3 install kafka-python
 
 #install nginx and curl
 RUN apt-get update && apt-get install -y nginx=1.14.* nginx-extras curl

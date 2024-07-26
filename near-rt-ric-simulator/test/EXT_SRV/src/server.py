@@ -1,5 +1,6 @@
 #  ============LICENSE_START===============================================
 #  Copyright (C) 2022 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023-2024 OpenInfra Foundation Europe. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -40,7 +41,7 @@ def get_all_a1_policies():
     return r
 
   res = list(a1_policy_instances)
-  return (res, 200)
+  return Response(json.dumps(res), 200, mimetype=APPL_JSON)
 
 # API Function: Get A1 policy
 def get_a1_policy(a1policyId):
