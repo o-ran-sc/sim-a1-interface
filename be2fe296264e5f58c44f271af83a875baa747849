@@ -16,6 +16,24 @@
       "message": "I fixed an issue in December, where this line was updated.\n\nhttps://gerrit.nordix.org/gitweb?p\u003doransc/sim/a1-interface.git;a\u003dblobdiff;f\u003dnear-rt-ric-simulator/Dockerfile;h\u003d4407f8c6b3886d80bc801e0b98b6344cd6b84328;hp\u003d786b003dc2e4386bd79ad95bf8ff51d6e61e998e;hb\u003d79992d7e456696d6211edcb64d6b2ce2d8b730c6;hpb\u003d3c47934969cb887007ad96d71906598a9a4bf0cc.",
       "revId": "be2fe296264e5f58c44f271af83a875baa747849",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c794a28_fb36f8fc",
+        "filename": "near-rt-ric-simulator/test/EXT_SRV/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001877
+      },
+      "writtenOn": "2024-07-29T08:16:53Z",
+      "side": 1,
+      "message": "This update is in a different file.",
+      "parentUuid": "43b29248_1a2ece92",
+      "revId": "be2fe296264e5f58c44f271af83a875baa747849",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
