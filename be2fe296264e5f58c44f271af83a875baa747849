@@ -34,6 +34,24 @@
       "parentUuid": "43b29248_1a2ece92",
       "revId": "be2fe296264e5f58c44f271af83a875baa747849",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5ae992e_f7f6199c",
+        "filename": "near-rt-ric-simulator/test/EXT_SRV/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2024-07-30T14:23:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c794a28_fb36f8fc",
+      "revId": "be2fe296264e5f58c44f271af83a875baa747849",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ],
   "submitRequirementResults": [
