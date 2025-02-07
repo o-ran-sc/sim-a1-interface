@@ -17,6 +17,7 @@
 
 from var_declaration import app
 from flask import Flask, request, Response
+from datetime import datetime
 
 #Constants
 TEXT_PLAIN='text/plain'
@@ -41,7 +42,8 @@ def set_payload_logging(state):
 @app.app.before_request
 def log_request_info():
     if (payload_log is True):
-        print('')
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]  # Format timestamp with milliseconds
+        print(f"\n[{timestamp}]")
         print('-----Request-----')
         print('Req Headers: ', request.headers)
         print('Req Body: ', request.get_data())
@@ -49,6 +51,8 @@ def log_request_info():
 # Generic function to log http header and payload - called after the response
 @app.app.after_request
 def log_response_info(response):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]  # Format timestamp with milliseconds
+    print(f"\n[{timestamp}]")
     if (payload_log is True):
         print('-----Response-----')
         print('Resp Headers: ', response.headers)
