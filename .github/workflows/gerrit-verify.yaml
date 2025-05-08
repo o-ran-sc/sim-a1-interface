@@ -82,10 +82,32 @@ jobs:
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
       TOX_ENVS: '["code"]'
 
+  call-sonarcloud-scan:
+    runs-on: ubuntu-latest
+    needs: notify
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.GERRIT_BRANCH }}
+          submodules: "true"
+      - name: Run SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.build.sourceEncoding=UTF-8
+            -Dsonar.organization=o-ran-sc
+            -Dsonar.projectBaseDir=.
+            -Dsonar.projectKey=o-ran-sc_a1-interface
+            -Dsonar.projectName=a1-interface
+            -Dsonar.sources=.
+            -Dsonar.verbose=true
+
   vote:
     if: ${{ always() }}
     # yamllint enable rule:line-length
-    needs: [prepare, call-gerrit-tox-verify]
+    needs: [prepare, call-gerrit-tox-verify, call-sonarcloud-scan]
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
