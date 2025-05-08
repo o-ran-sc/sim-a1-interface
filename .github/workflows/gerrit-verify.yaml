@@ -82,10 +82,18 @@ jobs:
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
       TOX_ENVS: '["code"]'
 
+  call-sonartype-lifecycle:
+    name: "Sonatype Lifecycle Scan"
+    needs: notify
+    # yamllint disable-line rule:line-length
+    uses: lfit/releng-reusable-workflows/.github/workflows/reuse-sonatype-lifecycle.yaml@ac846b1cfeaf3a7cac6f28413a5206afc9951464 # v0.2.11
+    secrets:
+      NEXUS_IQ_PASSWORD: ${{ secrets.NEXUS_IQ_PASSWORD }}
+
   vote:
     if: ${{ always() }}
     # yamllint enable rule:line-length
-    needs: [prepare, call-gerrit-tox-verify]
+    needs: [prepare, call-gerrit-tox-verify, call-sonartype-lifecycle]
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
