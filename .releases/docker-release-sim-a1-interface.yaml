@@ -1,10 +1,10 @@
 ---
 distribution_type: container
-container_release_tag: 2.8.0
+container_release_tag: 2.8.1
 container_pull_registry: nexus3.o-ran-sc.org:10004
 container_push_registry: nexus3.o-ran-sc.org:10002
 project: sim
-ref: c7911c6458a968adafc7f9a8c5f29b8234f60c45 
+ref: 7c905365b4532d39c34d6c8f0073c4d67d3d8d38 
 containers:
     - name: a1-simulator
-      version: 2.8.0
+      version: 2.8.1
