@@ -1,0 +1,9 @@
+Verified+1: ORAN Required GHA <releng+oran.required.gha@linuxfoundation.org>
+Code-Review+2: John Keeney <john.keeney@est.tech>
+Verified+1: o-ran-sc release <collab-it+o-ran-sc-release@linuxfoundation.org>
+Verified+1: ORAN Jobbuilder <releng+oran-jobbuilder@linuxfoundation.org>
+Submitted-by: John Keeney <john.keeney@est.tech>
+Submitted-at: Thu, 03 Jul 2025 16:27:35 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/sim/a1-interface/+/14662
+Project: sim/a1-interface
+Branch: refs/heads/master
