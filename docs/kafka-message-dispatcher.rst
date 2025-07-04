@@ -1,7 +1,6 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
-.. Copyright (C) 2022-2023 Nordix
-.. Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.
+.. Copyright (C) 2022 Nordix
 
 .. |nbsp| unicode:: 0xA0
    :trim:
@@ -33,7 +32,7 @@ The Kafka message dispatcher exposes a 'Kafka Message Dispatcher' REST API. This
 
    "Kafka Message Dispatcher API", ":download:`link <../near-rt-ric-simulator/test/KAFKA_DISPATCHER/api/KAFKA_DISPATCHER_api.yaml>`"
 
-The Kafka message dispatcher also exposes an 'Admin API' to manipulate the behavior of the Kafka message dispatcher itself. The 'Kafka Message Dispatcher Admin API' is documented below: 
+The Kafka message dispatcher also exposes an 'Admin API' to manipulate the behavior of the Kafka message dispather itself. The 'Kafka Message Dispatcher Admin API' is documented below: 
 
 Admin Functions
 ================
@@ -92,7 +91,7 @@ The HTTP response code to return.
 
 200:
 
-Force response code: <expected code> set for all all dispatcher response until it is reset
+Force response code: <expected code> set for all all dispatcher response until it is resetted
 
 **Examples:**
 
@@ -104,7 +103,7 @@ Force response code: <expected code> set for all all dispatcher response until i
 
 200: ::
 
-  Force response code: 500 set for all dispatcher response until it is reset
+  Force response code: 500 set for all dispatcher response until it is resetted
 
 
 Reset response-manipulation
@@ -130,7 +129,7 @@ The HTTP response code to return.
 
 200:
 
-Force response code has been reset for dispatcher responses
+Force response code has been resetted for dispatcher responses
 
 **Examples:**
 
@@ -142,7 +141,7 @@ Force response code has been reset for dispatcher responses
 
 200: ::
 
-  Force response code has been reset for dispatcher responses
+  Force response code has been resetted for dispatcher responses
 
 
 Response time manipulation
@@ -206,7 +205,7 @@ The time in seconds to delay all responses.
 
 200:
 
-Force delay has been reset for all dispatcher responses
+Force delay has been resetted for all dispatcher responses
 
 **Examples:**
 
@@ -218,4 +217,4 @@ Force delay has been reset for all dispatcher responses
 
 200: ::
 
-  Force delay has been reset for all dispatcher responses
+  Force delay has been resetted for all dispatcher responses

@@ -1,6 +1,6 @@
 from docs_conf.conf import *
 
-branch = 'l-release'
+branch = 'latest'
 
 language = 'en'
 
