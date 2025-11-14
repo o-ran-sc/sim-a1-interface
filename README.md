@@ -1,10 +1,17 @@
-# O-RAN-SC A1 Simulator
+# O-RAN-SC A1 Simulator (Experimental O-RAN-SC Module)
+
+![Status: Not for Production](https://img.shields.io/badge/status-not--for--production-red)
+![Status: Experimental](https://img.shields.io/badge/CVE%20Support-none-lightgrey)
+
+> [!WARNING]
+> This repository is pre-spec and not intended for production use. No CVE remediation or production guarantees apply.
 
 Read more here: [NEAR-RT-RIC-SIMULATOR](./near-rt-ric-simulator/README.md)
 
 ## License
 
-Copyright (C) 2024 Nordix Foundation.
+Copyright (C) 2023 Nordix Foundation.
+Copyright (C) 2023-2025 OpenInfra Foundation Europe.
 Licensed under the Apache License, Version 2.0 (the "License")
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
