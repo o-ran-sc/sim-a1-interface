@@ -24,7 +24,7 @@ A1 Policy are redirected as Kafka messages to a configured Kafka Topic to an ext
 
 **Note:** As with other A1 Simulator call-out servers, the Kafka message dispatcher functionality is only available for *'STD_2.0.0'* version simulators.
 
-The Kafka message dispatcher exposes a 'Kafka Message Dispatcher' REST API. This internal API is invoked directly by the A1 Simulator, and is not intended to be used by any other client.  This API is documented in `Kafka Message Dispatcher API <./KAFKA_DISPATCHER_api.html>`_ and in OpenAPI YAML format:
+The Kafka message dispatcher exposes a 'Kafka Message Dispatcher' REST API. This internal API is invoked directly by the A1 Simulator, and is not intended to be used by any other client.  This API is documented in :doc:`KAFKA_DISPATCHER_api` and in OpenAPI YAML format:
 
 .. csv-table::
    :header: "API name", "|yaml-icon|"

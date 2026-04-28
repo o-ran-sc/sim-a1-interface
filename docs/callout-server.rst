@@ -24,7 +24,7 @@ The O-RAN SC external call-out server allows behavioral extensions to be added t
 
 **Note:** call-out server functionality is only available for *'STD_2.0.0'* version simulators.
 
-The external call-out server exposes a 'Callout server API' REST API. This internal API is invoked directly by the A1 Simulator, and is not intended to be used by any other client.  The 'Callout Server API' is documented in `Callout Server API <./EXT_SRV_api.html>`_ and in OpenAPI YAML format:
+The external call-out server exposes a 'Callout server API' REST API. This internal API is invoked directly by the A1 Simulator, and is not intended to be used by any other client.  The 'Callout Server API' is documented in :doc:`EXT_SRV_api` and in OpenAPI YAML format:
 
 .. csv-table::
    :header: "API name", "|yaml-icon|"
