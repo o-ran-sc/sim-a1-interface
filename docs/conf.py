@@ -8,25 +8,20 @@ linkcheck_ignore = [
     'http://localhost.*',
     'http://127.0.0.1.*',
     'https://gerrit.o-ran-sc.org.*',
-    './KAFKA_DISPATCHER_api.html',
-    './EXT_SRV_api.html', #Generated file that doesn't exist at link check.
 ]
 
-extensions = ['sphinxcontrib.redoc']
+extensions = ['sphinxcontrib.openapi']
 
-redoc = [
-            {
-                'name': 'CALLOUT SERVER',
-                'page': 'EXT_SRV_api',
-                'spec': '../near-rt-ric-simulator/test/EXT_SRV/api/EXT_SRV_api.yaml',
-                'embed': True,
-            },
-            {
-                'name': 'Kafka Message Dispatcher',
-                'page': 'KAFKA_DISPATCHER_api',
-                'spec': '../near-rt-ric-simulator/test/KAFKA_DISPATCHER/api/KAFKA_DISPATCHER_api.yaml',
-                'embed': True,
-            },
-        ]
+# sphinxcontrib-openapi synthesises HTTP request/response examples
+# whose bodies (e.g. enum literal values, free-form 'string'
+# placeholders) Pygments' http lexer rejects. The extension already
+# falls back to relaxed-mode lexing, but the warnings are promoted to
+# errors under sphinx-build -W. Suppress them since the rendered
+# output is correct.
+suppress_warnings = ['misc.highlighting_failure']
 
-redoc_uri = 'https://cdn.jsdelivr.net/npm/redoc@latest/bundles/redoc.standalone.js'
+# The Kafka Message Dispatcher API spec uses non-standard HTTP status
+# code 419 ("KafkaMessagePublishFailed"). sphinxcontrib-httpdomain's
+# strict mode treats unknown status codes as docutils errors; disable
+# it so the spec renders without aborting sphinx-build -W.
+http_strict_mode = False
