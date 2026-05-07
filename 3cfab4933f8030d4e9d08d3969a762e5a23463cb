@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "3cfab4933f8030d4e9d08d3969a762e5a23463cb",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b965e703_13460c15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2026-05-07T14:53:08Z",
+      "side": 1,
+      "message": "ORAN Required GHA vote needs to be overridden, or change merged with child review https://gerrit.o-ran-sc.org/r/c/sim/a1-interface/+/15646/1",
+      "revId": "3cfab4933f8030d4e9d08d3969a762e5a23463cb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
